@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  php-apache:
+    container_name: php-apache
+    build: .
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - 80:80
+  
+  pg_server:
+    container_name: pg_server
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg/data:/var/lib/postgresql/data
