@@ -72,7 +72,6 @@ function jwt_decode($jwt) {
     $result = new JwtPayload();
     $result->email = $obj->email;
     $result->username = $obj->username;
-    // $result->exp = $obj->exp;
 
     return $result;
 }
