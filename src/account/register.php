@@ -13,7 +13,6 @@ function display_error($error) {
     }
 }
 
-# if it is a GET request, display the register form
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
 }
@@ -65,8 +64,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 else {
-    # if it is neither a GET nor a POST request, display an error
-    echo 'Error: invalid request method!';
+    echo 'ERROR 405: Method Not Allowed';
     exit;
 }
 
