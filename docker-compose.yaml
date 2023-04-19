@@ -7,6 +7,14 @@ services:
       - ./src:/var/www/html/
     ports:
       - 80:80
+    environment:
+      POSTGRES_HOST: pg_server
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      JWT_SECRET: secret123
+      JWT_EXP_TIME: 3600
   
   pg_server:
     container_name: pg_server
