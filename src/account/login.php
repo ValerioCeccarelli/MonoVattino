@@ -75,12 +75,6 @@ function password_check($password) {
     }
 }
 
-# if the user is already logged in, redirect to the home page
-if (isset($_SESSION['user_id'])) {
-    header('Location: /');
-    exit;
-}
-
 # if this is a GET request, display the login form
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     require_once('login_template.php');

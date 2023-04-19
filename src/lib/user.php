@@ -41,12 +41,6 @@ function get_user_by_email($conn, $email) {
     return $user;
 }
 
-# validate the user by comparing the password with the hashed one (db_user is the user from the database with the hashed password and salt)
-function validate_user_password($db_user, $user) {
-    $password_hash = hash('sha256', $user->password . $db_user->salt);
-    return $password_hash === $db_user->password;
-}
-
 function generate_random_string($length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters_length = strlen($characters);
@@ -61,15 +55,6 @@ class EmailAlreadyUsedException extends Exception
 {
     public function __construct() {
         parent::__construct("Email already used", 0, null);
-    }
-
-    // custom string representation of object
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-    }
-
-    public function customFunction() {
-        echo "A custom function for this type of exception\n";
     }
 }
 
