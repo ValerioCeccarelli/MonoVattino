@@ -68,8 +68,8 @@ function validate_username($username) {
 }
 
 # validate the user by comparing the password with the hashed one (db_user is the user from the database with the hashed password and salt)
-function validate_user_password_with_db($db_user, $user) {
-    $password_hash = hash('sha256', $user->password . $db_user->salt);
+function verify_password($db_user, $password) {
+    $password_hash = hash('sha256', $password . $db_user->salt);
     return $password_hash === $db_user->password;
 }
 

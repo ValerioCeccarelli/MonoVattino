@@ -1,117 +1,101 @@
-<? 
+<?php 
 
-$current_email = "";
-$current_password = "";
-
-$error_to_display = "";
-
+$email = "";
 $email_error = "";
+$password = "";
 $password_error = "";
 
-function email_check($email) {
-    global $error_to_display;
-    global $email_error;
-
-    # check if the email is valid
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-        $error_to_display = 'Please enter a valid email!';
-        $email_error = 'Please enter a valid email!';
-
-        require_once('login_template.php');
-        exit;
+function display_error($error) {
+    if (!empty($error)) {
+        echo '<p style="color: red;">' . $error . '</p>';
     }
 }
 
-function password_check($password) {
-    global $error_to_display;
-    global $password_error;
-
-
-    # check if the password is at least 8 characters long
-    if (strlen($password) < 8) {
-
-        $error_to_display = 'Please enter a valid password!';
-        $password_error = 'Password must be at least 8 characters long!';
-
-        require_once('login_template.php');
-        exit;
-    }
-    # check if the password is at most 64 characters long
-    if (strlen($password) > 64) {
-
-        $error_to_display = 'Please enter a valid password!';
-        $password_error = 'Password must be at most 64 characters long!';
-
-        require_once('login_template.php');
-        exit;
-    }
-    # check if the password contains at least one uppercase letter
-    if (!preg_match('/[A-Z]/', $password)) {
-
-        $error_to_display = 'Please enter a valid password!';
-        $password_error = 'Password must contain at least one uppercase letter!';
-
-        require_once('login_template.php');
-        exit;
-    }
-    # check if the password contains at least one lowercase letter
-    if (!preg_match('/[a-z]/', $password)) {
-
-        $error_to_display = 'Please enter a valid password!';
-        $password_error = 'Password must contain at least one lowercase letter!';
-
-        require_once('login_template.php');
-        exit;
-    }
-    # check if the password contains at least one number
-    if (!preg_match('/[0-9]/', $password)) {
-
-        $error_to_display = 'Please enter a valid password!';
-        $password_error = 'Password must contain at least one number!';
-
-        require_once('login_template.php');
-        exit;
-    }
+# if it is a GET request, display the register form
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    # pass
 }
-
-# if this is a GET request, display the login form
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    require_once('login_template.php');
-    exit;
-}
-
-# if this is a POST request, process the login form
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    # check that email and password were submitted
-    if (empty($_POST['email']) || empty($_POST['password'])) {
-        # I used empty() instead of isset() because it check if the variable is set and if it's not empty (since isset() doesn't work in this case)
-
-        $error_to_display = 'Please fill both the email and password field!';
-        $current_email = $_POST['email'];
-        $current_password = $_POST['password'];
-
-        require_once('login_template.php');
-        exit;
-    }
+elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require_once('../lib/user.php');
+    require_once('../lib/validate_user.php');
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $current_email = $email;
-    $current_password = $password;
+    try {
+        validate_email($email);
+        validate_password($password);
 
-    email_check($email);
-    password_check($password);
+        require_once('../lib/database.php');
 
-    # redirect to the home page
-    header('Location: /index.php');
+        $conn = connect_to_database();
 
+        if (!$conn) {
+            echo 'ERROR 500: Internal Server Error';
+            exit;
+        }
+
+        $db_user = get_user_by_email($conn, $email);
+
+        $is_valid = verify_password($db_user, $password);
+
+        if ($is_valid) {
+            require_once('../lib/jwt.php');
+
+            $jwt_payload = new JwtPayload();
+            $jwt_payload->email = $email;
+
+            $jwt = create_jwt($db_user);
+
+            setcookie('jwt', $jwt, get_jwt_expire_time(), '/');
+
+            header('Location: /');
+            exit;
+        }
+        else {
+            $password_error = "Invalid password!";
+        }
+    }
+    catch (InvalidEmailException $e) {
+        $email_error = $e->getMessage();
+    }
+    catch (InvalidPasswordException $e) {
+        $password_error = $e->getMessage();
+    }
+    catch (UserNotFoundException $e) {
+        $email_error = "This email is not registered!";
+    }
+    catch (Exception $e) {
+        echo 'ERROR 500: Internal Server Error';
+        exit;
+    }
+}
+else {
+    echo 'Error: invalid request method!';
     exit;
 }
 
-# if this is neither a GET nor a POST request, display an error
-echo 'Method not allowed';
-exit;
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MonoVattino</title>
+</head>
+<body>
+    <form action="/account/login.php" method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="<?php echo $email ?>" required>
+        <?php display_error($email_error) ?>
+</br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="<?php echo $password ?>" required>
+        <?php display_error($password_error) ?>
+</br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
