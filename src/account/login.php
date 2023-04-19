@@ -25,7 +25,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         validate_email($email);
         validate_password($password);
-
+        
         require_once('../lib/database.php');
 
         $conn = connect_to_database();
@@ -44,16 +44,17 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $jwt_payload = new JwtPayload();
             $jwt_payload->email = $email;
+            $jwt_payload->username = $db_user->username;
 
-            $jwt = create_jwt($db_user);
+            $jwt = generate_jwt($db_user);
 
-            setcookie('jwt', $jwt, get_jwt_expire_time(), '/');
+            setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
 
             header('Location: /');
             exit;
         }
         else {
-            $password_error = "Invalid password!";
+            $password_error = "Wrong password!";
         }
     }
     catch (InvalidEmailException $e) {

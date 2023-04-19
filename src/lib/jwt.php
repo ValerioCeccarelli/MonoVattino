@@ -5,6 +5,7 @@ function get_jwt_expire_time() {
 }
 
 class JwtPayload {
+    public $username;
     public $email;
 }
 
@@ -14,7 +15,7 @@ function generate_jwt($payload) {
     $headers = array('alg'=>'HS256','typ'=>'JWT');
 	$headers_encoded = base64url_encode(json_encode($headers));
 	
-    $payload = array('email'=>$payload->email);
+    $payload = array('email'=>$payload->email, 'username'=>$payload->username);
     $payload['exp'] = get_jwt_expire_time(); 
 	$payload_encoded = base64url_encode(json_encode($payload));
 	
@@ -70,6 +71,7 @@ function jwt_decode($jwt) {
 
     $result = new JwtPayload();
     $result->email = $obj->email;
+    $result->username = $obj->username;
     // $result->exp = $obj->exp;
 
     return $result;
