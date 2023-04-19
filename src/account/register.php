@@ -72,27 +72,45 @@ else {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Register - MonoVattino</title>
+
 </head>
+
 <body>
-    <form action="/account/register.php" method="POST">
-        <label for="username">Username</label>
-        <input type="username" name="username" id="username" value="<?php echo $username ?>" required>
-        <?php display_error($username_error) ?>
-</br>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?php echo $email ?>" required>
-        <?php display_error($email_error) ?>
-</br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" value="<?php echo $password ?>" required>
-        <?php display_error($password_error) ?>
-</br>
-        <button type="submit">Register</button>
-    </form>
+    <div class="row">
+        <div class="mx-auto col-10 col-md-8 col-lg-6">
+
+            <form action="/account/register.php" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="username" name="username" id="username" class="form-control"
+                        value="<?php echo $username ?>" required>
+                    <?php display_error($username_error) ?>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?>"
+                        required>
+                    <?php display_error($email_error) ?>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" id="password" class="form-control"
+                        value="<?php echo $password ?>" required>
+                    <?php display_error($password_error) ?>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+        </div>
+    </div>
 </body>
+
 </html>
