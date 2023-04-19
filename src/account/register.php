@@ -35,8 +35,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn = connect_to_database();
 
         if (!$conn) {
-            echo 'ERROR 500: Internal Server Error';
-            exit;
+            throw new Exception('Connection to database failed!');
         }
 
         $user = new User();
@@ -44,17 +43,10 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user->password = $password;
         $user->email = $email;
 
-        try {
-            create_new_user($conn, $user);
+        create_new_user($conn, $user);
             
-            header('Location: /');
-            exit;
-        } catch (EmailAlreadyUsedException $th) {
-            $email_error = "This email is already in use!";
-        } catch (Exception $e) {
-            echo 'ERROR 500: Internal Server Error';
-            exit;
-        }
+        header('Location: /');
+        exit;
     }
     catch (InvalidEmailException $e) {
         $email_error = $e->getMessage();
@@ -64,6 +56,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     catch (InvalidUsernameException $e) {
         $username_error = $e->getMessage();
+    }
+    catch (EmailAlreadyUsedException $th) {
+        $email_error = "This email is already in use!";
+    } catch (Exception $e) {
+        echo 'ERROR 500: Internal Server Error';
+        exit;
     }
 }
 else {
