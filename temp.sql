@@ -12,7 +12,7 @@ INSERT INTO users (username, email, password, salt) VALUES ('test', 'test@test',
 
 
 CREATE TABLE companies (
-	company_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
@@ -27,7 +27,7 @@ INSERT INTO companies (name, email, phone_number, website, cost_per_km, fixed_co
 
 
 CREATE TABLE scooters (
-	scooter_id SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	latitude NUMERIC(10, 8) NOT NULL,
 	longitude NUMERIC(11, 8) NOT NULL,
 	battery_level NUMERIC(3, 2) NOT NULL,
