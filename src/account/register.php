@@ -43,6 +43,16 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user->email = $email;
 
         create_new_user($conn, $user);
+
+        require_once('../lib/jwt.php');
+
+        $jwt_payload = new JwtPayload();
+        $jwt_payload->email = $email;
+        $jwt_payload->username = $db_user->username;
+
+        $jwt = generate_jwt($db_user);
+
+        setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
             
         header('Location: /');
         exit;
