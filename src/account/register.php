@@ -48,7 +48,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $jwt_payload = new JwtPayload();
         $jwt_payload->email = $email;
-        $jwt_payload->username = $db_user->username;
+        $jwt_payload->username = $username;
 
         $jwt = generate_jwt($db_user);
 
