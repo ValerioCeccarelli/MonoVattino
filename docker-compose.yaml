@@ -15,10 +15,10 @@ services:
       POSTGRES_DB: postgres
       JWT_SECRET: secret123
       JWT_EXP_TIME: 3600
-  
+
   pg_server:
     container_name: pg_server
-    image: postgres:13.2
+    image: postgis/postgis:15-3.3
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

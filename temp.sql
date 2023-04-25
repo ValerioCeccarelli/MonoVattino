@@ -44,3 +44,24 @@ INSERT INTO scooters (latitude, longitude, battery_level, is_available, company,
 INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (2, 1, 10, true, 1, NULL);
 INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (1, 2, 50, true, 2, NULL);
 INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (2, 2, 20, true, 2, NULL);
+
+
+CREATE TABLE my_points (
+	id SERIAL PRIMARY KEY,
+	latitude NUMERIC(10, 8) NOT NULL,
+	longitude NUMERIC(11, 8) NOT NULL
+);
+
+INSERT INTO my_points (latitude, longitude) VALUES (1, 1);
+
+CREATE EXTENSION postgis;
+
+SELECT * FROM my_points WHERE ST_DWithin(ST_MakePoint(0, 1), ST_MakePoint(latitude, longitude), 0.5);
+
+SELECT ST_Distance(
+    'SRID=4326;POINT(-72.1235 42.3521)'::geometry,
+    'SRID=4326;LINESTRING(-72.1260 42.45, -72.123 42.1546)'::geometry );
+
+SELECT ST_Distance(
+    ST_MakePoint(0, 1),
+    ST_MakePoint(1, 0));
