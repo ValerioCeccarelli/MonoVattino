@@ -1,3 +1,6 @@
+DROP TABLE users
+
+
 -- this file is used to save the sql statements for the project
 
 CREATE TABLE users (
@@ -33,13 +36,13 @@ CREATE TABLE scooters (
 	battery_level FLOAT NOT NULL,
 	company INTEGER NOT NULL,
 
-	FOREIGN KEY (company) REFERENCES companies(id),
+	FOREIGN KEY (company) REFERENCES companies(id)
 );
 
-INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (1, 1, 100, true, 1, NULL);
-INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (2, 1, 10, true, 1, NULL);
-INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (1, 2, 50, true, 2, NULL);
-INSERT INTO scooters (latitude, longitude, battery_level, is_available, company, owner_email) VALUES (2, 2, 20, true, 2, NULL);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 12, 100, 1);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 12, 10, 1);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 13, 50, 2);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 13, 20, 2);
 
 CREATE TABLE trips (
 	start_time TIMESTAMP NOT NULL,

@@ -15,8 +15,7 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
     $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name
         FROM scooters s
         JOIN companies c ON s.company=c.id
-        WHERE s.is_available=true 
-            AND ST_DWithin(ST_MakePoint($1, $2), ST_MakePoint(s.latitude, s.longitude), $3)
+        WHERE ST_DistanceSphere(ST_MakePoint($1, $2), ST_MakePoint(s.latitude, s.longitude)) < $3
             AND s.id NOT IN (
                 SELECT t.scooter_id
                 FROM trips t
@@ -24,11 +23,13 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
 
     $result1 = pg_prepare($conn, "get_scooters", $query);
     if(!$result1) {
+        echo "p " . pg_last_error();
         throw new Exception("Could not prepare the query: " . pg_last_error());
     }
 
     $result2 = pg_execute($conn, "get_scooters", array($latitude, $longitude, $radius));
     if(!$result2) {
+        echo "e " . pg_last_error();
         throw new Exception("Could not execute the query: " . pg_last_error());
     }
 
