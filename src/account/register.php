@@ -70,6 +70,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email_error = "This email is already in use!";
     } catch (Exception $e) {
         echo 'ERROR 500: Internal Server Error';
+        error_log("ERROR: register page" . $e->getMessage());
         exit;
     }
 }

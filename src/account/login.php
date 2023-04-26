@@ -67,6 +67,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     catch (Exception $e) {
         echo 'ERROR 500: Internal Server Error';
+        error_log("ERROR: register page" . $e->getMessage());
         exit;
     }
 }
