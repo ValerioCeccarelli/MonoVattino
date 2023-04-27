@@ -87,32 +87,32 @@ function get_scooter(_longitude, _latitude) {
         url: url,
         type: 'GET',
         data: data,
-        success: function(data) {
+        success: function (data) {
             scooters = data;
             console.log(scooters);
             initMap(crd.longitude, crd.latitude);
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
 }
 
-$(document).ready(() => {
-    const options = {
-        enableHighAccuracy: true,
-        timeout: 60000,
-        maximumAge: 0,
-    };
+// $(document).ready(() => {
+//     const options = {
+//         enableHighAccuracy: true,
+//         timeout: 60000,
+//         maximumAge: 0,
+//     };
 
-    success = (pos) => {
-        crd = pos.coords;
-        get_scooter(crd.longitude, crd.latitude);
-    };
+//     success = (pos) => {
+//         crd = pos.coords;
+//         get_scooter(crd.longitude, crd.latitude);
+//     };
 
-    error = (err) => {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    };
+//     error = (err) => {
+//         console.warn(`ERROR(${err.code}): ${err.message}`);
+//     };
 
-    navigator.geolocation.getCurrentPosition(success, error, options);
-});
+//     navigator.geolocation.getCurrentPosition(success, error, options);
+// });

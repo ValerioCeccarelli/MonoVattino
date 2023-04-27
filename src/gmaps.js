@@ -23,7 +23,24 @@
     d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() =>
         d[l](f, ...n))
 })
-({
-    key: "AIzaSyBUA0q_QDe0sEHpbyLgkibMyeU0iyOAv3k",
-    v: "beta"
+    ({
+        key: "AIzaSyBUA0q_QDe0sEHpbyLgkibMyeU0iyOAv3k",
+        v: "beta"
+    });
+
+async function getCurrentPosition() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+}
+
+async function initMap() {
+    let position = await getCurrentPosition();
+    console.log(position);
+}
+
+$(document).ready(function () {
+    initMap();
 });
+
+// Failed to create the directory /var/lib/pgadmin/sessions
