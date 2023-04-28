@@ -42,5 +42,3 @@ async function initMap() {
 $(document).ready(function () {
     initMap();
 });
-
-// Failed to create the directory /var/lib/pgadmin/sessions
