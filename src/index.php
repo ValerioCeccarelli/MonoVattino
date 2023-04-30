@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="gmaps.js"></script>
-    <script src="index.js"></script>
+    <!-- <script src="index.js"></script> -->
 </head>
 
 <body>
