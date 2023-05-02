@@ -16,6 +16,7 @@ function process_get_request() {
 
     $conn = connect_to_database();
 
+
     require_once('../lib/scooter.php');
 
     $scooters = get_scooters($conn, $longitude, $latitude, $radius);

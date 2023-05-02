@@ -106,8 +106,8 @@ async function renderMe(_latitude, _longitude) {
     });
     const meMarker = new AdvancedMarkerView({
         position: {
-            lat: crd.latitude,
-            lng: crd.longitude
+            lat: _latitude,
+            lng: _longitude
         },
         map: map,
         title: "Hello World!",
@@ -123,15 +123,54 @@ function moveMapCenter(_latitude, _longitude) {
     map.setCenter(pos);
 }
 
+scooters_markers = [];
 async function renderScooters(scooters) {
+    const {
+        AdvancedMarkerView,
+        PinView
+    } = await google.maps.importLibrary("marker");
 
+    scooters_markers.forEach(scooterMarker => {
+        scooterMarker.setMap(null);
+    });
+
+    scooters_markers = [];
+
+    scooters.forEach(scooter => {
+        const pin = new PinView({
+            background: '#4285F4',
+        });
+        const scooterMarker = new AdvancedMarkerView({
+            position: {
+                lat: parseFloat(scooter.latitude),
+                lng: parseFloat(scooter.longitude)
+            },
+            map: map,
+            title: "Hello World!",
+            content: pin.element,
+        });
+        scooters_markers.push(scooterMarker);
+    });
+}
+
+async function changeMarkerIcon() {
+    const {
+        PinView
+    } = await google.maps.importLibrary("marker");
+
+    scooters_markers.forEach(scooterMarker => {
+        const pin = new PinView({
+            background: '#999999',
+        });
+        scooterMarker.setContent(pin.element);
+    });
 }
 
 async function onDocumentReady() {
     // position of Colosseo
     // 41.889819, 12.492234
-    let latitude = 41.889819;
-    let longitude = 12.492234;
+    let longitude = 41.889819;
+    let latitude = 12.492234;
     let radius = 3000000;
 
     let map_promise = initMap(latitude, longitude);
@@ -148,6 +187,7 @@ async function onDocumentReady() {
     // if map and scooters are ready, render scooters
     await map_promise;
     let scooters = await scooters_promise;
+
     await renderScooters(scooters);
 
     // if position is available, wait for it
