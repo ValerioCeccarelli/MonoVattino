@@ -33,10 +33,6 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn = connect_to_database();
 
-        if (!$conn) {
-            throw new Exception('Connection to database failed!');
-        }
-
         $user = new User();
         $user->username = $username;
         $user->password = $password;

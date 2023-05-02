@@ -29,11 +29,6 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $conn = connect_to_database();
 
-        if (!$conn) {
-            echo 'ERROR 500: Internal Server Error';
-            exit;
-        }
-
         $db_user = get_user_by_email($conn, $email);
 
         $is_valid = verify_password($db_user, $password);
