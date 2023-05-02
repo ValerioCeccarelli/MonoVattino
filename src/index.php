@@ -17,7 +17,7 @@
     <?php 
     require_once('lib/jwt.php');
     if (!isset($_COOKIE['jwt']) || !jwt_decode($_COOKIE['jwt'])) {
-        echo 'Hello guest<br>yuo need to <a href="account/login.php">login</a> or <a href="account/register.php">register</a>!';
+        echo 'Hello guest<br>you need to <a href="account/login.php">login</a> or <a href="account/register.php">register</a>!';
     }else {
         echo 'Hello user<br>you can <a href="account/logout.php">logout</a> or <a href="account/profile.php">view your profile</a>!';
     }

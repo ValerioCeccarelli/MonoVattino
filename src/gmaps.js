@@ -68,6 +68,8 @@ async function initMap(_longitude, _latitude) {
         fullscreenControl: false,
     });
 
+    console.log("map initialized");
+
     map.addListener("zoom_changed", () => {
         let current_zoom = map.getZoom();
         onZoomChanged(current_zoom);
