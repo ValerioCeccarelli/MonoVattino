@@ -76,4 +76,21 @@ function jwt_decode($jwt) {
     return $result;
 }
 
+class InvalidJWTException extends Exception {
+    public function __construct($message) {
+        parent::__construct($message);
+    }
+}
+
+function validate_jwt() {
+    if (empty($_COOKIE['jwt'])) {
+        throw new InvalidJWTException("No JWT provided");
+    }
+    $jwt_payload = jwt_decode($_COOKIE['jwt']);
+    if ($jwt_payload === FALSE) {
+        throw new InvalidJWTException("Invalid JWT");
+    }
+    return $jwt_payload;
+}
+
 ?>
