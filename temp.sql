@@ -26,9 +26,9 @@ CREATE TABLE companies (
 	fixed_cost INTEGER NOT NULL
 );
 
-INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('test_company', 'test@test', '123456789', 'test.com', 'FF0000', 0.5, 1);
-INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('test_company_2', 'test2@test2', '123456789', 'test2.com', '00FF00', 0.7, 0.9);
-
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('mirko_scuscu', 'contanct@mirko.com', '123456789', 'www.mirko_scuscu.com', 'FF0000', 0.5, 1);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('vale_brumbrum', 'info@vale.it', '123456789', 'www.vale.brumbrum.com', '00FF00', 0.7, 0.9);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('ergrande', 'noreplay@ergrande.en', '123456789', 'www.ergrande.com', '0000FF', 0.3, 1.1);
 
 CREATE TABLE scooters (
 	id SERIAL PRIMARY KEY,
@@ -44,6 +44,13 @@ INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 1
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 12, 10, 1);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 13, 50, 2);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 13, 20, 2);
+
+-- insert scooter with latitude between 41 and 42 and longitude between 12 and 13
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41 + random() * (42 - 41), 12 + random() * (13 - 12), 100, 1);
+
+-- insert scooter with latitude between 41 and 42 and longitude between 12 and 13
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41 + random() * (42 - 41), 12 + random() * (13 - 12), 100, 2);
+
 
 CREATE TABLE trips (
 	start_time TIMESTAMP NOT NULL,
