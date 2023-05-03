@@ -8,11 +8,12 @@ class Scooter {
 
     public $company_id;
     public $company_name;
+    public $company_color;
 }
 
 function get_scooters($conn, $longitude, $latitude, $radius) {
 
-    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name
+    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color
         FROM scooters s
         JOIN companies c ON s.company=c.id
         WHERE ST_DistanceSphere(ST_MakePoint($1, $2), ST_MakePoint(s.latitude, s.longitude)) < $3
@@ -43,6 +44,7 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
         $scooter->battery_level = $row['battery_level'];
         $scooter->company_id = $row['company'];
         $scooter->company_name = $row['name'];
+        $scooter->company_color = $row['color'];
 
         array_push($scooters, $scooter);
     }

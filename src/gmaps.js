@@ -138,7 +138,7 @@ async function renderScooters(scooters) {
 
     scooters.forEach(scooter => {
         const pin = new PinView({
-            background: '#4285F4',
+            background: '#' + scooter.company_color,
         });
         const scooterMarker = new AdvancedMarkerView({
             position: {

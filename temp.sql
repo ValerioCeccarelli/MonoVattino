@@ -20,13 +20,14 @@ CREATE TABLE companies (
 	email VARCHAR(50) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
 	website VARCHAR(100) NOT NULL,
+	color VARCHAR(6) NOT NULL,
 
 	cost_per_km INTEGER NOT NULL,
 	fixed_cost INTEGER NOT NULL
 );
 
-INSERT INTO companies (name, email, phone_number, website, cost_per_km, fixed_cost) VALUES ('test_company', 'test@test', '123456789', 'test.com', 0.5, 1);
-INSERT INTO companies (name, email, phone_number, website, cost_per_km, fixed_cost) VALUES ('test_company_2', 'test2@test2', '123456789', 'test2.com', 0.7, 0.9);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('test_company', 'test@test', '123456789', 'test.com', 'FF0000', 0.5, 1);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('test_company_2', 'test2@test2', '123456789', 'test2.com', '00FF00', 0.7, 0.9);
 
 
 CREATE TABLE scooters (
