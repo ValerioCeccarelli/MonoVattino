@@ -110,7 +110,7 @@ async function renderMe(_latitude, _longitude) {
             lng: _longitude
         },
         map: map,
-        title: "Hello World!",
+        title: "You!",
         content: pin.element,
     });
 }
@@ -146,10 +146,54 @@ async function renderScooters(scooters) {
                 lng: parseFloat(scooter.longitude)
             },
             map: map,
-            title: "Hello World!",
+            title: scooter.name,
             content: pin.element,
         });
         scooters_markers.push(scooterMarker);
+
+        scooterMarker.addListener("click", () => {
+            console.log(scooter);
+
+            $('#scooter_id').text(scooter.id);
+            $('#scooter_company').text(scooter.company_name);
+            $('#scooter_battery').text(scooter.battery_level);
+            $('#scooter_lat').text(scooter.latitude);
+            $('#scooter_lng').text(scooter.longitude);
+
+            $('#info_scooter').show();
+
+            $('#btn_reserve').click(async () => {
+                try {
+                    await reserveScooter(scooter);
+                    $('#info_scooter').hide();
+                    alert("Scooter reserved!");
+                } catch (error) {
+                    console.error(error);
+                    alert("Error while reserving scooter!");
+                }
+            });
+
+            // update the map by removing the scooter withouth refreshing the page
+            scooters.remove(scooter);
+            scooterMarker.setMap(null);
+        });
+    });
+}
+
+async function reserveScooter(scooter) {
+    return new Promise((resolve, reject) => {
+        const data = {
+            scooter_id: scooter.id,
+            action: 'reserve'
+        };
+        $.ajax({
+            url: 'http://localhost/scooter/scooter.php',
+            type: 'POST',
+            data: data,
+            async: false,
+            success: resolve,
+            error: reject
+        });
     });
 }
 

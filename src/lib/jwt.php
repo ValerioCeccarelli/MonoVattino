@@ -87,7 +87,7 @@ function validate_jwt() {
         throw new InvalidJWTException("No JWT provided");
     }
     $jwt_payload = jwt_decode($_COOKIE['jwt']);
-    if ($jwt_payload === FALSE) {
+    if ($jwt_payload == FALSE) {
         throw new InvalidJWTException("Invalid JWT");
     }
     return $jwt_payload;

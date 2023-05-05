@@ -46,7 +46,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $jwt_payload->email = $email;
         $jwt_payload->username = $username;
 
-        $jwt = generate_jwt($db_user);
+        $jwt = generate_jwt($jwt_payload);
 
         setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
             

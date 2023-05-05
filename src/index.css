@@ -1,4 +1,3 @@
-
 #map {
     height: 70%;
     width: 50%;
@@ -10,4 +9,8 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+#info_scooter {
+    display: none;
 }

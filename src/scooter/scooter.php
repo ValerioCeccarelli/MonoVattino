@@ -37,7 +37,7 @@ function process_post_request() {
 
     require_once('../lib/scooter.php');
 
-    if ($action === 'reserve') {
+    if ($action === 'reserve') {        
         reserve_scooter($conn, $scooter_id, $jwt_payload->email);
     }
     elseif ($action === 'end') {
