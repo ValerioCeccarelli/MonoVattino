@@ -48,10 +48,6 @@ INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 1
 -- insert scooter with latitude between 41 and 42 and longitude between 12 and 13
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41 + random() * (42 - 41), 12 + random() * (13 - 12), 100, 1);
 
--- insert scooter with latitude between 41 and 42 and longitude between 12 and 13
-INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41 + random() * (42 - 41), 12 + random() * (13 - 12), 100, 2);
-
-
 CREATE TABLE trips (
 	start_time TIMESTAMP NOT NULL,
 	scooter_id INTEGER PRIMARY KEY,
