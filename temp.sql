@@ -22,13 +22,13 @@ CREATE TABLE companies (
 	website VARCHAR(100) NOT NULL,
 	color VARCHAR(6) NOT NULL,
 
-	cost_per_km INTEGER NOT NULL,
+	cost_per_minute INTEGER NOT NULL,
 	fixed_cost INTEGER NOT NULL
 );
 
-INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('mirko_scuscu', 'contanct@mirko.com', '123456789', 'www.mirko_scuscu.com', 'FF0000', 0.5, 1);
-INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('vale_brumbrum', 'info@vale.it', '123456789', 'www.vale.brumbrum.com', '00FF00', 0.7, 0.9);
-INSERT INTO companies (name, email, phone_number, website, color, cost_per_km, fixed_cost) VALUES ('ergrande', 'noreplay@ergrande.en', '123456789', 'www.ergrande.com', '0000FF', 0.3, 1.1);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_minute, fixed_cost) VALUES ('mirko_scuscu', 'contanct@mirko.com', '123456789', 'www.mirko_scuscu.com', 'FF0000', 0.5, 1);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_minute, fixed_cost) VALUES ('vale_brumbrum', 'info@vale.it', '123456789', 'www.vale.brumbrum.com', '00FF00', 0.7, 0.9);
+INSERT INTO companies (name, email, phone_number, website, color, cost_per_minute, fixed_cost) VALUES ('ergrande', 'noreplay@ergrande.en', '123456789', 'www.ergrande.com', '0000FF', 0.3, 1.1);
 
 CREATE TABLE scooters (
 	id SERIAL PRIMARY KEY,
@@ -79,3 +79,11 @@ SELECT ST_Distance(
 SELECT ST_Distance(
     ST_MakePoint(0, 1),
     ST_MakePoint(1, 0));
+
+
+delete from trips where 1=1;
+delete from scooters where 1=1;
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 12, 100, 1);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 12, 10, 1);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41, 13, 50, 2);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (42, 13, 20, 2);

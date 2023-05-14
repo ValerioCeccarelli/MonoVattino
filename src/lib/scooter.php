@@ -9,6 +9,8 @@ class Scooter {
     public $company_id;
     public $company_name;
     public $company_color;
+
+    public $is_my_scooter;
 }
 
 function get_scooters($conn, $longitude, $latitude, $radius) {
@@ -45,6 +47,43 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
         $scooter->company_id = $row['company'];
         $scooter->company_name = $row['name'];
         $scooter->company_color = $row['color'];
+        $scooter->is_my_scooter = false;
+
+        array_push($scooters, $scooter);
+    }
+
+    return $scooters;
+}
+
+function get_my_scooters($conn, $user_id) {
+    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color
+        FROM scooters s
+        JOIN companies c ON s.company=c.id
+        JOIN trips t ON s.id=t.scooter_id
+        WHERE t.user_email=$1";
+
+    $result1 = pg_prepare($conn, "get_my_scooters", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "get_my_scooters", array($user_id));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $scooters = array();
+
+    while ($row = pg_fetch_array($result2, null, PGSQL_ASSOC)) {
+        $scooter = new Scooter();
+        $scooter->id = $row['id'];
+        $scooter->longitude = $row['longitude'];
+        $scooter->latitude = $row['latitude'];
+        $scooter->battery_level = $row['battery_level'];
+        $scooter->company_id = $row['company'];
+        $scooter->company_name = $row['name'];
+        $scooter->company_color = $row['color'];
+        $scooter->is_my_scooter = true;
 
         array_push($scooters, $scooter);
     }
@@ -132,6 +171,39 @@ function free_scoter($conn, $scooter_id) {
     if(!$result2) {
         throw new Exception("Could not execute the query: " . pg_last_error());
     }
+}
+
+class ScooterCosts {
+    public $cost_per_minute;
+    public $fixed_cost;
+}
+
+function get_scooter_costs($conn, $scooter_id) {
+    $query = "SELECT c.cost_per_minute, c.fixed_cost
+        FROM scooters s
+        JOIN companies c ON s.company=c.id
+        WHERE s.id=$1";
+
+    $result1 = pg_prepare($conn, "get_scooter_costs", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "get_scooter_costs", array($scooter_id));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $row = pg_fetch_array($result2, null, PGSQL_ASSOC);
+    $cost_per_minute = $row['cost_per_minute'];
+    $fixed_cost = $row['fixed_cost'];
+
+    $scooter_costs = new ScooterCosts();
+
+    $scooter_costs->cost_per_minute = $cost_per_minute;
+    $scooter_costs->fixed_cost = $fixed_cost;
+
+    return $scooter_costs;
 }
 
 ?>

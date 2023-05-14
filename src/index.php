@@ -26,7 +26,7 @@ if (isset($_COOKIE['jwt'])) {
 
     <link rel="stylesheet" type="text/css" href="index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="gmaps.js"></script>
+    <script src="index.js" defer></script>
     <!-- <script src="index.js"></script> -->
 </head>
 
@@ -49,11 +49,8 @@ if (isset($_COOKIE['jwt'])) {
         <p>Battery: <span id="scooter_battery"></span></p>
         <p>Company: <span id="scooter_company"></span></p>
 
-        <?php 
-            if ($is_user_logged) {
-                echo '<button id="btn_reserve">Reserve</button>';
-            }
-        ?>
+        <button id="btn_reserve">Reserve</button>
+        <button id="btn_release">Release</button>
     </div>
 </body>
 
