@@ -177,6 +177,7 @@ async function onScooterReleaseClick(scooter, scooter_marker) {
     try {
         let payment = await releaseScooter(scooter.id, my_position.longitude, my_position.latitude);
         $('#info_scooter').hide();
+        // TODO: per ora sta cosa non funziona e returna undefined
         // TODO: controllare la conversione in float (tipo arrotondare il valore)
         alert("Scooter released!\nYou paid: " + payment + "€");
 
