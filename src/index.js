@@ -72,7 +72,7 @@ async function reserveScooter(scooter_id) {
         scooter_id: scooter_id
     };
 
-    await ajaxPostAsync(url, data);
+    return await ajaxPostAsync(url, data);
 }
 
 async function releaseScooter(scooter_id, longitude, latitude) {
@@ -83,7 +83,7 @@ async function releaseScooter(scooter_id, longitude, latitude) {
         latitude: latitude
     };
 
-    await ajaxPostAsync(url, data);
+    return await ajaxPostAsync(url, data);
 }
 
 async function getCurrentPosition() {
@@ -115,7 +115,6 @@ async function initMap(latitude, longitude) {
         Map
     } = await google.maps.importLibrary("maps");
 
-    // The map, centered at Uluru
     map = new Map(document.getElementById("map"), {
         zoom: 14,
         center: position,
@@ -138,6 +137,8 @@ function moveMapCenter(latitude, longitude) {
 
 async function onScooterReserveClick(scooter, scooter_marker) {
     try {
+        let scooter_marker = scooter_markers[scooter.id];
+
         await reserveScooter(scooter.id);
         $('#info_scooter').hide();
         alert("Scooter reserved!");
@@ -167,7 +168,7 @@ async function onScooterReserveClick(scooter, scooter_marker) {
     }
 }
 
-async function onScooterReleaseClick(scooter, scooter_marker) {
+async function onScooterReleaseClick(scooter) {
 
     if (my_position == null) {
         alert("Error while releasing scooter!\nWe can not get your position.\nPlease, reload the page and allow the website to use your position.");
@@ -175,11 +176,13 @@ async function onScooterReleaseClick(scooter, scooter_marker) {
     }
 
     try {
+        let scooter_marker = scooter_markers[scooter.id];
+
         let payment = await releaseScooter(scooter.id, my_position.longitude, my_position.latitude);
         $('#info_scooter').hide();
-        // TODO: per ora sta cosa non funziona e returna undefined
+
         // TODO: controllare la conversione in float (tipo arrotondare il valore)
-        alert("Scooter released!\nYou paid: " + payment + "€");
+        alert("Scooter released!\nYou paid: " + payment.total_cost + "€");
 
         const {
             PinView
@@ -191,20 +194,17 @@ async function onScooterReleaseClick(scooter, scooter_marker) {
         scooter_marker.content = pin.element;
         scooter.is_my_scooter = false;
 
-        //TODO: questa cosa non funziona, in particolare se si rilascia lo scooter compare sia un marker su dove sei sia rimane il marker vecchio...
-        console.log(scooter_marker.position);
         scooter_marker.position = {
             lat: my_position.latitude,
             lng: my_position.longitude
-        }
-        console.log(scooter_marker.position);
+        };
     } catch (error) {
         console.error(error);
         alert("Error while releasing scooter!pp");
     }
 }
 
-function onScooterClick(scooter, scooter_marker) {
+function onScooterClick(scooter) {
 
     $('#scooter_id').text(scooter.id);
     $('#scooter_company').text(scooter.company_name);
@@ -218,19 +218,23 @@ function onScooterClick(scooter, scooter_marker) {
         $('#btn_reserve').hide();
         $('#btn_release').show();
         $('#btn_release').click(() => {
-            onScooterReleaseClick(scooter, scooter_marker);
+            onScooterReleaseClick(scooter);
         });
     }
     else {
         $('#btn_release').hide();
         $('#btn_reserve').show();
         $('#btn_reserve').click(() => {
-            onScooterReserveClick(scooter, scooter_marker);
+            onScooterReserveClick(scooter);
         });
     }
 }
 
 async function renderScooter(scooter) {
+    if (scooter_markers[scooter.id] != null) {
+        return;
+    }
+
     const {
         AdvancedMarkerView,
         PinView
@@ -256,9 +260,10 @@ async function renderScooter(scooter) {
     });
 
     scooterMarker.addListener("click", () => {
-        onScooterClick(scooter, scooterMarker);
+        onScooterClick(scooter);
     });
 
+    scooter_markers[scooter.id] = scooterMarker;
     return scooterMarker;
 }
 
@@ -360,4 +365,5 @@ async function onDocumentReady() {
 
 let map = null;
 let my_position = null;
+let scooter_markers = {};
 $(document).ready(onDocumentReady);
