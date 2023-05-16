@@ -217,14 +217,15 @@ function onScooterClick(scooter) {
     if (scooter.is_my_scooter) {
         $('#btn_reserve').hide();
         $('#btn_release').show();
-        $('#btn_release').click(() => {
+        
+        $('#btn_release').unbind('click').click(() => {
             onScooterReleaseClick(scooter);
         });
     }
     else {
         $('#btn_release').hide();
         $('#btn_reserve').show();
-        $('#btn_reserve').click(() => {
+        $('#btn_reserve').unbind('click').click(() => {
             onScooterReserveClick(scooter);
         });
     }
@@ -367,3 +368,5 @@ let map = null;
 let my_position = null;
 let scooter_markers = {};
 $(document).ready(onDocumentReady);
+
+// TODO: gestire i problemi causati dal server, tipo se per qualche motivo returna 500
