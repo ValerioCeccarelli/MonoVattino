@@ -17,17 +17,18 @@
 
     <style>
         .my-nav {
-            height: 10vh;
+            height: max(10vh, 50px);
         }
 
         .map {
-            height: 90vh;
+            height: min(90vh, calc(100vh - 50px));
             background-color: blue;
         }
     </style>
 </head>
 
 <body>
+    <!-- Navbar -->
     <nav class="navbar bg-body-tertiary my-nav">
         <div class="container float-start">
             <a class="navbar-brand" href="#">
@@ -38,24 +39,38 @@
         </div>
     </nav>
 
+    <!-- Gmap -->
     <div class="map">
         <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
             aria-controls="offcanvasBottom">Toggle bottom offcanvas</button> -->
-        <button class="btn btn-primary" type="button" onclick="cabbo()">Toggle bottom offcanvas js</button>
+        <button class="btn btn-primary" type="button" onclick="openBottomDrawer()">Toggle bottom offcanvas js</button>
     </div>
 
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+    <!-- Bottom drawer-->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
+        style="border-top-left-radius: 25px; border-top-right-radius: 25px; overflow: hidden;">
+        <div class="offcanvas-header" style="background-color: red; ">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Info Scooter</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body small">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div class="offcanvas-body medium">
+            <p>Battery: <span id="scooter_battery"></span></p>
+            <p>Company: <span id="scooter_company"></span></p>
+            <p>Latitudine: <span id="scooter_lat"></span></p>
+            <p>Longitudine: <span id="scooter_lng"></span></p>
+
+            <!-- <button id="btn_reserve">Reserve</button>
+            <button id="btn_release">Release</button> -->
+
+
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
-            </button>
+            </button> -->
+            <button class="btn btn-primary" type="button" onclick="openPopup()">Prenota o ferma</button>
         </div>
     </div>
 
+    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -79,8 +94,11 @@
     </div>
 
     <script>
-        function cabbo() {
-            $('#offcanvasBottom').offcanvas('show')
+        function openBottomDrawer() {
+            $('#offcanvasBottom').offcanvas('show');
+        }
+        function openPopup() {
+            $('#exampleModal').modal('show');
         }
     </script>
 </body>
