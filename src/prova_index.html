@@ -46,9 +46,10 @@
         <button class="btn btn-primary" type="button" onclick="openBottomDrawer()">Toggle bottom offcanvas js</button>
     </div>
 
+    <!-- il coso di height: auto; è importante perché sennò boot usa il 30% dello schermo -->
     <!-- Bottom drawer-->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
-        style="border-top-left-radius: 25px; border-top-right-radius: 25px; overflow: hidden;">
+        style="border-top-left-radius: 25px; border-top-right-radius: 25px; overflow: hidden; height: auto;">
         <div class="offcanvas-header" style="background-color: red; ">
             <h5 class="offcanvas-title" id="offcanvasBottomLabel">Info Scooter</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -67,6 +68,7 @@
                 Launch demo modal
             </button> -->
             <button class="btn btn-primary" type="button" onclick="openPopup()">Prenota o ferma</button>
+            <button class="btn btn-danger" type="button" onclick="expandBottomDrawer()">Expand</button>
         </div>
     </div>
 
@@ -99,6 +101,11 @@
         }
         function openPopup() {
             $('#exampleModal').modal('show');
+        }
+        function expandBottomDrawer() {
+            let num = $("#offcanvasBottom").css('height');
+            console.log(num);
+            $("#offcanvasBottom").css('height', num + 1);
         }
     </script>
 </body>
