@@ -217,7 +217,7 @@ function onScooterClick(scooter) {
     if (scooter.is_my_scooter) {
         $('#btn_reserve').hide();
         $('#btn_release').show();
-        
+
         $('#btn_release').unbind('click').click(() => {
             onScooterReleaseClick(scooter);
         });
@@ -331,6 +331,7 @@ async function onDocumentReady() {
         position = await position_promise;
     }
     catch (error) {
+        // TODO: controllare se questo == va bene o se devo usare ===
         if (error.code == error.PERMISSION_DENIED) {
             console.error("User denied the request for Geolocation.");
             alert("This website needs your position to show you the nearest scooters.\nPlease, allow the website to use your position and reload the page.");
