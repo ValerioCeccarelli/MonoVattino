@@ -30,12 +30,17 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar bg-body-tertiary my-nav">
-        <div class="container float-start">
+        <div class="container float-center">
             <a class="navbar-brand" href="#">
-                <img src="/favicon.ico" alt="Bootstrap" width="30" height="24">
+                <img src="/favicon.ico" width="30" height="30">
             </a>
             <h1>MonoVattino</h1>
-            <h1>ppp</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
         </div>
     </nav>
 
@@ -49,16 +54,16 @@
     <!-- il coso di height: auto; è importante perché sennò boot usa il 30% dello schermo -->
     <!-- Bottom drawer-->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
-        style="border-top-left-radius: 25px; border-top-right-radius: 25px; overflow: hidden; height: auto;">
-        <div class="offcanvas-header" style="background-color: red; ">
+        style="border-top-left-radius: 25px; border-top-right-radius: 25px; overflow: hidden; height: auto; width: max(300px, 50vw);">
+        <div class="offcanvas-header" style="background-color: red; padding-top: 0.6rem; padding-bottom: 0.6rem;">
             <h5 class="offcanvas-title" id="offcanvasBottomLabel">Info Scooter</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body medium">
             <p>Battery: <span id="scooter_battery"></span></p>
             <p>Company: <span id="scooter_company"></span></p>
-            <p>Latitudine: <span id="scooter_lat"></span></p>
-            <p>Longitudine: <span id="scooter_lng"></span></p>
+            <!-- <p>Latitudine: <span id="scooter_lat"></span></p>
+            <p>Longitudine: <span id="scooter_lng"></span></p> -->
 
             <!-- <button id="btn_reserve">Reserve</button>
             <button id="btn_release">Release</button> -->
@@ -68,7 +73,6 @@
                 Launch demo modal
             </button> -->
             <button class="btn btn-primary" type="button" onclick="openPopup()">Prenota o ferma</button>
-            <button class="btn btn-danger" type="button" onclick="expandBottomDrawer()">Expand</button>
         </div>
     </div>
 
@@ -101,11 +105,6 @@
         }
         function openPopup() {
             $('#exampleModal').modal('show');
-        }
-        function expandBottomDrawer() {
-            let num = $("#offcanvasBottom").css('height');
-            console.log(num);
-            $("#offcanvasBottom").css('height', num + 1);
         }
     </script>
 </body>
