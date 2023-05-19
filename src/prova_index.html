@@ -17,19 +17,51 @@
 
     <style>
         .my-nav {
-            height: max(10vh, 50px);
+            height: 10vh;
+            width: 100vw;
         }
 
         .map {
-            height: min(90vh, calc(100vh - 50px));
+            /* height: min(90vh, calc(100vh - 50px)) */
             background-color: blue;
+            height: 90vh;
+            width: 100vw;
+            background-size: cover;
+            background-repeat: repeat;
+
+        }
+
+        .my-img {
+            height: max(9vh, 40px);
+            aspect-ratio: 1/1;
+        }
+
+        /* body {
+            overflow: hidden;
+            height: 100vh;
+        } */
+
+        .my-pad {
+            margin-top: 0%;
+        }
+
+        @media screen and (max-width: 800px) {
+            .my-pad {
+                margin-top: 5%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .my-pad {
+                margin-top: 7%;
+            }
         }
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar bg-body-tertiary my-nav">
+    <!-- <nav class="navbar bg-body-tertiary my-nav">
         <div class="container float-center">
             <a class="navbar-brand" href="#">
                 <img src="/favicon.ico" width="30" height="30">
@@ -45,14 +77,70 @@
                 </svg>
                 Heading
             </div>
-            <!-- <div class="fs-2" style="font-size: 3px;">
+             <div class="fs-2" style="font-size: 3px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     <path fill-rule="evenodd"
                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg>
-            </div> -->
+            </div>
+        </div>
+    </nav> -->
+    <!-- <nav class="text-center my-nav">
+        <div class="row align-items-center my-nav" style="background-color: red;">
+            <div class="col" style="align-self: center;">
+                <img src="/favicon.ico" width="30" height="30">
+            </div>
+            <div class="col" style="background-color: green;">
+                One of three columns
+            </div>
+            <div class="col">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                </svg>
+            </div>
+        </div>
+    </nav> -->
+    <!-- <nav class="navbar navbar-light bg-light justify-content-beetween">
+        <a class="navbar-brand" style="display: flex;">
+            <img alt="ppp" src="/favicon.ico" style="height: 10vh;">
+            <h1>MonoVattino</h1>
+        </a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
+            viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+    </nav> -->
+    <nav class="navbar navbar-expand bg-body-tertiary my-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/favicon.ico" alt="ppp" class="my-img">
+            </a>
+            <div class="collapse navbar-collapse " style="text-align: center;" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <span class="nav-link active my-pad" style="padding: 0 0;text-align: center;"
+                            aria-current="page" href="#">
+                            <h3 style="margin-bottom: 0%;">MonoVattino</h3>
+                        </span>
+                    </li>
+                </ul>
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </nav>
 
