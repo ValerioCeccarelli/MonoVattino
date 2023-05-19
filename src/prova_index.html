@@ -13,6 +13,8 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
@@ -43,6 +45,12 @@
 
         .my-pad {
             margin-top: 0%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .my-pad {
+                margin-top: 1%;
+            }
         }
 
         @media screen and (max-width: 800px) {
@@ -119,9 +127,11 @@
     </nav> -->
     <nav class="navbar navbar-expand bg-body-tertiary my-nav">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <!-- <a class="navbar-brand" href="#">
                 <img src="/favicon.ico" alt="ppp" class="my-img">
-            </a>
+                <i class="bi bi-scooter"></i>
+            </a> -->
+            <i class="bi bi-scooter navbar-brand" style="font-size: 2rem;"></i>
             <div class="collapse navbar-collapse " style="text-align: center;" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -133,12 +143,13 @@
                     </li>
                 </ul>
                 <a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
+                    </svg> -->
+                    <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
                 </a>
             </div>
         </div>
@@ -160,18 +171,39 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body medium">
-            <p>Battery: <span id="scooter_battery"></span></p>
-            <p>Company: <span id="scooter_company"></span></p>
-            <!-- <p>Latitudine: <span id="scooter_lat"></span></p>
-            <p>Longitudine: <span id="scooter_lng"></span></p> -->
+            <div class="row">
+                <div class="col">
+                    <p>
+                        <i class="bi bi-battery-charging"></i>
+                        Battery: <span id="scooter_battery">69</span>%
+                    </p>
+                    <p>
+                        <i class="bi bi-building"></i>
+                        Company: <span id="scooter_company">mirko_scuscu</span>
+                    </p>
+                </div>
+                <div class="col">
+                    <p>
+                        <i class="bi bi-currency-euro"></i>
+                        Base cost: <span id="scooter_battery">1</span>€
+                    </p>
+                    <p>
+                        <i class="bi bi-currency-euro"></i>
+                        Per minute: <span id="scooter_company">0.36</span>€
+                    </p>
+                </div>
+                <div class="col d-none d-md-block">
+                    <p>
+                        <i class="bi bi-geo-alt"></i>
+                        Latitude: <span id="scooter_battery">41.03456</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-geo-alt"></i>
+                        Longitude: <span id="scooter_company">12.456</span>
+                    </p>
+                </div>
+            </div>
 
-            <!-- <button id="btn_reserve">Reserve</button>
-            <button id="btn_release">Release</button> -->
-
-
-            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
-            </button> -->
             <button class="btn btn-primary" type="button" onclick="openPopup()">Prenota o ferma</button>
         </div>
     </div>
