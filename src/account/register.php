@@ -118,6 +118,8 @@ else {
 
         </div>
     </div>
+
+    <p>Already have an account? <a href="/account/login.php">Login</a></p>
 </body>
 
 </html>

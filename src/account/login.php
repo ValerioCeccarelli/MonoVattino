@@ -95,6 +95,8 @@ else {
         </br>
         <button type="submit">Login</button>
     </form>
+
+    <p>Don't have an account? <a href="/account/register.php">Register</a></p>
 </body>
 
 </html>

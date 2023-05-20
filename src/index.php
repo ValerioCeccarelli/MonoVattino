@@ -68,7 +68,8 @@ try {
                 </ul>
 
                 <!-- Person img -->
-                <a>
+                <a style="color: black" <?php if ($is_user_logged) { ?> href="account/profile.php" <?php } else { ?>
+                    href="account/login.php" <?php } ?>>
                     <i class="bi bi-person-circle my-nav-icon"></i>
                 </a>
             </div>
