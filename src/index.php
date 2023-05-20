@@ -23,6 +23,9 @@ try {
 <head>
     <meta charset="UTF-8">
 
+    <!-- favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
     <title>MonoVattino</title>
 
     <!-- Bootstrap css -->
