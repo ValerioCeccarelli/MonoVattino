@@ -1,16 +1,18 @@
 <?php
 
+require_once('lib/jwt.php');
+
 $is_user_logged = false;
 $jwt_payload = null;
 $username = null;
 
-if (isset($_COOKIE['jwt'])) {
-    require_once('lib/jwt.php');
-    $jwt_payload = jwt_decode($_COOKIE['jwt']);
-    if ($jwt_payload) {
-        $is_user_logged = true;
-        $username = $jwt_payload->username;
-    }
+try {
+    $jwt_payload = validate_jwt();
+    $is_user_logged = true;
+    $username = $jwt_payload->username;
+} catch (InvalidJWTException $e) {
+    $is_user_logged = false;
+    $username = null;
 }
 
 ?>
@@ -125,10 +127,6 @@ if (isset($_COOKIE['jwt'])) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="success_modal_title">Modal title</h5>
-                    <button type="button" onclick="alert('da implementare')" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body" id="success_modal_mody">
                     Ok!
