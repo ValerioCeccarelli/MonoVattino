@@ -1,16 +1,51 @@
-#map {
-    height: 70%;
-    width: 50%;
+.my-nav {
+    height: 6vh;
+    width: 100vw;
+}
+
+.map {
+    background-color: blue;
+    height: 94vh;
+    width: 100vw;
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+.my-nav-icon {
+    font-size: 2rem;
+}
+
+.my-pad {
+    margin-top: 0%;
+}
+
+@media screen and (max-width: 1000px) {
+    .my-pad {
+        margin-top: 1%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .my-pad {
+        margin-top: 5%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .my-pad {
+        margin-top: 7%;
+    }
+}
+
+.my-offcanvas {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    overflow: hidden;
+    height: auto !important;
+}
+
+.my-offcanvas-header {
     background-color: red;
-}
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-#info_scooter {
-    display: none;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
 }
