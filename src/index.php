@@ -119,7 +119,7 @@ try {
                 </div>
             </div>
 
-            <button class="btn btn-primary" id="offcanvas_button" type="button">Prenota o ferma</button>
+            <button class="btn btn-primary" id="offcanvas_button" type="button">Reserve</button>
         </div>
     </div>
 
@@ -129,7 +129,7 @@ try {
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="success_modal_title">Modal title</h5>
+                    <h5 class="modal-title" id="success_modal_title">Scooter reserved!</h5>
                 </div>
                 <div class="modal-body" id="success_modal_mody">
                     Ok!
@@ -142,12 +142,12 @@ try {
     </div>
 
     <!-- Error Modal -->
-    <div class="modal fade" id="error_modal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="error_modal" tabindex="-1" aria-labelledby="error_modal_title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <i class="bi bi-exclamation-triangle-fill pe-4 fs-3" style="color: red;"></i>
-                    <h1 class="modal-title fs-5" id="errorModalLabel">Error!</h1>
+                    <h1 class="modal-title fs-5" id="error_modal_title">Error!</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="error_modal_body">
