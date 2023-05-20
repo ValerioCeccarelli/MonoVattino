@@ -189,8 +189,6 @@ async function onScooterReleaseClick(scooter) {
         let payment = await releaseScooter(scooter.id, my_position.longitude, my_position.latitude);
         $('#info_scooter').hide();
 
-        // TODO: controllare la conversione in float (tipo arrotondare il valore)
-        // TODO: controllare il valore se è sensato
         $('#success_modal_title').text("Scooter released!");
         $('#success_modal_mody').text("You paid: " + payment.total_cost + "€");
         $('#success_modal').modal('show');
@@ -209,6 +207,9 @@ async function onScooterReleaseClick(scooter) {
             lat: my_position.latitude,
             lng: my_position.longitude
         };
+
+        scooter.latitude = my_position.latitude;
+        scooter.longitude = my_position.longitude;
     } catch (error) {
         console.error(error);
         showErrorWithModal("Error while releasing the scooter!<br>Please reload the page and try again.");
@@ -303,86 +304,88 @@ async function renderMe(latitude, longitude) {
 }
 
 async function onDocumentReady() {
-    // center the map on Colosseo
-    const colosseo = {
-        longitude: 12.492234,
-        latitude: 41.889819,
-    }
-    let radius = 30000000
-
-    const initial_position = colosseo;
-
-    let map_promise = initMap(initial_position.latitude, initial_position.longitude);
-    let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
-
-    let position_promise = null;
-    if (isCurrentPositionAvailable()) {
-        position_promise = getCurrentPosition();
-    }
-    else {
-        console.error("Geolocation is not supported by this browser.");
-        showErrorWithModal("Geolocation is not supported by this browser.<br>We can not show you the nearest scooters.<br>Please, use another browser.");
-    }
-
-    await map_promise;
-    let scooters_response = await scooters_promise;
-    let scooters = scooters_response.scooters;
-    let my_scooters = scooters_response.reserved_scooters;
-
-    scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    my_scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    if (!isCurrentPositionAvailable()) {
-        return;
-    }
-
-    let position = null;
     try {
-        position = await position_promise;
-    }
-    catch (error) {
-        // TODO: test this
-        if (error.PERMISSION_DENIED && error.code === error.PERMISSION_DENIED) {
-            console.error("User denied the request for Geolocation.");
-            showErrorWithModal("This website needs your position to show you the nearest scooters.<br>Please, allow the website to use your position and reload the page.");
+        // center the map on Colosseo
+        const colosseo = {
+            longitude: 12.492234,
+            latitude: 41.889819,
+        }
+        let radius = 30000000
+
+        const initial_position = colosseo;
+
+        let map_promise = initMap(initial_position.latitude, initial_position.longitude);
+        let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
+
+        let position_promise = null;
+        if (isCurrentPositionAvailable()) {
+            position_promise = getCurrentPosition();
         }
         else {
-            console.error("An unknown error occurred.");
-            showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
+            console.error("Geolocation is not supported by this browser.");
+            showErrorWithModal("Geolocation is not supported by this browser.<br>We can not show you the nearest scooters.<br>Please, use another browser.");
         }
-        return;
+
+        await map_promise;
+        let scooters_response = await scooters_promise;
+        let scooters = scooters_response.scooters;
+        let my_scooters = scooters_response.reserved_scooters;
+
+        scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        my_scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        if (!isCurrentPositionAvailable()) {
+            return;
+        }
+
+        let position = null;
+        try {
+            position = await position_promise;
+        }
+        catch (error) {
+            if (error.PERMISSION_DENIED && error.code === error.PERMISSION_DENIED) {
+                console.error("User denied the request for Geolocation.");
+                showErrorWithModal("This website needs your position to show you the nearest scooters.<br>Please, allow the website to use your position and reload the page.");
+            }
+            else {
+                console.error("An unknown error occurred.");
+                showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
+            }
+            return;
+        }
+
+        my_position = position.coords;
+        let new_latitude = my_position.latitude;
+        let new_longitude = my_position.longitude;
+
+        scooters_promise = getScooters(new_latitude, new_longitude, radius);
+
+        moveMapCenter(new_latitude, new_longitude);
+        renderMe(new_latitude, new_longitude);
+
+        scooters_response = await scooters_promise;
+        scooters = scooters_response.scooters;
+        my_scooters = scooters_response.reserved_scooters;
+
+        scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        my_scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+    } catch (error) {
+        console.error(error);
+        showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
     }
-
-    my_position = position.coords;
-    let new_latitude = my_position.latitude;
-    let new_longitude = my_position.longitude;
-
-    scooters_promise = getScooters(new_latitude, new_longitude, radius);
-
-    moveMapCenter(new_latitude, new_longitude);
-    renderMe(new_latitude, new_longitude);
-
-    scooters_response = await scooters_promise;
-    scooters = scooters_response.scooters;
-    my_scooters = scooters_response.reserved_scooters;
-
-    scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    my_scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
 }
 
 let map = null;
 let my_position = null;
 let scooter_markers = {};
 $(document).ready(onDocumentReady);
-
-// TODO: gestire i problemi causati dal server, tipo se per qualche motivo returna 500

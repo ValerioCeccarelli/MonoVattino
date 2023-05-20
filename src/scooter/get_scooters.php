@@ -27,8 +27,6 @@ function process_get_request() {
             $reserved_scooters = get_my_scooters($conn, $jwt_payload->email);
         }
     }
-
-    error_log("scooters: " . json_encode($scooters));
     
     header('Content-Type: application/json');
     echo json_encode(array('scooters' => $scooters, 'reserved_scooters' => $reserved_scooters));
