@@ -11,11 +11,14 @@ class Scooter {
     public $company_color;
 
     public $is_my_scooter;
+
+    public $cost_per_minute;
+    public $fixed_cost;
 }
 
 function get_scooters($conn, $longitude, $latitude, $radius) {
 
-    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color
+    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color, c.cost_per_minute, c.fixed_cost
         FROM scooters s
         JOIN companies c ON s.company=c.id
         WHERE ST_DistanceSphere(ST_MakePoint($1, $2), ST_MakePoint(s.latitude, s.longitude)) < $3
@@ -48,15 +51,19 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
         $scooter->company_name = $row['name'];
         $scooter->company_color = $row['color'];
         $scooter->is_my_scooter = false;
+        $scooter->cost_per_minute = $row['cost_per_minute'];
+        $scooter->fixed_cost = $row['fixed_cost'];
 
         array_push($scooters, $scooter);
     }
+
+    // error_log($scooters[0]);
 
     return $scooters;
 }
 
 function get_my_scooters($conn, $user_id) {
-    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color
+    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color, c.cost_per_minute, c.fixed_cost
         FROM scooters s
         JOIN companies c ON s.company=c.id
         JOIN trips t ON s.id=t.scooter_id
@@ -84,6 +91,8 @@ function get_my_scooters($conn, $user_id) {
         $scooter->company_name = $row['name'];
         $scooter->company_color = $row['color'];
         $scooter->is_my_scooter = true;
+        $scooter->cost_per_minute = $row['cost_per_minute'];
+        $scooter->fixed_cost = $row['fixed_cost'];
 
         array_push($scooters, $scooter);
     }
