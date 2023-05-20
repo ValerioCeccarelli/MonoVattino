@@ -22,8 +22,8 @@ CREATE TABLE companies (
 	website VARCHAR(100) NOT NULL,
 	color VARCHAR(6) NOT NULL,
 
-	cost_per_minute INTEGER NOT NULL,
-	fixed_cost INTEGER NOT NULL
+	cost_per_minute FLOAT NOT NULL,
+	fixed_cost FLOAT NOT NULL
 );
 
 INSERT INTO companies (name, email, phone_number, website, color, cost_per_minute, fixed_cost) VALUES ('mirko_scuscu', 'contanct@mirko.com', '123456789', 'www.mirko_scuscu.com', 'FF0000', 0.5, 1);
