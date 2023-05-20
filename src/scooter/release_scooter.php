@@ -27,6 +27,8 @@ function process_post_request() {
     $costs = get_scooter_costs($conn, $scooter_id);
 
     $total_cost = $costs->fixed_cost + $costs->cost_per_minute * $travel_time / 60;
+
+    $total_cost = round($total_cost, 2);
     
     header('Content-Type: application/json');
     echo json_encode(array('total_cost' => $total_cost));

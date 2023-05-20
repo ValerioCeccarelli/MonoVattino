@@ -105,6 +105,11 @@ function onZoomChanged() {
     // console.log("zoom changed: " + zoom);
 }
 
+function showErrorWithModal(message) {
+    $('#error_modal_body').html(message);
+    $('#error_modal').modal('show');
+}
+
 async function initMap(latitude, longitude) {
     let position = {
         lat: latitude,
@@ -135,13 +140,16 @@ function moveMapCenter(latitude, longitude) {
     map.setCenter(pos);
 }
 
-async function onScooterReserveClick(scooter, scooter_marker) {
+async function onScooterReserveClick(scooter) {
     try {
         let scooter_marker = scooter_markers[scooter.id];
 
         await reserveScooter(scooter.id);
         $('#info_scooter').hide();
-        alert("Scooter reserved!");
+
+        $('#success_modal_title').text("Scooter reserved!");
+        $('#success_modal_body').html("You have successfully reserved the scooter.<br>Now you can go to the scooter and release it.");
+        $('#success_modal').modal('show');
 
         $('#btn_reserve').hide();
         $('#btn_release').show();
@@ -159,19 +167,19 @@ async function onScooterReserveClick(scooter, scooter_marker) {
 
         if (error.status == 401) {
             console.error("User not logged in.");
-            alert("Error while reserving scooter!\nYou have to login first.\nPlease, login and try again.");
+            showErrorWithModal("Error while reserving scooter!<br>You have to login first.<br>Please, login and try again.");
             return;
         }
 
         console.error(error);
-        alert("Error while reserving scooter!<<");
+        showErrorWithModal("Error while reserving scooter!<br>Please reload the page and try again.");
     }
 }
 
 async function onScooterReleaseClick(scooter) {
 
     if (my_position == null) {
-        alert("Error while releasing scooter!\nWe can not get your position.\nPlease, reload the page and allow the website to use your position.");
+        showErrorWithModal("Error while releasing scooter!<br>We can not get your position.<br>Please, reload the page and allow the website to use your position.");
         return;
     }
 
@@ -181,8 +189,9 @@ async function onScooterReleaseClick(scooter) {
         let payment = await releaseScooter(scooter.id, my_position.longitude, my_position.latitude);
         $('#info_scooter').hide();
 
-        // TODO: controllare la conversione in float (tipo arrotondare il valore)
-        alert("Scooter released!\nYou paid: " + payment.total_cost + "€");
+        $('#success_modal_title').text("Scooter released!");
+        $('#success_modal_mody').text("You paid: " + payment.total_cost + "€");
+        $('#success_modal').modal('show');
 
         const {
             PinView
@@ -198,37 +207,44 @@ async function onScooterReleaseClick(scooter) {
             lat: my_position.latitude,
             lng: my_position.longitude
         };
+
+        scooter.latitude = my_position.latitude;
+        scooter.longitude = my_position.longitude;
     } catch (error) {
         console.error(error);
-        alert("Error while releasing scooter!pp");
+        showErrorWithModal("Error while releasing the scooter!<br>Please reload the page and try again.");
     }
 }
 
 function onScooterClick(scooter) {
 
-    $('#scooter_id').text(scooter.id);
-    $('#scooter_company').text(scooter.company_name);
-    $('#scooter_battery').text(scooter.battery_level);
-    $('#scooter_lat').text(scooter.latitude);
-    $('#scooter_lng').text(scooter.longitude);
+    console.log(scooter);
 
-    $('#info_scooter').show();
+    $('#scooter_battery').text(scooter.battery_level);
+    $('#scooter_company').text(scooter.company_name);
+
+    $('#scooter_fixed_cost').text(scooter.fixed_cost);
+    $('#scooter_cost_per_minute').text(scooter.cost_per_minute);
+
+    $('#scooter_latitude').text(scooter.latitude);
+    $('#scooter_longitude').text(scooter.longitude);
 
     if (scooter.is_my_scooter) {
-        $('#btn_reserve').hide();
-        $('#btn_release').show();
-        
-        $('#btn_release').unbind('click').click(() => {
+        $('#offcanvas_button').text("Release");
+
+        $('#offcanvas_button').unbind('click').click(() => {
             onScooterReleaseClick(scooter);
         });
     }
     else {
-        $('#btn_release').hide();
-        $('#btn_reserve').show();
-        $('#btn_reserve').unbind('click').click(() => {
+        $('#offcanvas_button').text("Reserve");
+
+        $('#offcanvas_button').unbind('click').click(() => {
             onScooterReserveClick(scooter);
         });
     }
+
+    $('#offcanvasBottom').offcanvas('show');
 }
 
 async function renderScooter(scooter) {
@@ -288,85 +304,88 @@ async function renderMe(latitude, longitude) {
 }
 
 async function onDocumentReady() {
-    // center the map on Colosseo
-    const colosseo = {
-        longitude: 12.492234,
-        latitude: 41.889819,
-    }
-    let radius = 30000000
-
-    const initial_position = colosseo;
-
-    let map_promise = initMap(initial_position.latitude, initial_position.longitude);
-    let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
-
-    let position_promise = null;
-    if (isCurrentPositionAvailable()) {
-        position_promise = getCurrentPosition();
-    }
-    else {
-        console.error("Geolocation is not supported by this browser.");
-        alert("Geolocation is not supported by this browser.\nWe can not show you the nearest scooters.\nPlease, use another browser.");
-    }
-
-    await map_promise;
-    let scooters_response = await scooters_promise;
-    let scooters = scooters_response.scooters;
-    let my_scooters = scooters_response.reserved_scooters;
-
-    scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    my_scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    if (!isCurrentPositionAvailable()) {
-        return;
-    }
-
-    let position = null;
     try {
-        position = await position_promise;
-    }
-    catch (error) {
-        if (error.code == error.PERMISSION_DENIED) {
-            console.error("User denied the request for Geolocation.");
-            alert("This website needs your position to show you the nearest scooters.\nPlease, allow the website to use your position and reload the page.");
+        // center the map on Colosseo
+        const colosseo = {
+            longitude: 12.492234,
+            latitude: 41.889819,
+        }
+        let radius = 30000000
+
+        const initial_position = colosseo;
+
+        let map_promise = initMap(initial_position.latitude, initial_position.longitude);
+        let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
+
+        let position_promise = null;
+        if (isCurrentPositionAvailable()) {
+            position_promise = getCurrentPosition();
         }
         else {
-            console.error("An unknown error occurred.");
-            alert("An unknown error occurred.\nPlease, reload the page.");
+            console.error("Geolocation is not supported by this browser.");
+            showErrorWithModal("Geolocation is not supported by this browser.<br>We can not show you the nearest scooters.<br>Please, use another browser.");
         }
-        return;
+
+        await map_promise;
+        let scooters_response = await scooters_promise;
+        let scooters = scooters_response.scooters;
+        let my_scooters = scooters_response.reserved_scooters;
+
+        scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        my_scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        if (!isCurrentPositionAvailable()) {
+            return;
+        }
+
+        let position = null;
+        try {
+            position = await position_promise;
+        }
+        catch (error) {
+            if (error.PERMISSION_DENIED && error.code === error.PERMISSION_DENIED) {
+                console.error("User denied the request for Geolocation.");
+                showErrorWithModal("This website needs your position to show you the nearest scooters.<br>Please, allow the website to use your position and reload the page.");
+            }
+            else {
+                console.error("An unknown error occurred.");
+                showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
+            }
+            return;
+        }
+
+        my_position = position.coords;
+        let new_latitude = my_position.latitude;
+        let new_longitude = my_position.longitude;
+
+        scooters_promise = getScooters(new_latitude, new_longitude, radius);
+
+        moveMapCenter(new_latitude, new_longitude);
+        renderMe(new_latitude, new_longitude);
+
+        scooters_response = await scooters_promise;
+        scooters = scooters_response.scooters;
+        my_scooters = scooters_response.reserved_scooters;
+
+        scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+
+        my_scooters.forEach(scooter => {
+            renderScooter(scooter);
+        });
+    } catch (error) {
+        console.error(error);
+        showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
     }
-
-    my_position = position.coords;
-    let new_latitude = my_position.latitude;
-    let new_longitude = my_position.longitude;
-
-    scooters_promise = getScooters(new_latitude, new_longitude, radius);
-
-    moveMapCenter(new_latitude, new_longitude);
-    renderMe(new_latitude, new_longitude);
-
-    scooters_response = await scooters_promise;
-    scooters = scooters_response.scooters;
-    my_scooters = scooters_response.reserved_scooters;
-
-    scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
-
-    my_scooters.forEach(scooter => {
-        renderScooter(scooter);
-    });
 }
 
 let map = null;
 let my_position = null;
 let scooter_markers = {};
 $(document).ready(onDocumentReady);
-
-// TODO: gestire i problemi causati dal server, tipo se per qualche motivo returna 500
