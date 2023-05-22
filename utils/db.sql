@@ -1,7 +1,7 @@
-DROP TABLE trips;
-DROP TABLE scooters;
-DROP TABLE companies;
-DROP TABLE users;
+DROP TABLE IF EXISTS trips;
+DROP TABLE IF EXISTS scooters;
+DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
 	username VARCHAR(20) NOT NULL,
