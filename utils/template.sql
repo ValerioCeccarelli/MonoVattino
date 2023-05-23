@@ -7,7 +7,8 @@ CREATE TABLE users (
 	username VARCHAR(20) NOT NULL,
 	email VARCHAR(50) PRIMARY KEY,
 	password VARCHAR(64) NOT NULL, -- password is hashed with sha256 so it is 64 characters long
-	salt VARCHAR(10) NOT NULL -- salt is used to hash the password and in the algorithm is a 10 character string
+	salt VARCHAR(10) NOT NULL, -- salt is used to hash the password and in the algorithm is a 10 character string
+	credit_card VARCHAR(16) NOT NULL
 );
 
 INSERT INTO users (username, email, password, salt) VALUES ('test', 'test@test', 'test', 'test');

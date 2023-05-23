@@ -1,11 +1,6 @@
 <?php 
 require_once('../lib/jwt.php');
 
-// $is_user_logged = false;
-// $jwt_payload = null;
-// $username = null;
-// $email = null;
-
 try {
     $jwt_payload = validate_jwt();
     $is_user_logged = true;

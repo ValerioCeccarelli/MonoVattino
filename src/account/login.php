@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <!-- Email input -->
                         <div class="inputbox">
                             <ion-icon name="mail-outline"></ion-icon>
-                            <input id="email" name="email" type="email" required>
+                            <input id="email" name="email" type="email" value="<?php echo $email; ?>" required>
                             <label id="email_label" for="email">Email</label>
                         </div>
 
@@ -106,7 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <!-- Password input -->
                         <div class="inputbox">
                             <ion-icon name="lock-closed-outline"></ion-icon>
-                            <input id="password" name="password" type="password" required>
+                            <input id="password" name="password" type="password" value="<?php echo $password; ?>"
+                                required>
                             <label id="password_label" for="password">Password</label>
                         </div>
 
@@ -133,6 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     <script>
     function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
+        }
         $(input_id).focus(function() {
             $(label_id).css('top', '-5px')
         });
@@ -146,6 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     setLabelControls('#email', '#email_label');
     setLabelControls('#password', '#password_label');
     </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
