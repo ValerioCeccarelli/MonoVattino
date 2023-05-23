@@ -98,20 +98,20 @@ else {
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="username" name="username" id="username" class="form-control"
-                        value="<?php echo $username ?>" required>
-                    <?php display_error($username_error) ?>
+                        value="<?php echo $username; ?>" required>
+                    <?php display_error($username_error); ?>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?>"
+                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $email; ?>"
                         required>
-                    <?php display_error($email_error) ?>
+                    <?php display_error($email_error); ?>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control"
-                        value="<?php echo $password ?>" required>
-                    <?php display_error($password_error) ?>
+                        value="<?php echo $password; ?>" required>
+                    <?php display_error($password_error); ?>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
