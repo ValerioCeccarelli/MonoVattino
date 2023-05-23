@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $username = "";
 $username_error = null;
@@ -11,8 +11,7 @@ $credit_card_error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
-}
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once('../lib/user.php');
     require_once('../lib/validate_user.php');
 
@@ -48,31 +47,25 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $jwt = generate_jwt($jwt_payload);
 
         setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
-            
+
         header('Location: /');
         exit;
-    }
-    catch (InvalidEmailException $e) {
+    } catch (InvalidEmailException $e) {
         $email_error = $e->getMessage();
-    }
-    catch (InvalidPasswordException $e) {
+    } catch (InvalidPasswordException $e) {
         $password_error = $e->getMessage();
-    }
-    catch (InvalidUsernameException $e) {
+    } catch (InvalidUsernameException $e) {
         $username_error = $e->getMessage();
-    }
-    catch (InvalidCreditCardException $e) {
+    } catch (InvalidCreditCardException $e) {
         $credit_card_error = $e->getMessage();
-    }
-    catch (EmailAlreadyUsedException $th) {
+    } catch (EmailAlreadyUsedException $th) {
         $email_error = "This email is already in use!";
     } catch (Exception $e) {
         echo 'ERROR 500: Internal Server Error';
         error_log("ERROR: register page" . $e->getMessage());
         exit;
     }
-}
-else {
+} else {
     echo 'ERROR 405: Method Not Allowed';
     exit;
 }
@@ -103,7 +96,7 @@ else {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/login.php" method="POST">
+                    <form action="/account/register.php" method="POST">
                         <!-- Title -->
                         <h2>
                             Register
@@ -119,7 +112,9 @@ else {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                        <h5 class="error-msg"><?php echo $username_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $username_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Credit card input -->
@@ -132,7 +127,9 @@ else {
 
                         <!-- Credit card error -->
                         <?php if ($credit_card_error) { ?>
-                        <h5 class="error-msg"><?php echo $credit_card_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $credit_card_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Email input -->
@@ -144,7 +141,9 @@ else {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                        <h5 class="error-msg"><?php echo $email_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $email_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -157,18 +156,20 @@ else {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                        <h5 class="error-msg"><?php echo $password_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $password_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
                         <div style="height: 30px"></div>
 
-                        <!-- Login button -->
-                        <button type="submit">Log in</button>
+                        <!-- Register button -->
+                        <button type="submit">Register</button>
 
                         <!-- Register page link -->
                         <div class="register">
-                            <p>Vedi che scrive quaaaa <a href="login.php">Login</a></p>
+                            <p>Already signed up? <a href="login.php">Login</a></p>
                         </div>
                     </form>
                 </div>
@@ -177,24 +178,24 @@ else {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
-    setLabelControls('#username', '#username_label');
-    setLabelControls('#credit_card', '#credit_card_label');
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
+        setLabelControls('#username', '#username_label');
+        setLabelControls('#credit_card', '#credit_card_label');
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
