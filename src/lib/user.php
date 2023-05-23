@@ -4,6 +4,7 @@ error_reporting(0);
 
 class User {
     public $username;
+    public $credit_card;
     public $email;
     public $password;
     public $salt;
@@ -71,7 +72,7 @@ class EmailAlreadyUsedException extends Exception
 # throws an EmailAlreadyUsedException if the email is already in the database
 # throws an Exception if the query fails
 function create_new_user($conn, $user) {
-    $query = "INSERT INTO users \n(username, password, salt, email) \nVALUES ($1, $2, $3, $4)";
+    $query = "INSERT INTO users \n(username, password, salt, email, credit_card) \nVALUES ($1, $2, $3, $4, $5)";
     $result1 = pg_prepare($conn, "create_new_user", $query);
     if(!$result1) {
         throw new Exception("Could not prepare the query: " . pg_last_error());
@@ -80,12 +81,13 @@ function create_new_user($conn, $user) {
     $username = $user->username;
     $password = $user->password;
     $email = $user->email;
+    $credit_card = $user->credit_card;
 
     $salt = generate_random_string(10);
     $password_hash = hash('sha256', $password . $salt);
     // echo strlen($password_hash); //64
     
-    $result2 = pg_execute($conn, "create_new_user", array($username, $password_hash, $salt, $email));
+    $result2 = pg_execute($conn, "create_new_user", array($username, $password_hash, $salt, $email, $credit_card));
 
     if(!$result2) {
         $error = pg_last_error();

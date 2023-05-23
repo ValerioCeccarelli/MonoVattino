@@ -7,7 +7,8 @@ CREATE TABLE users (
 	username VARCHAR(20) NOT NULL,
 	email VARCHAR(50) PRIMARY KEY,
 	password VARCHAR(64) NOT NULL,
-	salt VARCHAR(10) NOT NULL
+	salt VARCHAR(10) NOT NULL,
+	credit_card VARCHAR(16) NOT NULL
 );
 
 CREATE TABLE companies (
