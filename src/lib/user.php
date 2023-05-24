@@ -157,9 +157,7 @@ function check_if_user_can_reserve($conn, $user_id) {
     $privacy_policy_accepted = $first_line['privacy_policy_accepted'];
     $terms_and_conditions_accepted = $first_line['terms_and_conditions_accepted'];
     $payment_method = $first_line['payment_method'];
-    error_log('ppppp');
-    error_log( 'pollooooo' . $privacy_policy_accepted . ' ' . $terms_and_conditions_accepted . ' ' . $payment_method);
-
+    
     if ($privacy_policy_accepted == 'f') {
         throw new UserCanNotReserveException("Privacy policy not accepted!\nPlease, accept the privacy policy in your profile!");
     }
@@ -181,6 +179,69 @@ function update_user_policy($conn, $email, $privacy_policy, $terms_and_condition
     }
 
     $result2 = pg_execute($conn, "update_user_policy", array($privacy_policy, $terms_and_conditions, $email));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+}
+
+// Function that create a new payment method in the database and return the id of the payment method
+function create_payment_method($conn, $owner, $card_number, $month, $year, $cvv) {
+    $query = "INSERT INTO payment_methods \n(owner, card_number, month, year, cvv) \nVALUES ($1, $2, $3, $4, $5) RETURNING id";
+
+    $result1 = pg_prepare($conn, "create_payment_method", $query);
+    if(!$result1) {
+        echo pg_last_error();
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "create_payment_method", array($owner, $card_number, $month, $year, $cvv));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
+    if(!$first_line) {
+        throw new Exception("Could not fetch the result: " . pg_last_error());
+    }
+
+    return $first_line['id'];
+}
+
+class PaymentNotFoundException extends Exception
+{
+    public function __construct($message) {
+        parent::__construct($message, 0, null);
+    }
+}
+
+function get_user_payment_method($conn, $email) {
+    $query = "SELECT payment_method FROM users WHERE email = $1";
+    $result1 = pg_prepare($conn, "get_user_payment_method", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "get_user_payment_method", array($email));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
+    if(!$first_line) {
+        throw new PaymentNotFoundException("Could not fetch the result: " . pg_last_error());
+    }
+
+    return $first_line['payment_method'];
+}
+
+function update_user_payment_method($conn, $email, $payment_id) {
+    $query = "UPDATE users SET payment_method = $1 WHERE email = $2";
+    $result1 = pg_prepare($conn, "update_user_payment_method", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "update_user_payment_method", array($payment_id, $email));
     if(!$result2) {
         throw new Exception("Could not execute the query: " . pg_last_error());
     }

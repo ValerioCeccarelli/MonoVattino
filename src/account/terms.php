@@ -35,7 +35,7 @@ try {
         $conn = connect_to_database();
         update_user_policy($conn, $email, $privacy_policy, $terms_and_conditions);
 
-        header('Location: /');
+        header('Location: /account/payment.php');
         exit;
     } else {
         throw new MethodNotAllowedException("Method not allowed");
