@@ -173,4 +173,17 @@ function check_if_user_can_reserve($conn, $user_id) {
     }
 }
 
+function update_user_policy($conn, $email, $privacy_policy, $terms_and_conditions) {
+    $query = "UPDATE users SET privacy_policy_accepted = $1, terms_and_conditions_accepted = $2 WHERE email = $3";
+    $result1 = pg_prepare($conn, "update_user_policy", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "update_user_policy", array($privacy_policy, $terms_and_conditions, $email));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+}
+
 ?>

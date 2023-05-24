@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
 
-        header('Location: /');
+        header('Location: /account/terms.php');
         exit;
     } catch (InvalidEmailException $e) {
         $email_error = $e->getMessage();
