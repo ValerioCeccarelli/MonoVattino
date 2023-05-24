@@ -102,7 +102,6 @@ function isCurrentPositionAvailable() {
 
 function onZoomChanged() {
     let zoom = map.getZoom();
-    // console.log("zoom changed: " + zoom);
 }
 
 function showErrorWithModal(message) {
@@ -163,6 +162,8 @@ async function onScooterReserveClick(scooter) {
 
         scooter_marker.content = pin.element;
         scooter.is_my_scooter = true;
+
+        $('#offcanvasBottom').offcanvas('hide');
     } catch (error) {
 
         if (error.status == 401) {
@@ -210,6 +211,8 @@ async function onScooterReleaseClick(scooter) {
 
         scooter.latitude = my_position.latitude;
         scooter.longitude = my_position.longitude;
+
+        $('#offcanvasBottom').offcanvas('hide');
     } catch (error) {
         console.error(error);
         showErrorWithModal("Error while releasing the scooter!<br>Please reload the page and try again.");
