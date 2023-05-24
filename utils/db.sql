@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS payment_methods;
 
 CREATE TABLE payment_methods (
 	id SERIAL PRIMARY KEY,
-	credit_card VARCHAR(16) NOT NULL,
+	card_number VARCHAR(16) NOT NULL,
 	month INTEGER NOT NULL,
 	year INTEGER NOT NULL,
 	cvv INTEGER NOT NULL,

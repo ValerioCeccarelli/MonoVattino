@@ -12,6 +12,8 @@ try {
         $jwt_payload = validate_jwt();
         $email = $jwt_payload->email;
 
+        error_log("ciaoooooooo " . $email . "ciaooooooooo");
+
         $scooter_id = $_POST['scooter_id'];
 
         if (empty($scooter_id)) {
