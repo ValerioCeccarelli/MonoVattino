@@ -24,6 +24,29 @@ class InvalidUsernameException extends Exception
     }
 }
 
+class InvalidNameException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
+class InvalidSurnameException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
+class InvalidDateOfBirthException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
 function validate_email($email)
 {
     // echo $email;
@@ -80,6 +103,47 @@ function verify_password($db_user, $password)
     return $password_hash === $db_user->password;
 }
 
+function validate_name($name)
+{
+    if (empty($name)) {
+        throw new InvalidNameException("Name is required!");
+    }
+    if (strlen($name) > 50) {
+        throw new InvalidNameException("Name must be at most 50 characters long!");
+    }
+    if (!preg_match('/^[a-zA-Z]+$/', $name)) {
+        throw new InvalidNameException("Name must contain only letters!");
+    }
+}
+
+function validate_surname($surname)
+{
+    if (empty($surname)) {
+        throw new InvalidSurnameException("Surname is required!");
+    }
+    if (strlen($surname) > 50) {
+        throw new InvalidSurnameException("Surname must be at most 50 characters long!");
+    }
+    if (!preg_match('/^[a-zA-Z]+$/', $surname)) {
+        throw new InvalidSurnameException("Surname must contain only letters!");
+    }
+}
+
+function validate_date_of_birth($date_of_birth)
+{
+    if (empty($date_of_birth)) {
+        throw new InvalidDateOfBirthException("Date of birth is required!");
+    }
+    if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date_of_birth)) {
+        throw new InvalidDateOfBirthException("Date of birth must be in the format YYYY-MM-DD!");
+    }
+    $date_of_birth = new DateTime($date_of_birth);
+    $now = new DateTime();
+    $diff = $date_of_birth->diff($now);
+    if ($diff->y < 18) {
+        throw new InvalidDateOfBirthException("You must be at least 18 years old to register!");
+    }
+}
 // class InvalidCreditCardException extends Exception
 // {
 //     public function __construct($message)
