@@ -2,12 +2,17 @@
 
 $username = "";
 $username_error = null;
+$name = "";
+$name_error = null;
+$surname = "";
+$surname_error = null;
 $email = "";
 $email_error = null;
 $password = "";
 $password_error = null;
-// $credit_card = "";
-// $credit_card_error = null;
+$date_of_birth = "";
+$date_of_birth_error = null;
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -16,14 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     require_once('../lib/validate_user.php');
 
     $username = $_POST['username'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $credit_card = $_POST['credit_card'];
+    $date_of_birth = $_POST['date_of_birth'];
 
     try {
         validate_username($username);
         validate_email($email);
         validate_password($password);
+        validate_name($name);
+        validate_surname($surname);
+        validate_date_of_birth($date_of_birth);
 
         require_once('../lib/database.php');
 
@@ -31,9 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         $user = new User();
         $user->username = $username;
-        $user->password = $password;
-        $user->credit_card = $credit_card;
         $user->email = $email;
+        $user->password = $password;
+        $user->name = $name;
+        $user->surname = $username;
+        $user->date_of_birth = $date_of_birth;
 
         $user->privacy_policy_accepted = false;
         $user->terms_and_conditions_accepted = false;
@@ -116,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $username_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $username_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Email input -->
@@ -130,9 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $email_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $email_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -145,9 +157,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $password_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $password_error; ?>
+                            </h5>
+                        <?php } ?>
+
+                        <!-- Name input -->
+                        <div class="inputbox">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <input id="name" name="name" type="text" value="<?php echo $name; ?>" required>
+                            <label id="name_label" for="name">Name</label>
+                        </div>
+
+                        <!-- Name error -->
+                        <?php if ($name_error) { ?>
+                            <h5 class="error-msg">
+                                <?php echo $name_error; ?>
+                            </h5>
+                        <?php } ?>
+
+                        <!-- Surname input -->
+                        <div class="inputbox">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <input id="surname" name="surname" type="text" value="<?php echo $surname; ?>" required>
+                            <label id="surname_label" for="surname">Surname</label>
+                        </div>
+
+                        <!-- Surname error -->
+                        <?php if ($surname_error) { ?>
+                            <h5 class="error-msg">
+                                <?php echo $surname_error; ?>
+                            </h5>
+                        <?php } ?>
+
+                        <!-- Date of birth input -->
+                        <div class="inputbox">
+                            <ion-icon name="calendar-outline"></ion-icon>
+                            <input id="date_of_birth" name="date_of_birth" type="date"
+                                value="<?php echo $date_of_birth; ?>" required>
+                            <label id="date_of_birth_label" for="date_of_birth">Date of birth</label>
+                        </div>
+
+                        <!-- Date of birth error -->
+                        <?php if ($date_of_birth_error) { ?>
+                            <h5 class="error-msg">
+                                <?php echo $date_of_birth_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -167,24 +222,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
-    setLabelControls('#username', '#username_label');
-    setLabelControls('#credit_card', '#credit_card_label');
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
+        setLabelControls('#username', '#username_label');
+        setLabelControls('#name', '#name_label');
+        setLabelControls('#surname', '#surname_label');
+        setLabelControls('#date_of_birth', '#date_of_birth_label');
+        $('#date_of_birth_label').css('top', '-5px')
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
