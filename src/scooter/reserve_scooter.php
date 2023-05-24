@@ -5,27 +5,26 @@ require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
 require_once('../lib/scooter.php');
-
-function process_post_request() {
-
-    $jwt_payload = validate_jwt();
-
-    $scooter_id = $_POST['scooter_id'];
-
-    if (empty($scooter_id)) {
-        throw new BadRequestException("Missing parameters");
-    }
-
-    $conn = connect_to_database();
-
-    reserve_scooter($conn, $scooter_id, $jwt_payload->email);
-
-    echo "OK";
-}
+require_once('../lib/user.php');
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        process_post_request();
+        $jwt_payload = validate_jwt();
+        $email = $jwt_payload->email;
+
+        $scooter_id = $_POST['scooter_id'];
+
+        if (empty($scooter_id)) {
+            throw new BadRequestException("Missing parameters");
+        }
+
+        $conn = connect_to_database();
+
+        error_log("00000000");
+
+        check_if_user_can_reserve($conn, $email);
+
+        reserve_scooter($conn, $scooter_id, $email);
     }
     else {
         throw new MethodNotAllowedException("Method not allowed");
@@ -45,6 +44,14 @@ try {
 } catch (InvalidJWTException $e) {
     http_response_code(401);
     echo "401 Unauthorized";
+    exit;
+} catch (UserCanNotReserveException $e) {
+    http_response_code(403);
+    echo $e->getMessage();
+    exit;
+} catch (NoUserFoundException $e) {
+    http_response_code(404);
+    echo "404 Not Found";
     exit;
 } catch (Exception $e) {
     error_log("ERROR: scooter.php: " . $e->getMessage());

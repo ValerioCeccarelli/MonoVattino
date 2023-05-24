@@ -51,6 +51,13 @@ h2 {
     text-align: center;
 }
 
+h4 {
+    font-size: 1em;
+    color: #fff;
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
 .inputbox {
     position: relative;
     margin-top: 30px;
@@ -70,13 +77,14 @@ h2 {
 }
 
 .inputbox input {
-    width: 100%;
+    width: 98.4%;
     height: 50px;
     background: transparent;
     border: none;
     outline: none;
     font-size: 1em;
-    padding: 0 35px 0 5px;
+
+    padding-left: 5px;
     color: #fff;
 }
 
@@ -143,4 +151,10 @@ button {
     padding-top: 5px;
     color: red;
     font-size: 0.8em;
+}
+
+/* Fix style of chrome autocomplete */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px rgba(100, 100, 100, 1) inset;
+    -webkit-text-fill-color: #fff;
 }

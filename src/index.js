@@ -102,7 +102,6 @@ function isCurrentPositionAvailable() {
 
 function onZoomChanged() {
     let zoom = map.getZoom();
-    // console.log("zoom changed: " + zoom);
 }
 
 function showErrorWithModal(message) {
@@ -163,11 +162,21 @@ async function onScooterReserveClick(scooter) {
 
         scooter_marker.content = pin.element;
         scooter.is_my_scooter = true;
+
+        $('#offcanvasBottom').offcanvas('hide');
     } catch (error) {
 
         if (error.status == 401) {
             console.error("User not logged in.");
             showErrorWithModal("Error while reserving scooter!<br>You have to login first.<br>Please, login and try again.");
+            return;
+        }
+        if (error.status == 403) {
+            console.error("User not authorized.");
+            text = error.responseText;
+            // replace \n with <br>
+            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            showErrorWithModal(text);
             return;
         }
 
@@ -210,6 +219,8 @@ async function onScooterReleaseClick(scooter) {
 
         scooter.latitude = my_position.latitude;
         scooter.longitude = my_position.longitude;
+
+        $('#offcanvasBottom').offcanvas('hide');
     } catch (error) {
         console.error(error);
         showErrorWithModal("Error while releasing the scooter!<br>Please reload the page and try again.");
@@ -217,8 +228,6 @@ async function onScooterReleaseClick(scooter) {
 }
 
 function onScooterClick(scooter) {
-
-    console.log(scooter);
 
     $('#scooter_battery').text(scooter.battery_level);
     $('#scooter_company').text(scooter.company_name);

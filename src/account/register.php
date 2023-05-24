@@ -6,8 +6,8 @@ $email = "";
 $email_error = null;
 $password = "";
 $password_error = null;
-$credit_card = "";
-$credit_card_error = null;
+// $credit_card = "";
+// $credit_card_error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         validate_username($username);
         validate_email($email);
         validate_password($password);
-        validate_credit_card($credit_card);
 
         require_once('../lib/database.php');
 
@@ -35,6 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $user->password = $password;
         $user->credit_card = $credit_card;
         $user->email = $email;
+
+        $user->privacy_policy_accepted = false;
+        $user->terms_and_conditions_accepted = false;
+
+        $user->payment_method = null;
 
         create_new_user($conn, $user);
 
@@ -48,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
 
-        header('Location: /');
+        header('Location: /account/terms.php');
         exit;
     } catch (InvalidEmailException $e) {
         $email_error = $e->getMessage();
@@ -56,8 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $password_error = $e->getMessage();
     } catch (InvalidUsernameException $e) {
         $username_error = $e->getMessage();
-    } catch (InvalidCreditCardException $e) {
-        $credit_card_error = $e->getMessage();
     } catch (EmailAlreadyUsedException $th) {
         $email_error = "This email is already in use!";
     } catch (Exception $e) {
@@ -69,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo 'ERROR 405: Method Not Allowed';
     exit;
 }
+
+// TODO: aggiungere cose come l'età della persona, il numero di telefono, ecc...
 
 ?>
 
@@ -112,24 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $username_error; ?>
-                            </h5>
-                        <?php } ?>
-
-                        <!-- Credit card input -->
-                        <div class="inputbox">
-                            <ion-icon name="card-outline"></ion-icon>
-                            <input id="credit_card" name="credit_card" type="text" value="<?php echo $credit_card; ?>"
-                                required>
-                            <label id="credit_card_label" for="credit_card">Credit card</label>
-                        </div>
-
-                        <!-- Credit card error -->
-                        <?php if ($credit_card_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $credit_card_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $username_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Email input -->
@@ -141,9 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $email_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $email_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -156,9 +145,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $password_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $password_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -178,24 +167,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
-            }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
         }
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
+            }
+        });
+    }
 
-        setLabelControls('#email', '#email_label');
-        setLabelControls('#password', '#password_label');
-        setLabelControls('#username', '#username_label');
-        setLabelControls('#credit_card', '#credit_card_label');
+    setLabelControls('#email', '#email_label');
+    setLabelControls('#password', '#password_label');
+    setLabelControls('#username', '#username_label');
+    setLabelControls('#credit_card', '#credit_card_label');
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
