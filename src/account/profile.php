@@ -1,14 +1,26 @@
 <?php 
 require_once('../lib/jwt.php');
+require_once('../lib/database.php');
+require_once('../lib/user.php');
 
 try {
     $jwt_payload = validate_jwt();
-    $is_user_logged = true;
-    $username = $jwt_payload->username;
     $email = $jwt_payload->email;
+
+    $conn = connect_to_database();
+    $user = get_user_by_email($conn, $email);
+
+    $username = $user->username;
 } catch (InvalidJWTException $e) {
     http_response_code(401);
     echo "401 Unauthorized";
+    exit;
+} 
+// TODO: add other exceptions
+catch (Exception $e) {
+    error_log("ERROR: profile.php: " . $e->getMessage());
+    http_response_code(500);
+    echo "500 Internal Server Error";
     exit;
 }
 ?>
@@ -46,6 +58,7 @@ try {
 </head>
 
 <body>
+    <?php echo json_encode($user); ?>
     <div class="container">
         <div class="row justify-content-center">
             <h1 style="text-align: center;">Your profile!</h1>

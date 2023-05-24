@@ -2,13 +2,29 @@ DROP TABLE IF EXISTS trips;
 DROP TABLE IF EXISTS scooters;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS payment_methods;
+
+CREATE TABLE payment_methods (
+	id SERIAL PRIMARY KEY,
+	credit_card VARCHAR(16) NOT NULL,
+	month INTEGER NOT NULL,
+	year INTEGER NOT NULL,
+	cvv INTEGER NOT NULL,
+	owner VARCHAR(50) NOT NULL
+);
 
 CREATE TABLE users (
 	username VARCHAR(20) NOT NULL,
 	email VARCHAR(50) PRIMARY KEY,
 	password VARCHAR(64) NOT NULL,
 	salt VARCHAR(10) NOT NULL,
-	credit_card VARCHAR(16) NOT NULL
+
+	privacy_policy_accepted BOOLEAN NOT NULL,
+	terms_and_conditions_accepted BOOLEAN NOT NULL,
+
+	payment_method INTEGER,
+
+	FOREIGN KEY (payment_method) REFERENCES payment_methods(id)
 );
 
 CREATE TABLE companies (

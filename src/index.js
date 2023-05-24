@@ -171,6 +171,14 @@ async function onScooterReserveClick(scooter) {
             showErrorWithModal("Error while reserving scooter!<br>You have to login first.<br>Please, login and try again.");
             return;
         }
+        if (error.status == 403) {
+            console.error("User not authorized.");
+            text = error.responseText;
+            // replace \n with <br>
+            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            showErrorWithModal(text);
+            return;
+        }
 
         console.error(error);
         showErrorWithModal("Error while reserving scooter!<br>Please reload the page and try again.");
@@ -220,8 +228,6 @@ async function onScooterReleaseClick(scooter) {
 }
 
 function onScooterClick(scooter) {
-
-    console.log(scooter);
 
     $('#scooter_battery').text(scooter.battery_level);
     $('#scooter_company').text(scooter.company_name);
