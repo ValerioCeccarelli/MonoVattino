@@ -5,6 +5,7 @@ require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
 require_once('../lib/scooter.php');
+require_once('../lib/trips.php');
 
 function process_post_request() {
 
@@ -23,6 +24,8 @@ function process_post_request() {
     $travel_time = get_travel_time($conn, $scooter_id);
     move_to_position($conn, $scooter_id, $longitude, $latitude);
     free_scoter($conn, $scooter_id);
+
+    create_trip($conn, $scooter_id, $jwt_payload->user_id, $travel_time);
 
     $costs = get_scooter_costs($conn, $scooter_id);
 
