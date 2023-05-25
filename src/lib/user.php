@@ -279,4 +279,42 @@ function update_user_payment_method($conn, $email, $payment_id)
     }
 }
 
+class PaymentMethod {
+    public $id;
+    public $owner;
+    public $card_number;
+    public $month;
+    public $year;
+    public $cvv;
+}
+
+function get_payment_metod_by_id($conn, $id) {
+    $query = "SELECT * FROM payment_methods WHERE id = $1";
+    $result1 = pg_prepare($conn, "get_payment_metod_by_id", $query);
+    if (!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "get_payment_metod_by_id", array($id));
+    if (!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
+    if (!$first_line) {
+        throw new PaymentNotFoundException("Could not fetch the result: " . pg_last_error());
+    }
+
+    $payment_method = new PaymentMethod();
+
+    $payment_method->id = $first_line['id'];
+    $payment_method->owner = $first_line['owner'];
+    $payment_method->card_number = $first_line['card_number'];
+    $payment_method->month = $first_line['month'];
+    $payment_method->year = $first_line['year'];
+    $payment_method->cvv = $first_line['cvv'];
+
+    return $payment_method;
+}
+
 ?>

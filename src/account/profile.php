@@ -10,14 +10,32 @@ try {
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $email);
 
+    // echo json_encode($user);
+    // echo "<br>";
+    
+    try {
+        $payment_method = get_payment_metod_by_id($conn, $user->payment_method);
+    } catch (PaymentNotFoundException $e) {
+        $payment_method = null;
+    }
+
+    // echo json_encode($payment_method);
+
     $username = $user->username;
 } catch (InvalidJWTException $e) {
-    http_response_code(401);
-    echo "401 Unauthorized";
+    // http_response_code(401);
+    // echo "401 Unauthorized";
+    header("Location: /account/login.php");
     exit;
-} 
-// TODO: add other exceptions
-catch (Exception $e) {
+} catch (NoUserFoundException $e) {
+    http_response_code(404);
+    echo "404 Not Found";
+    exit;
+} catch (PaymentNotFoundException  $e) {
+    http_response_code(404);
+    echo "404 Not Found";
+    exit;
+} catch (Exception $e) {
     error_log("ERROR: profile.php: " . $e->getMessage());
     http_response_code(500);
     echo "500 Internal Server Error";
@@ -50,91 +68,225 @@ catch (Exception $e) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
-    img {
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+
+    .profile-img {
         width: 30vw !important;
         height: auto;
+    }
+
+    .form-box {
+        position: relative;
+        width: auto;
+        height: auto;
+
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+
+        background-color: rgba(100, 100, 100, 0.8);
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-padding {
+        padding: 0px 20px;
+        padding-top: 15px;
+    }
+
+    .form-box h2 {
+        font-size: 2em;
+        color: #fff;
+        text-align: center;
+    }
+
+    .inputbox {
+        position: relative;
+        margin-top: 30px;
+        width: auto;
+        border-bottom: 2px solid #fff;
+    }
+
+    .inputbox label {
+        position: absolute;
+        top: -5px;
+        left: 5px;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 1em;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .inputbox input {
+        width: 85.4%;
+        height: 50px;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
+
+        padding-left: 5px;
+        color: #fff;
+
+        left: -15px;
+        position: relative;
+    }
+
+    .inputbox ion-icon {
+        position: absolute;
+        right: 8px;
+        color: #fff;
+        font-size: 1.2em;
+        top: 20px;
+    }
+
+    .forget {
+        margin: -15px 0 15px;
+        font-size: .9em;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .forget label input {
+        margin-right: 3px;
+
+    }
+
+    .forget label a {
+        color: #fff;
+        text-decoration: none;
     }
     </style>
 </head>
 
 <body>
-    <?php echo json_encode($user); ?>
     <div class="container">
-        <div class="row justify-content-center">
-            <h1 style="text-align: center;">Your profile!</h1>
-        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="container">
+                    <!-- User name title -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1><?php echo $user->username; ?> Profile</h1>
+                        </div>
+                    </div>
 
-        <!-- Profile photo -->
-        <div class="row justify-content-center">
-            <img src="https://www.gravatar.com/avatar/<?php echo md5($email); ?>?s=200" alt="Profile photo"
-                class="rounded-circle">
-        </div>
+                    <!-- Gravatar icon -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?d=identicon"
+                                alt="Gravatar" class="rounded-circle profile-img" style="width: 120px !important">
+                        </div>
+                    </div>
 
-        <!-- Profile info -->
-        <div class="form">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Username:</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="<?php echo $username ?>" aria-label="Username"
-                        aria-describedby="basic-addon1" disabled>
-                    <span class="input-group-text" id="basic-addon1" onclick="showFormModal()">
-                        <i class="bi bi-pencil-square"></i>
-                    </span>
+                    <!-- User info -->
+                    <div class="form-box">
+                        <div class="form-padding">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 text-center">
+                                        <!-- Title -->
+                                        <h2>Info</h2>
+
+                                        <!-- Name input -->
+                                        <div class="inputbox">
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            <input id="name" name="name" type="text" value="<?php echo $user->name; ?>"
+                                                required>
+                                            <label id="name_label" for="name">Name</label>
+                                        </div>
+
+                                        <!-- Surname input -->
+                                        <div class="inputbox">
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            <input id="surname" name="surname" type="text"
+                                                value="<?php echo $user->surname; ?>" required>
+                                            <label id="surname_label" for="surname">Surname</label>
+                                        </div>
+
+                                        <!-- Email input -->
+                                        <div class="inputbox">
+                                            <ion-icon name="mail-outline"></ion-icon>
+                                            <input id="email" name="email" type="email"
+                                                value="<?php echo $user->email; ?>" disable>
+                                            <label id="email_label" for="email">Email</label>
+                                        </div>
+
+                                        <!-- Username input -->
+                                        <div class="inputbox">
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            <input id="username" name="username" type="text"
+                                                value="<?php echo $user->username; ?>" disable>
+                                            <label id="username_label" for="username">Username</label>
+                                        </div>
+
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
+
+                                    </div>
+                                    <div class="col-12 col-sm-6 text-center">
+                                        <!-- Title -->
+                                        <h2>Payment</h2>
+
+                                        <?php if ($payment_method != null) { ?>
+                                        <!-- Owner -->
+                                        <div class="inputbox">
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            <input id="owner" name="owner" type="text"
+                                                value="<?php echo $payment_method->owner; ?>" required>
+                                            <label id="owner_label" for="username">Card holder</label>
+                                        </div>
+
+                                        <!-- Card number -->
+                                        <div class="inputbox">
+                                            <ion-icon name="card-outline"></ion-icon>
+                                            <input id="card_number" name="card_number" type="text"
+                                                value="<?php echo $payment_method->card_number; ?>" required>
+                                            <label id="card_number_label" for="card_number">Card number</label>
+                                        </div>
+
+                                        <!-- Expiration date -->
+                                        <div class="inputbox">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                            <input id="expiration_date" name="expiration_date" type="text"
+                                                value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
+                                                required>
+                                            <label id="expiration_date_label" for="expiration_date">Expiration
+                                                date</label>
+                                        </div>
+
+                                        <!-- CVV -->
+                                        <div class="inputbox">
+                                            <ion-icon name="lock-closed-outline"></ion-icon>
+                                            <input id="cvv" name="cvv" type="text"
+                                                value="<?php echo $payment_method->cvv; ?>" required>
+                                            <label id="cvv_label" for="cvv">CVV</label>
+                                        </div>
+
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
+
+                                        <?php } else { ?>
+
+                                        <p>No payment method</p>
+
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" placeholder="<?php echo $email ?>" disabled>
-            </div>
-            <!-- <button type="submit"><i class="bi bi-pencil-square"></i></button> -->
+            <div class="col-12 col-md-6" style="background-color: red;">ppp</div>
         </div>
     </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    <!-- Form Modal -->
-    <div class="modal fade" id="form_modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="modal fade" id="error_modal" tabindex="-1" aria-labelledby="error_modal_title" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <i class="bi bi-exclamation-triangle-fill pe-4 fs-3" style="color: red;"></i>
-                    <h1 class="modal-title fs-5" id="error_modal_title">Error!</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="error_modal_body">
-                    Something went wrong! Please refresh the page and try again.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    function showErrorWithModal(message) {
-        $('#error_modal_body').html(message);
-        $('#error_modal').modal('show');
-    }
-
-    function showFormModal() {
-        $('#form_modal').modal('show');
-    }
-    </script>
 </body>
 
 </html>
