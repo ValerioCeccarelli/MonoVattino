@@ -4,6 +4,7 @@ require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
+require_once('../lib/validate_user.php');
 
 // TODO: fai il validation anche sugli altri parametri per evitare il goto
 
@@ -26,35 +27,20 @@ try {
         // pass
     } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        if (!isset($owner) || $owner == "") {
-            $owner_error = "Missing owner";
-            goto end;
-        }
-
-        if (!isset($card_number) || $card_number == "") {
-            $card_number_error = "Missing card number";
-            goto end;
-        }
-
-        if (!isset($expiration_date) || $expiration_date == "") {
-            $expiration_date_error = "Missing expiration date";
-            goto end;
-        }
+        validate_owner($owner);
+        validate_card_number($card_number);
+        validate_expiration_date($expiration_date);
+        validate_cvv($cvv);
 
         $month = substr($expiration_date, 0, 2);
         $year = substr($expiration_date, 3, 2);
-
-        if (!isset($cvv) || $cvv == "") {
-            $cvv_error = "Missing CVV";
-            goto end;
-        }
 
         $conn = connect_to_database();
 
         try {
             $payment_method = get_user_payment_method($conn, $email);
             if ($payment_method != null) {
-                delete_user_payment_method($conn, $email);
+                delete_user_payment_method($conn, $email); //TODO: da fare
             }
         } catch (PaymentNotFoundException $e) {
             // pass
@@ -82,14 +68,20 @@ try {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;
+} catch (InvalidOwnerException $e) {
+    $owner_error = $e->getMessage();
+} catch (InvalidCardNumberException $e) {
+    $card_number_error = $e->getMessage();
+} catch (InvalidExpirationDateException $e) {
+    $expiration_date_error = $e->getMessage();
+} catch (InvalidCvvException $e) {
+    $cvv_error = $e->getMessage();
 } catch (Exception $e) {
     error_log("ERROR: profile.php: " . $e->getMessage());
     http_response_code(500);
     echo "500 Internal Server Error";
     exit;
 }
-
-end:
 
 ?>
 

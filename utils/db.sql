@@ -27,6 +27,7 @@ CREATE TABLE users (
 	name VARCHAR(50) NOT NULL,
 	surname VARCHAR(50) NOT NULL,
 	date_of_birth VARCHAR(20) NOT NULL,
+	phone_number VARCHAR(20) NOT NULL,
 
 	FOREIGN KEY (payment_method) REFERENCES payment_methods(id)
 );

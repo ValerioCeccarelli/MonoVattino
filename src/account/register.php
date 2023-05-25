@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password input -->
                         <div class="inputbox">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <ion-icon name="lock-closed-outline" onclick="togglePassword()"></ion-icon>
                             <input id="password" name="password" type="password" value="<?php echo $password; ?>"
                                 required>
                             <label id="password_label" for="password">Password</label>
@@ -245,7 +245,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             </div>
         </div>
     </section>
-    // TODO mettere opzione per vedere la password hoverando l'icona
 
     <script>
         function setLabelControls(input_id, label_id) {
@@ -270,6 +269,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         setLabelControls('#date_of_birth', '#date_of_birth_label');
         setLabelControls('#phone_number', '#phone_number_label');
         $('#date_of_birth_label').css('top', '-5px')
+
+        function togglePassword() {
+            $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
+        }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
