@@ -47,6 +47,14 @@ class InvalidDateOfBirthException extends Exception
         parent::__construct($message, 0, null);
     }
 }
+
+class InvalidPhoneNumberException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
 function validate_email($email)
 {
     // echo $email;
@@ -144,6 +152,20 @@ function validate_date_of_birth($date_of_birth)
         throw new InvalidDateOfBirthException("You must be at least 18 years old to register!");
     }
 }
+
+function validate_phone_number($phone_number)
+{
+    if (empty($phone_number)) {
+        throw new InvalidPhoneNumberException("Phone number is required!");
+    }
+    if (strlen($phone_number) > 20) {
+        throw new InvalidPhoneNumberException("Phone number must be at most 20 characters long!");
+    }
+    if (!preg_match('/^[0-9]+$/', $phone_number)) {
+        throw new InvalidPhoneNumberException("Phone number must contain only numbers!");
+    }
+}
+
 // class InvalidCreditCardException extends Exception
 // {
 //     public function __construct($message)
