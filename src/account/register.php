@@ -12,7 +12,8 @@ $password = "";
 $password_error = null;
 $date_of_birth = "";
 $date_of_birth_error = null;
-
+$phone_number = "";
+$phone_number_error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -26,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $date_of_birth = $_POST['date_of_birth'];
+    $phone_number = $_POST['phone_number'];
 
     try {
         validate_username($username);
@@ -34,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         validate_name($name);
         validate_surname($surname);
         validate_date_of_birth($date_of_birth);
+        validate_phone_number($phone_number);
 
         require_once('../lib/database.php');
 
@@ -46,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $user->name = $name;
         $user->surname = $username;
         $user->date_of_birth = $date_of_birth;
+        $user->phone_number = $phone_number;
 
         $user->privacy_policy_accepted = false;
         $user->terms_and_conditions_accepted = false;
@@ -80,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $name_error = $e->getMessage();
     } catch (InvalidSurnameException $e) {
         $surname_error = $e->getMessage();
+    } catch (InvalidPhoneNumberException $e) {
+        $phone_number_error = $e->getMessage();
     } catch (Exception $e) {
         echo 'ERROR 500: Internal Server Error';
         error_log("ERROR: register page" . $e->getMessage());
@@ -89,8 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo 'ERROR 405: Method Not Allowed';
     exit;
 }
-
-// TODO: aggiungere cose come l'età della persona, il numero di telefono, ecc...
 
 ?>
 
@@ -134,9 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $username_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $username_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Email input -->
@@ -148,9 +152,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $email_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $email_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -160,12 +164,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                                 required>
                             <label id="password_label" for="password">Password</label>
                         </div>
-
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $password_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $password_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Name input -->
@@ -177,9 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Name error -->
                         <?php if ($name_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $name_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $name_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Surname input -->
@@ -191,9 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Surname error -->
                         <?php if ($surname_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $surname_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $surname_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Date of birth input -->
@@ -206,10 +209,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Date of birth error -->
                         <?php if ($date_of_birth_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $date_of_birth_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $date_of_birth_error; ?>
+                            </h5>
                         <?php } ?>
+
+                        <!-- Phone number input -->
+                        <div class="inputbox">
+                            <ion-icon name="call-outline"></ion-icon>
+                            <input id="phone_number" name="phone_number" type="tel" value="<?php echo $phone_number; ?>"
+                                required>
+                            <label id="phone_number_label" for="phone_number">Phone number</label>
+                        </div>
+
+                        <!-- Phone number error -->
+                        <?php if ($phone_number_error) { ?>
+                            <h5 class="error-msg">
+                                <?php echo $phone_number_error; ?>
+                            </h5>
+                        <?php } ?>
+
 
                         <!-- Padding -->
                         <div style="height: 30px"></div>
@@ -226,29 +245,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             </div>
         </div>
     </section>
+    // TODO mettere opzione per vedere la password hoverando l'icona
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
-    setLabelControls('#username', '#username_label');
-    setLabelControls('#name', '#name_label');
-    setLabelControls('#surname', '#surname_label');
-    setLabelControls('#date_of_birth', '#date_of_birth_label');
-    $('#date_of_birth_label').css('top', '-5px')
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
+        setLabelControls('#username', '#username_label');
+        setLabelControls('#name', '#name_label');
+        setLabelControls('#surname', '#surname_label');
+        setLabelControls('#date_of_birth', '#date_of_birth_label');
+        setLabelControls('#phone_number', '#phone_number_label');
+        $('#date_of_birth_label').css('top', '-5px')
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

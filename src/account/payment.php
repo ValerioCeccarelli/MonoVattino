@@ -24,8 +24,7 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // pass
-    }
-    else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!isset($owner) || $owner == "") {
             $owner_error = "Missing owner";
@@ -67,8 +66,7 @@ try {
 
         header('Location: /');
         exit;
-    }
-    else {
+    } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
 
@@ -135,9 +133,9 @@ end:
 
                         <!-- Owner error -->
                         <?php if ($owner_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $owner_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $owner_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Card number -->
@@ -150,9 +148,9 @@ end:
 
                         <!-- Card number error -->
                         <?php if ($card_number_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $card_number_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $card_number_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Expiration date -->
@@ -165,9 +163,9 @@ end:
 
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $expiration_date_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $expiration_date_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- CVV -->
@@ -179,9 +177,9 @@ end:
 
                         <!-- CVV error -->
                         <?php if ($cvv_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $cvv_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $cvv_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -199,24 +197,24 @@ end:
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls("#owner", "#owner_label");
-    setLabelControls("#card_number", "#card_number_label");
-    setLabelControls("#expiration_date", "#expiration_date_label");
-    setLabelControls("#cvv", "#cvv_label");
+        setLabelControls("#owner", "#owner_label");
+        setLabelControls("#card_number", "#card_number_label");
+        setLabelControls("#expiration_date", "#expiration_date_label");
+        setLabelControls("#cvv", "#cvv_label");
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
