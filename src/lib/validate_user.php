@@ -55,6 +55,39 @@ class InvalidPhoneNumberException extends Exception
         parent::__construct($message, 0, null);
     }
 }
+
+class InvalidOwnerException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
+class InvalidCardNumberException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
+class InvalidExpirationDateException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
+class InvalidCVVException extends Exception
+{
+    public function __construct($message)
+    {
+        parent::__construct($message, 0, null);
+    }
+}
+
 function validate_email($email)
 {
     // echo $email;
@@ -119,7 +152,7 @@ function validate_name($name)
     if (strlen($name) > 50) {
         throw new InvalidNameException("Name must be at most 50 characters long!");
     }
-    if (!preg_match('/^[a-zA-Z]+$/', $name)) {
+    if (!preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $name)) {
         throw new InvalidNameException("Name must contain only letters!");
     }
 }
@@ -165,6 +198,78 @@ function validate_phone_number($phone_number)
         throw new InvalidPhoneNumberException("Phone number must contain only numbers!");
     }
 }
+
+function validate_owner($owner)
+{
+    if (empty($owner)) {
+        throw new InvalidOwnerException("Owner is required!");
+    }
+    if (strlen($owner) > 50) {
+        throw new InvalidOwnerException("Owner must be at most 50 characters long!");
+    }
+    if (!preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $owner)) {
+        throw new InvalidOwnerException("Owner must contain only letters!");
+    }
+}
+
+function validate_card_number($card_number)
+{
+    if (empty($card_number)) {
+        throw new InvalidCardNumberException("Card number is required!");
+    }
+    if (strlen($card_number) < 16) {
+        throw new InvalidCardNumberException("Card number must be 16 digits long!");
+    }
+    if (strlen($card_number) > 16) {
+        throw new InvalidCardNumberException("Card number must be 16 digits long!");
+    }
+    if (!preg_match('/^[0-9]+$/', $card_number)) {
+        throw new InvalidCardNumberException("Card number must contain only numbers!");
+    }
+}
+
+function validate_expiration_date($expiration_date)
+{
+    if (empty($expiration_date)) {
+        throw new InvalidExpirationDateException("Expiry date is required!");
+    }
+    if (!preg_match('/^[0-9]{2}\/[0-9]{2}$/', $expiration_date)) {
+        throw new InvalidExpirationDateException("Expiry date must be in the format MM/YY!");
+    }
+    $month = substr($expiration_date, 0, 2);
+    $year = substr($expiration_date, 3, 2);
+    if ($month < 1 || $month > 12) {
+        throw new InvalidExpirationDateException("Invalid month!");
+    }
+
+    $current_date = new DateTime();
+    $current_year = $current_date->format('y');
+    $current_month = $current_date->format('m');
+
+    if ($year < $current_year) {
+        throw new InvalidExpirationDateException("Card has expired!");
+    }
+    if ($year == $current_year && $month < $current_month) {
+        throw new InvalidExpirationDateException("Card has expired!");
+    }
+
+}
+
+function validate_cvv($cvv)
+{
+    if (empty($cvv)) {
+        throw new InvalidCvvException("CVV is required!");
+    }
+    if (strlen($cvv) != 3) {
+        throw new InvalidCvvException("CVV must be 3 digits long!");
+    }
+    if (!preg_match('/^[0-9]+$/', $cvv)) {
+        throw new InvalidCvvException("CVV must contain only numbers!");
+    }
+}
+
+
+
 
 // class InvalidCreditCardException extends Exception
 // {

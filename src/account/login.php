@@ -16,7 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         validate_email($email);
-        validate_password($password);
+
+        try {
+            validate_password($password);
+        } catch (InvalidPasswordException $e) {
+            throw new InvalidPasswordException("Invalid password!");
+        }
 
         require_once('../lib/database.php');
 
@@ -100,12 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                        <h5 class="error-msg"><?php echo $email_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $email_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Password input -->
                         <div class="inputbox">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <ion-icon name="lock-closed-outline" onclick="togglePassword()"></ion-icon>
                             <input id="password" name="password" type="password" value="<?php echo $password; ?>"
                                 required>
                             <label id="password_label" for="password">Password</label>
@@ -113,7 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                        <h5 class="error-msg"><?php echo $password_error; ?></h5>
+                            <h5 class="error-msg">
+                                <?php echo $password_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -133,22 +142,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
+        function togglePassword() {
+            $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
+        }
+
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
