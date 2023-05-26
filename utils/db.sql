@@ -30,7 +30,7 @@ CREATE TABLE users (
 	date_of_birth VARCHAR(20) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
 
-	FOREIGN KEY (payment_method) REFERENCES payment_methods(id)
+	FOREIGN KEY (payment_method) REFERENCES payment_methods(id) ON DELETE SET NULL
 );
 
 CREATE TABLE companies (

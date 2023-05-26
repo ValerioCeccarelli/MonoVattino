@@ -6,8 +6,6 @@ require_once('../lib/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/validate_user.php');
 
-// TODO: fai il validation anche sugli altri parametri per evitare il goto
-
 try {
     $jwt_payload = validate_jwt();
     $email = $jwt_payload->email;
@@ -38,9 +36,9 @@ try {
         $conn = connect_to_database();
 
         try {
-            $payment_method = get_user_payment_method($conn, $email);
+            $payment_method = get_user_payment_method_id($conn, $email);
             if ($payment_method != null) {
-                delete_user_payment_method($conn, $email); //TODO: da fare
+                delete_payment_method($conn, $payment_method);
             }
         } catch (PaymentNotFoundException $e) {
             // pass
@@ -125,9 +123,9 @@ try {
 
                         <!-- Owner error -->
                         <?php if ($owner_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $owner_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $owner_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Card number -->
@@ -140,9 +138,9 @@ try {
 
                         <!-- Card number error -->
                         <?php if ($card_number_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $card_number_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $card_number_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Expiration date -->
@@ -155,9 +153,9 @@ try {
 
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $expiration_date_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $expiration_date_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- CVV -->
@@ -169,9 +167,9 @@ try {
 
                         <!-- CVV error -->
                         <?php if ($cvv_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $cvv_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $cvv_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -189,24 +187,24 @@ try {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
-            }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
         }
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
+            }
+        });
+    }
 
-        setLabelControls("#owner", "#owner_label");
-        setLabelControls("#card_number", "#card_number_label");
-        setLabelControls("#expiration_date", "#expiration_date_label");
-        setLabelControls("#cvv", "#cvv_label");
+    setLabelControls("#owner", "#owner_label");
+    setLabelControls("#card_number", "#card_number_label");
+    setLabelControls("#expiration_date", "#expiration_date_label");
+    setLabelControls("#cvv", "#cvv_label");
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

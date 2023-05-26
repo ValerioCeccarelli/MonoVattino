@@ -301,7 +301,7 @@ try {
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">+</th>
+                                        <th scope="col"></th>
                                         <th scope="col">Company</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Time</th>
@@ -360,7 +360,7 @@ try {
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">+</th>
+                                        <th scope="col"></th>
                                         <th scope="col">Company</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Time</th>

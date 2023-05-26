@@ -244,7 +244,7 @@ class PaymentNotFoundException extends Exception
     }
 }
 
-function get_user_payment_method($conn, $email)
+function get_user_payment_method_id($conn, $email)
 {
     $query = "SELECT payment_method FROM users WHERE email = $1";
     $result1 = pg_prepare($conn, "get_user_payment_method", $query);
@@ -315,6 +315,20 @@ function get_payment_metod_by_id($conn, $id) {
     $payment_method->cvv = $first_line['cvv'];
 
     return $payment_method;
+}
+
+function delete_payment_method($conn, $payment_id) {
+    $query = "DELETE FROM payment_methods WHERE id = $1";
+    // the foreign key constraint will set to null the payment_method field in the users table
+    $result1 = pg_prepare($conn, "delete_payment_method", $query);
+    if (!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "delete_payment_method", array($payment_id));
+    if (!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }    
 }
 
 ?>
