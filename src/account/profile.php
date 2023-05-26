@@ -2,6 +2,8 @@
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/user.php');
+require_once('../lib/reservations.php');
+require_once('../lib/trips.php');
 
 try {
     $jwt_payload = validate_jwt();
@@ -9,9 +11,6 @@ try {
 
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $email);
-
-    // echo json_encode($user);
-    // echo "<br>";
     
     try {
         $payment_method = get_payment_metod_by_id($conn, $user->payment_method);
@@ -19,12 +18,11 @@ try {
         $payment_method = null;
     }
 
-    // echo json_encode($payment_method);
+    $reservations = get_user_reservation($conn, $email);
+    $trips = get_user_trips($conn, $email);
 
     $username = $user->username;
 } catch (InvalidJWTException $e) {
-    // http_response_code(401);
-    // echo "401 Unauthorized";
     header("Location: /account/login.php");
     exit;
 } catch (NoUserFoundException $e) {
@@ -281,7 +279,122 @@ try {
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6" style="background-color: red;">ppp</div>
+            <div class="col-12 col-md-6">
+                <div class="container">
+                    <!-- Current trips title -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1>Current trips</h1>
+                        </div>
+                    </div>
+
+                    <!-- Current trips -->
+                    <?php if (! $reservations) { ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>No current trips</p>
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">+</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($reservations as $reservation) { 
+                                        $start_time = strtotime($reservation->date);
+                                        $end_time = strtotime("now");   
+                                    
+                                        $travel_time = $end_time - $start_time;
+
+                                        $price = $reservation->fixed_cost + $reservation->cost_per_minute * $travel_time  / 60;
+                                        $price = round($price, 2);
+
+                                        $travel_hours = floor($travel_time / 3600);
+                                        $travel_minutes = floor(($travel_time / 60) % 60);
+                                        $travel_time = $travel_hours . "h " . $travel_minutes . "m";
+
+                                        $date = date("d/m/Y", $start_time);
+                                        ?>
+                                    <tr>
+                                        <td><?php echo $reservation->company_color; ?></td>
+                                        <td><?php echo $reservation->company_name; ?></td>
+                                        <td><?php echo $date; ?></td>
+                                        <td><?php echo $travel_time; ?></td>
+                                        <td><?php echo $price; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php } ?>
+
+                    <!-- Old trips title -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1>Old trips</h1>
+                        </div>
+                    </div>
+
+                    <!-- Old trips -->
+                    <?php if (! $trips) { ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>No old trips</p>
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">+</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($trips as $trip) {  
+                                    
+                                        $travel_time = $trip->trip_time;
+
+                                        $price = $trip->fixed_cost + $trip->cost_per_minute * $travel_time  / 60;
+                                        $price = round($price, 2);
+
+                                        $travel_hours = floor($travel_time / 3600);
+                                        $travel_minutes = floor(($travel_time / 60) % 60);
+                                        $travel_time = $travel_hours . "h " . $travel_minutes . "m";
+
+                                        $start_time = strtotime($trip->date);
+                                        $date = date("d/m/Y", $start_time);
+                                        ?>
+                                    <tr>
+                                        <td><?php echo $trip->company_color; ?></td>
+                                        <td><?php echo $trip->company_name; ?></td>
+                                        <td><?php echo $date; ?></td>
+                                        <td><?php echo $travel_time; ?></td>
+                                        <td><?php echo $price; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
