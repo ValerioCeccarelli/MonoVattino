@@ -25,7 +25,7 @@ function process_post_request() {
     move_to_position($conn, $scooter_id, $longitude, $latitude);
     free_scoter($conn, $scooter_id);
 
-    create_trip($conn, $scooter_id, $jwt_payload->user_id, $travel_time);
+    create_trip($conn, $scooter_id, $jwt_payload->email, $travel_time);
 
     $costs = get_scooter_costs($conn, $scooter_id);
 
