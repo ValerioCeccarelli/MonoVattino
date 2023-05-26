@@ -325,7 +325,9 @@ try {
                                         $date = date("d/m/Y", $start_time);
                                         ?>
                                     <tr>
-                                        <td><?php echo $reservation->company_color; ?></td>
+
+                                        <td><i class="bi bi-scooter"
+                                                style="color: #<?php echo $reservation->company_color; ?>"></i></td>
                                         <td><?php echo $reservation->company_name; ?></td>
                                         <td><?php echo $date; ?></td>
                                         <td><?php echo $travel_time; ?></td>
@@ -381,7 +383,8 @@ try {
                                         $date = date("d/m/Y", $start_time);
                                         ?>
                                     <tr>
-                                        <td><?php echo $trip->company_color; ?></td>
+                                        <td><i class="bi bi-scooter"
+                                                style="color: #<?php echo $trip->company_color; ?>"></i></td>
                                         <td><?php echo $trip->company_name; ?></td>
                                         <td><?php echo $date; ?></td>
                                         <td><?php echo $travel_time; ?></td>
