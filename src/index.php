@@ -82,16 +82,6 @@ try {
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
-                        <label>
-                            <input type="checkbox">
-                            <ion-icon name="sunny" class="sun"></ion-icon>
-                            <ion-icon name="moon" class="moon"></ion-icon>
-                            <span class="toggle"> </span>
-                            <span class="animateBg"></span>
-                        </label>
-                    </li>
-
-                    <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
                             <a class="nav-link" href="account/logout.php">Logout</a>
                         <?php } else { ?>
