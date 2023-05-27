@@ -125,7 +125,7 @@ async function initMap(latitude, longitude) {
         mapId: "DEMO_MAP_ID",
         streetViewControl: false,
         mapTypeControl: false,
-        fullscreenControl: false,
+        fullscreenControl: false
     });
 
     map.addListener("zoom_changed", onZoomChanged);

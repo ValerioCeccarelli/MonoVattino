@@ -21,6 +21,8 @@ try {
     $expiration_date_error = null;
     $cvv_error = null;
 
+    $is_from_terms = isset($_GET['f']) && $_GET['f'] === 'p';
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // pass
     } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -47,6 +49,11 @@ try {
         $payment_id = create_payment_method($conn, $owner, $card_number, $month, $year, $cvv);
 
         update_user_payment_method($conn, $email, $payment_id);
+
+        if ($is_from_terms) {
+            header('Location: /account/profile.php');
+            exit;
+        }
 
         header('Location: /');
         exit;
@@ -107,7 +114,7 @@ try {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/payment.php" method="POST">
+                    <form action="/account/payment.php<?php if ($is_from_terms) echo "?f=p"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Payment

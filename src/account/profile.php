@@ -18,6 +18,12 @@ try {
         $payment_method = null;
     }
 
+    if ($user->privacy_policy_accepted && $user->terms_and_conditions_accepted) {
+        $policy_accepted = true;
+    } else {
+        $policy_accepted = false;
+    }
+
     $reservations = get_user_reservation($conn, $email);
     $trips = get_user_trips($conn, $email);
 
@@ -67,7 +73,6 @@ try {
 
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-
 
     .profile-img {
         width: 30vw !important;
@@ -161,16 +166,22 @@ try {
 </head>
 
 <body>
-    <div class="container">
+    <div class="container shadow min-vh-100">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="container">
+                    <!-- Padding -->
+                    <div style="height: 30px"></div>
+
                     <!-- User name title -->
                     <div class="row">
                         <div class="col-12 text-center">
                             <h1><?php echo $user->username; ?> Profile</h1>
                         </div>
                     </div>
+
+                    <!-- Padding -->
+                    <div style="height: 10px"></div>
 
                     <!-- Gravatar icon -->
                     <div class="row">
@@ -180,6 +191,9 @@ try {
                         </div>
                     </div>
 
+                    <!-- Padding -->
+                    <div style="height: 20px"></div>
+
                     <!-- User info -->
                     <div class="form-box">
                         <div class="form-padding">
@@ -187,7 +201,14 @@ try {
                                 <div class="row">
                                     <div class="col-12 col-sm-6 text-center">
                                         <!-- Title -->
-                                        <h2>Info</h2>
+                                        <h2>
+                                            Info
+                                            <?php if (!$policy_accepted) { ?>
+                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                data-placement="top" style="color: yellow;"
+                                                title="You need to firm the terms and conditions"></i>
+                                            <?php } ?>
+                                        </h2>
 
                                         <!-- Name input -->
                                         <div class="inputbox">
@@ -224,10 +245,25 @@ try {
                                         <!-- Padding -->
                                         <div style="height: 30px"></div>
 
+                                        <?php if (!$policy_accepted) { ?>
+                                        <!-- Privacy policy link -->
+                                        <a href="/account/terms.php?f=p" class="btn btn-danger">Firm terms and
+                                            conditions</a>
+
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
+                                        <?php } ?>
+
                                     </div>
                                     <div class="col-12 col-sm-6 text-center">
                                         <!-- Title -->
-                                        <h2>Payment</h2>
+                                        <h2>Payment
+                                            <?php if ($payment_method == null) { ?>
+                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                data-placement="top" style="color: yellow;"
+                                                title="You need to add a payment method"></i>
+                                            <?php } ?>
+                                        </h2>
 
                                         <?php if ($payment_method != null) { ?>
                                         <!-- Owner -->
@@ -265,11 +301,22 @@ try {
                                         </div>
 
                                         <!-- Padding -->
+                                        <div style="height: 20px"></div>
+
+                                        <!-- Change payment method -->
+                                        <a href="/account/payment.php?f=p" class="btn btn-primary">Change payment
+                                            method</a>
+
+                                        <!-- Padding -->
                                         <div style="height: 30px"></div>
 
                                         <?php } else { ?>
 
-                                        <p>No payment method</p>
+                                        <!-- No payment method -->
+                                        <a href="/account/payment.php?f=p" class="btn btn-danger">Add new method</a>
+
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
 
                                         <?php } ?>
                                     </div>
@@ -400,8 +447,20 @@ try {
             </div>
         </div>
     </div>
+    <button class="btn btn-dark shadow ciao" id="btnSwitch">Toggle Mode</button>
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+    document.getElementById('btnSwitch').addEventListener('click', () => {
+        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+            document.documentElement.setAttribute('data-bs-theme', 'light')
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')
+        }
+    });
+    </script>
 
 </body>
 
