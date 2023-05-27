@@ -122,10 +122,13 @@ async function initMap(latitude, longitude) {
     map = new Map(document.getElementById("map"), {
         zoom: 14,
         center: position,
-        mapId: "DEMO_MAP_ID",
+
+        // mapId: "18db44928f96d960", // chiaro
+        mapId: "a4960208d9b76361", // scuro
         streetViewControl: false,
         mapTypeControl: false,
         fullscreenControl: false,
+
     });
 
     map.addListener("zoom_changed", onZoomChanged);
@@ -319,7 +322,7 @@ async function onDocumentReady() {
             longitude: 12.492234,
             latitude: 41.889819,
         }
-        let radius = 30000000
+        let radius = 3000000000000;
 
         const initial_position = colosseo;
 
@@ -393,6 +396,8 @@ async function onDocumentReady() {
         showErrorWithModal("An unknown error occurred.<br>Please, reload the page.");
     }
 }
+
+
 
 let map = null;
 let my_position = null;

@@ -82,6 +82,16 @@ try {
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
+                        <label>
+                            <input type="checkbox">
+                            <ion-icon name="sunny" class="sun"></ion-icon>
+                            <ion-icon name="moon" class="moon"></ion-icon>
+                            <span class="toggle"> </span>
+                            <span class="animateBg"></span>
+                        </label>
+                    </li>
+
+                    <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
                             <a class="nav-link" href="account/logout.php">Logout</a>
                         <?php } else { ?>
@@ -96,7 +106,6 @@ try {
 
     <!-- Map -->
     <div class="map" id="map"></div>
-
     <!-- Bottom drawer-->
     <div class="offcanvas offcanvas-bottom my-offcanvas" tabindex="-1" id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel">
@@ -175,6 +184,8 @@ try {
             </div>
         </div>
     </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
