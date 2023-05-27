@@ -328,6 +328,9 @@ try {
             </div>
             <div class="col-12 col-md-6">
                 <div class="container">
+                    <!-- Padding -->
+                    <div style="height: 30px"></div>
+
                     <!-- Current trips title -->
                     <div class="row">
                         <div class="col-12 text-center">
