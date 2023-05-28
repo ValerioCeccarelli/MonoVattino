@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS trips;
 DROP TABLE IF EXISTS reservations;
+DROP TABLE IF EXISTS issues;
 DROP TABLE IF EXISTS scooters;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS payment_methods;
-DROP TABLE IF EXISTS issues;
 
 CREATE TABLE payment_methods (
 	id SERIAL PRIMARY KEY,
@@ -33,6 +33,8 @@ CREATE TABLE users (
 
 	map_theme VARCHAR(10) NOT NULL,
 	html_theme VARCHAR(10) NOT NULL,
+
+	is_admin BOOLEAN NOT NULL,
 
 	FOREIGN KEY (payment_method) REFERENCES payment_methods(id) ON DELETE SET NULL
 );

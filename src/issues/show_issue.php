@@ -4,7 +4,8 @@ require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
-require_once('../lib/http_exceptions/bad_request.php');
+require_once('../lib/http_exceptions/forbidden.php');
+require_once('../lib/accounts/user.php');
 
 try {
     $jwt_payload = validate_jwt();
@@ -12,37 +13,25 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $conn = connect_to_database();
+
+        $user = get_user_by_email($conn, $email);
+
+        if (!$user->is_admin) {
+            throw new ForbiddenException("You are not an admin!");
+        }
+
         $issues = get_issues_info($conn);
-    // } 
-    //else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    //     $issue_id = $_POST['id'];
-
-    //     if(!isset($issue_id)) {
-    //         throw new BadRequestException("Missing issue id");
-    //     }
-
-    //     delete_issue($conn, $issue_id);
-        
-    //     $conn = connect_to_database();
-    //     $issues = get_issues_info($conn);
-    // } else if ($_SERVER['REQUEST_METHOD'] === 'UPDATE') {
-    //     $issue_id = $_POST['id'];
-
-    //     if(!isset($issue_id)) {
-    //         throw new BadRequestException("Missing issue id");
-    //     }
-
-    //     update_issue_status_as_accepted($conn, $issue_id);
-        
-    //     $conn = connect_to_database();
-    //     $issues = get_issues_info($conn);
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
 } catch (InvalidJWTException $e) {
     header("Location: /account/login.php");
     exit;
-} catch (MethodNotAllowedException $e) {
+} catch (ForbiddenException $e) {
+    http_response_code(403);
+    echo "403 Forbidden";
+    exit;
+}catch (MethodNotAllowedException $e) {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;

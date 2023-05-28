@@ -5,13 +5,12 @@ require_once('lib/accounts/user.php');
 require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
-
-
 $is_user_logged = false;
 $jwt_payload = null;
 $username = null;
 
 $map_theme = 'default';
+$is_admin = false;
 
 try {
     $jwt_payload = validate_jwt();
@@ -21,7 +20,13 @@ try {
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $jwt_payload->email);
     $map_theme = $user->map_theme;
+    $is_admin = $user->is_admin;
 } catch (InvalidJWTException $e) {
+    $is_user_logged = false;
+    $username = null;
+} catch (Exception $e) {
+    error_log("ERROR: index.php: " . $e->getMessage());
+    
     $is_user_logged = false;
     $username = null;
 }
@@ -92,6 +97,11 @@ $map_id = theme_to_mapid($map_theme);
                     <li class="nav-item">
                         <a class="nav-link" href="#">About us</a>
                     </li>
+                    <?php if ($is_admin) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="issues/show_issue.php">Issues</a>
+                    </li>
+                    <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
