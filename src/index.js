@@ -123,7 +123,7 @@ async function initMap(latitude, longitude) {
         zoom: 14,
         center: position,
 
-        // mapId: "18db44928f96d960", // standard
+        // mapId: "18db44928f96d960", // default
         //mapId: "a4960208d9b76361", // dark
         // mapId: "7bf73a088c3484e4", // night
         // mapId: "4d28faf75cbe2224", // atlas

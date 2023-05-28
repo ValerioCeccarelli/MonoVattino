@@ -12,9 +12,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <title>MonoVattino</title>
+
+    <link id="theme-style" rel="stylesheet" href="default.css">
+    <script>
+        function setTheme(themeName) {
+            var style = document.getElementById('theme-style');
+            style.href = themeName + '.css';
+        }
+    </script>
 </head>
 
 <body>
+    <button onclick="setTheme('default')">Default Theme</button>
+    <button onclick="setTheme('dark')">Dark Theme</button>
+    <button onclick="setTheme('light')">Light Theme</button>
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <i class="bi bi-scooter navbar-brand my-nav-icon" style="font-size: 35px;"></i>
 
