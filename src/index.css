@@ -1,5 +1,5 @@
 .map {
-    height: 94vh;
+    height: calc(100vh - 78.5px);
     width: 100vw;
     background-size: cover;
     background-repeat: repeat;
