@@ -35,6 +35,7 @@ CREATE TABLE users (
 	html_theme VARCHAR(10) NOT NULL,
 
 	is_admin BOOLEAN NOT NULL,
+	language VARCHAR(10) NOT NULL,
 
 	FOREIGN KEY (payment_method) REFERENCES payment_methods(id) ON DELETE SET NULL
 );
