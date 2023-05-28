@@ -10,6 +10,7 @@ $jwt_payload = null;
 $username = null;
 
 $map_theme = 'default';
+$html_theme = 'light';
 
 try {
     $jwt_payload = validate_jwt();
@@ -19,6 +20,8 @@ try {
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $jwt_payload->email);
     $map_theme = $user->map_theme;
+    $html_theme = $user->html_theme;
+
 } catch (InvalidJWTException $e) {
     $is_user_logged = false;
     $username = null;
@@ -28,7 +31,7 @@ $map_id = theme_to_mapid($map_theme);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="<?php echo $html_theme; ?>">
 
 <head>
     <script>
