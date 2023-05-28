@@ -6,10 +6,7 @@ require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
 $is_user_logged = false;
-$jwt_payload = null;
-$username = null;
-
-$map_theme = 'default';
+$html_theme = 'light';
 
 try {
     $jwt_payload = validate_jwt();
@@ -18,17 +15,16 @@ try {
 
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $jwt_payload->email);
-    $map_theme = $user->map_theme;
+    $html_theme = $user->html_theme;
 } catch (InvalidJWTException $e) {
     $is_user_logged = false;
     $username = null;
 }
 
-$map_id = theme_to_mapid($map_theme);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="<?php echo $html_theme; ?>">
 
 <head>
     <meta charset='utf-8'>
