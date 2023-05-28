@@ -215,4 +215,47 @@ function get_scooter_costs($conn, $scooter_id) {
     return $scooter_costs;
 }
 
+class ScooterNotFoundException extends Exception {
+    public function __construct($message) {
+        parent::__construct($message, 0, null);
+    }
+}
+
+function get_scooter_by_id($conn, $scooter_id) {
+    $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color, c.cost_per_minute, c.fixed_cost
+        FROM scooters s
+        JOIN companies c ON s.company=c.id
+        WHERE s.id=$1";
+
+    $result1 = pg_prepare($conn, "get_scooter_by_id", $query);
+    if(!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "get_scooter_by_id", array($scooter_id));
+    if(!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+
+    $row = pg_fetch_array($result2, null, PGSQL_ASSOC);
+
+    if(!$row) {
+        throw new ScooterNotFoundException("Scooter not found!");
+    }
+
+    $scooter = new Scooter();
+    $scooter->id = $row['id'];
+    $scooter->longitude = $row['longitude'];
+    $scooter->latitude = $row['latitude'];
+    $scooter->battery_level = $row['battery_level'];
+    $scooter->company_id = $row['company'];
+    $scooter->company_name = $row['name'];
+    $scooter->company_color = $row['color'];
+    $scooter->is_my_scooter = false;
+    $scooter->cost_per_minute = $row['cost_per_minute'];
+    $scooter->fixed_cost = $row['fixed_cost'];
+
+    return $scooter;
+}
+
 ?>

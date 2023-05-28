@@ -262,6 +262,11 @@ function onScooterClick(scooter) {
         });
     }
 
+    $('#offcanvas_report_button').unbind('click').click(() => {
+        // redirect to report issue page
+        window.location.href = "issues/report_issue.php?id=" + scooter.id;
+    });
+
     $('#offcanvasBottom').offcanvas('show');
 }
 

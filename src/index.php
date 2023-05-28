@@ -11,6 +11,8 @@ $username = null;
 
 $map_theme = 'default';
 $html_theme = 'light';
+$is_admin = false;
+
 
 try {
     $jwt_payload = validate_jwt();
@@ -20,9 +22,15 @@ try {
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $jwt_payload->email);
     $map_theme = $user->map_theme;
-    $html_theme = $user->html_theme;
 
+    $html_theme = $user->html_theme;
+    $is_admin = $user->is_admin;
 } catch (InvalidJWTException $e) {
+    $is_user_logged = false;
+    $username = null;
+} catch (Exception $e) {
+    error_log("ERROR: index.php: " . $e->getMessage());
+    
     $is_user_logged = false;
     $username = null;
 }
@@ -96,6 +104,11 @@ $map_id = theme_to_mapid($map_theme);
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">About us</a>
                     </li>
+                    <?php if ($is_admin) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="issues/show_issue.php">Issues</a>
+                    </li>
+                    <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -154,6 +167,7 @@ $map_id = theme_to_mapid($map_theme);
             </div>
 
             <button class="btn btn-primary" id="offcanvas_button" type="button">Reserve</button>
+            <button class="btn btn-warning" id="offcanvas_report_button" type="button">Report</button>
         </div>
     </div>
 

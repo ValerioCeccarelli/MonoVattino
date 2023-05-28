@@ -20,6 +20,9 @@ class User
 
     public $map_theme;
     public $html_theme;
+
+    public $is_admin;
+    public $language;
 }
 
 class NoUserFoundException extends Exception
@@ -38,7 +41,7 @@ function get_user_by_email($conn, $email)
                 salt, privacy_policy_accepted, 
                 terms_and_conditions_accepted, payment_method,
                 map_theme, html_theme,
-                name, surname, date_of_birth, phone_number
+                name, surname, date_of_birth, phone_number, is_admin, language
             FROM users WHERE email = $1";
 
     $result1 = pg_prepare($conn, "get_user_by_email", $query);
@@ -70,6 +73,8 @@ function get_user_by_email($conn, $email)
     $user->payment_method = $first_line['payment_method'];
     $user->map_theme = $first_line['map_theme'];
     $user->html_theme = $first_line['html_theme'];
+    $user->is_admin = $first_line['is_admin'];
+    $user->language = $first_line['language'];
 
     if ($user->privacy_policy_accepted == 't') {
         $user->privacy_policy_accepted = true;
@@ -81,6 +86,12 @@ function get_user_by_email($conn, $email)
         $user->terms_and_conditions_accepted = true;
     } else {
         $user->terms_and_conditions_accepted = false;
+    }
+
+    if ($user->is_admin == 't') {
+        $user->is_admin = true;
+    } else {
+        $user->is_admin = false;
     }
 
     return $user;
@@ -114,8 +125,8 @@ function create_new_user($conn, $user)
 {
     $query = "INSERT INTO users \n(username, password, salt, email, privacy_policy_accepted, 
     terms_and_conditions_accepted, payment_method,
-    name, surname, date_of_birth, phone_number, map_theme, html_theme
-     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8, 'default', 'light')";
+    name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language
+     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8, 'default', 'light', false, 'en')";
     $result1 = pg_prepare($conn, "create_new_user", $query);
     if (!$result1) {
         throw new Exception("Could not prepare the query: " . pg_last_error());
