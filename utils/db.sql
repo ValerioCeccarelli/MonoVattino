@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS scooters;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS payment_methods;
+DROP TABLE IF EXISTS issues;
 
 CREATE TABLE payment_methods (
 	id SERIAL PRIMARY KEY,
@@ -162,6 +163,19 @@ INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.82
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.83943943888112, 12.460035397993927, 100, 3);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.91059073562172, 12.55949614282705, 100, 2);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.81337129790749, 12.432355659015847, 100, 3);
+
+CREATE TABLE issues (
+	id SERIAL PRIMARY KEY,
+	scooter_id INTEGER NOT NULL,
+	user_email VARCHAR(50) NOT NULL,
+	title VARCHAR(50) NOT NULL,
+	description VARCHAR(500) NOT NULL,
+	status VARCHAR(20) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+
+	FOREIGN KEY (scooter_id) REFERENCES scooters(id),
+	FOREIGN KEY (user_email) REFERENCES users(email)
+);
 
 CREATE TABLE reservations (
 	start_time TIMESTAMP NOT NULL,

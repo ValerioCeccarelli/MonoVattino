@@ -5,6 +5,8 @@ require_once('lib/accounts/user.php');
 require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
+
+
 $is_user_logged = false;
 $jwt_payload = null;
 $username = null;
@@ -148,6 +150,7 @@ $map_id = theme_to_mapid($map_theme);
             </div>
 
             <button class="btn btn-primary" id="offcanvas_button" type="button">Reserve</button>
+            <button class="btn btn-warning" id="offcanvas_report_button" type="button">Report</button>
         </div>
     </div>
 
