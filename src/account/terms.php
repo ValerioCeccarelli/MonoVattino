@@ -15,6 +15,8 @@ try {
     $privacy_policy_error = null;
     $terms_and_conditions_error = null;
 
+    $is_from_terms = isset($_GET['f']) && $_GET['f'] === 'p';
+
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // pass
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,6 +36,11 @@ try {
         
         $conn = connect_to_database();
         update_user_policy($conn, $email, $privacy_policy, $terms_and_conditions);
+
+        if ($is_from_terms) {
+            header('Location: /account/profile.php');
+            exit;
+        }
 
         header('Location: /account/payment.php');
         exit;
@@ -87,7 +94,7 @@ end:
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/terms.php" method="POST">
+                    <form action="/account/terms.php<?php if($is_from_terms) echo "f=p"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Hi <?php echo $username; ?>!

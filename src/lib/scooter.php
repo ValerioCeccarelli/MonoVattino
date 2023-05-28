@@ -24,7 +24,7 @@ function get_scooters($conn, $longitude, $latitude, $radius) {
         WHERE ST_DistanceSphere(ST_MakePoint($1, $2), ST_MakePoint(s.latitude, s.longitude)) < $3
             AND s.id NOT IN (
                 SELECT t.scooter_id
-                FROM trips t
+                FROM reservations t
             )";
 
     $result1 = pg_prepare($conn, "get_scooters", $query);
@@ -66,7 +66,7 @@ function get_my_scooters($conn, $user_id) {
     $query = "SELECT s.id, s.longitude, s.latitude, s.battery_level, s.company, c.name, c.color, c.cost_per_minute, c.fixed_cost
         FROM scooters s
         JOIN companies c ON s.company=c.id
-        JOIN trips t ON s.id=t.scooter_id
+        JOIN reservations t ON s.id=t.scooter_id
         WHERE t.user_email=$1";
 
     $result1 = pg_prepare($conn, "get_my_scooters", $query);
@@ -107,7 +107,7 @@ class ScooterAlreayReservedException extends Exception {
 }
 
 function reserve_scooter($conn, $scooter_id, $user_id) {
-    $query = "INSERT INTO trips (scooter_id, user_email, start_time)
+    $query = "INSERT INTO reservations (scooter_id, user_email, start_time)
         VALUES ($1, $2, NOW())";
 
     $result1 = pg_prepare($conn, "reserve_scooter", $query);
@@ -127,7 +127,7 @@ function reserve_scooter($conn, $scooter_id, $user_id) {
 
 function get_travel_time($conn, $scooter_id) {
     $query = "SELECT start_time, NOW() AS end_time
-        FROM trips
+        FROM reservations
         WHERE scooter_id=$1";
 
     $result1 = pg_prepare($conn, "get_travel_time", $query);
@@ -169,7 +169,7 @@ function move_to_position($conn, $scooter_id, $longitude, $latitude) {
 }
 
 function free_scoter($conn, $scooter_id) {
-    $query = "DELETE FROM trips WHERE scooter_id=$1";
+    $query = "DELETE FROM reservations WHERE scooter_id=$1";
 
     $result1 = pg_prepare($conn, "free_scooter", $query);
     if(!$result1) {

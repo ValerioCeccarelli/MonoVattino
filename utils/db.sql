@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS trips;
+DROP TABLE IF EXISTS reservations;
 DROP TABLE IF EXISTS scooters;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS users;
@@ -29,7 +30,7 @@ CREATE TABLE users (
 	date_of_birth VARCHAR(20) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
 
-	FOREIGN KEY (payment_method) REFERENCES payment_methods(id)
+	FOREIGN KEY (payment_method) REFERENCES payment_methods(id) ON DELETE SET NULL
 );
 
 CREATE TABLE companies (
@@ -159,10 +160,20 @@ INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.83
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.91059073562172, 12.55949614282705, 100, 2);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.81337129790749, 12.432355659015847, 100, 3);
 
-CREATE TABLE trips (
+CREATE TABLE reservations (
 	start_time TIMESTAMP NOT NULL,
 	scooter_id INTEGER PRIMARY KEY,
 	user_email VARCHAR(50) NOT NULL,
+
+	FOREIGN KEY (scooter_id) REFERENCES scooters(id),
+	FOREIGN KEY (user_email) REFERENCES users(email)
+);
+
+CREATE TABLE trips (
+	trip_time INTEGER NOT NULL,
+	scooter_id INTEGER PRIMARY KEY,
+	user_email VARCHAR(50) NOT NULL,
+	date TIMESTAMP NOT NULL,
 
 	FOREIGN KEY (scooter_id) REFERENCES scooters(id),
 	FOREIGN KEY (user_email) REFERENCES users(email)

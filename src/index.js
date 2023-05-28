@@ -132,8 +132,7 @@ async function initMap(latitude, longitude) {
         // mapId: "b00ca340d0b7980f", // light
         streetViewControl: false,
         mapTypeControl: false,
-        fullscreenControl: false,
-
+        fullscreenControl: false
     });
 
     map.addListener("zoom_changed", onZoomChanged);
