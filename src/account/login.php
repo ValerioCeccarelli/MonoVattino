@@ -1,4 +1,8 @@
 <?php
+require_once('../lib/accounts/user.php');
+require_once('../lib/accounts/validate_user.php');
+require_once('../lib/database.php');
+require_once('../lib/jwt.php');
 
 $email = "";
 $email_error = null;
@@ -8,8 +12,6 @@ $password_error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once('../lib/user.php');
-    require_once('../lib/validate_user.php');
 
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -23,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             throw new InvalidPasswordException("Invalid password!");
         }
 
-        require_once('../lib/database.php');
 
         $conn = connect_to_database();
 
@@ -32,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $is_valid = verify_password($db_user, $password);
 
         if ($is_valid) {
-            require_once('../lib/jwt.php');
 
             $jwt_payload = new JwtPayload();
             $jwt_payload->email = $email;
@@ -105,9 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $email_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $email_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -120,9 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $password_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $password_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -142,26 +142,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
+        }
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
             }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
-        }
+        });
+    }
 
-        function togglePassword() {
-            $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
-        }
+    function togglePassword() {
+        $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
+    }
 
-        setLabelControls('#email', '#email_label');
-        setLabelControls('#password', '#password_label');
+    setLabelControls('#email', '#email_label');
+    setLabelControls('#password', '#password_label');
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -4,8 +4,8 @@ require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
-require_once('../lib/scooter.php');
-require_once('../lib/user.php');
+require_once('../lib/scooters/scooter.php');
+require_once('../lib/accounts/user.php');
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

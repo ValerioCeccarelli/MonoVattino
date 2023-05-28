@@ -119,15 +119,17 @@ async function initMap(latitude, longitude) {
         Map
     } = await google.maps.importLibrary("maps");
 
+    console.log("Map loaded! " + map_id);
+
     map = new Map(document.getElementById("map"), {
         zoom: 14,
         center: position,
-
+        mapId: map_id,
         // mapId: "18db44928f96d960", // default
         // mapId: "a4960208d9b76361", // dark
         // mapId: "7bf73a088c3484e4", // night
         // mapId: "4d28faf75cbe2224", // atlas
-        mapId: "a85cc9c21291463", // classic
+        // mapId: "a85cc9c21291463", // classic
         // mapId: "f12bf4b63529e007", // grey
         // mapId: "b00ca340d0b7980f", // light
         streetViewControl: false,

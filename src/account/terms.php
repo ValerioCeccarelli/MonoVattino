@@ -1,7 +1,7 @@
 <?php 
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
-require_once('../lib/user.php');
+require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 
 try {
@@ -94,7 +94,7 @@ end:
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/terms.php<?php if($is_from_terms) echo "f=p"; ?>" method="POST">
+                    <form action="/account/terms.php<?php if($is_from_terms) echo "?f=p"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Hi <?php echo $username; ?>!

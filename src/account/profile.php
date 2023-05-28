@@ -1,15 +1,40 @@
 <?php 
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
-require_once('../lib/user.php');
-require_once('../lib/reservations.php');
-require_once('../lib/trips.php');
+require_once('../lib/accounts/user.php');
+require_once('../lib/scooters/reservations.php');
+require_once('../lib/scooters/trips.php');
+require_once('../lib/accounts/payments.php');
+require_once('../lib/accounts/themes.php');
+require_once('../lib/http_exceptions/method_not_allowed.php');
 
 try {
+    $conn = connect_to_database();
+
     $jwt_payload = validate_jwt();
     $email = $jwt_payload->email;
 
-    $conn = connect_to_database();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        // pass
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['map_theme'])) {
+            $theme = $_POST['map_theme'];
+
+            if (is_valid_map_theme($theme)) {
+                update_map_theme($conn, $email, $theme);
+            }
+        }
+        if (isset($_POST['html_theme'])) {
+            $theme = $_POST['html_theme'];
+
+            if (is_valid_html_theme($theme)) {
+                update_html_theme($conn, $email, $theme);
+            }
+        }
+    } else {
+        throw new MethodNotAllowedException("Method not allowed");
+    }
+
     $user = get_user_by_email($conn, $email);
     
     try {
@@ -23,6 +48,9 @@ try {
     } else {
         $policy_accepted = false;
     }
+
+    // $map_id = theme_to_mapid($user->map_theme);
+    $html_theme = $user->html_theme;
 
     $reservations = get_user_reservation($conn, $email);
     $trips = get_user_trips($conn, $email);
@@ -39,6 +67,10 @@ try {
     http_response_code(404);
     echo "404 Not Found";
     exit;
+}catch (MethodNotAllowedException $e) {
+    http_response_code(405);
+    echo "405 Method Not Allowed";
+    exit;
 } catch (Exception $e) {
     error_log("ERROR: profile.php: " . $e->getMessage());
     http_response_code(500);
@@ -48,7 +80,7 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="<?php echo $html_theme;?>">
 
 <head>
     <meta charset="UTF-8">
@@ -166,7 +198,35 @@ try {
 </head>
 
 <body>
-    <div class="container shadow min-vh-100">
+    <!-- NavBar -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
+        <div class="container-fluid">
+            <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
+            <a class="navbar-brand" href="#"><strong>MonoVattino</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.php">Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="account/logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container shadow" style="height: calc(100vh - 78.5px)">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="container">
@@ -328,6 +388,9 @@ try {
             </div>
             <div class="col-12 col-md-6">
                 <div class="container">
+                    <!-- Padding -->
+                    <div style="height: 30px"></div>
+
                     <!-- Current trips title -->
                     <div class="row">
                         <div class="col-12 text-center">
@@ -446,20 +509,36 @@ try {
                 </div>
             </div>
         </div>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="html_theme" id="html_theme" value="light">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Light</button>
+        </form>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="html_theme" id="html_theme" value="dark">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Dark</button>
+        </form>
+
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="map_theme" id="map_theme" value="default">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map default</button>
+        </form>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="map_theme" id="map_theme" value="dark">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map Dark</button>
+        </form>
     </div>
-    <button class="btn btn-dark shadow ciao" id="btnSwitch">Toggle Mode</button>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-    document.getElementById('btnSwitch').addEventListener('click', () => {
-        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-            document.documentElement.setAttribute('data-bs-theme', 'light')
-        } else {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-        }
-    });
+    // document.getElementById('btnSwitch').addEventListener('click', () => {
+    //     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+    //         document.documentElement.setAttribute('data-bs-theme', 'light')
+    //     } else {
+    //         document.documentElement.setAttribute('data-bs-theme', 'dark')
+    //     }
+    // });
     </script>
 
 </body>

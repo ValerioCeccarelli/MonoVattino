@@ -17,6 +17,9 @@ class User
     public $terms_and_conditions_accepted;
 
     public $payment_method;
+
+    public $map_theme;
+    public $html_theme;
 }
 
 class NoUserFoundException extends Exception
@@ -34,6 +37,7 @@ function get_user_by_email($conn, $email)
     $query = "SELECT username, email, password, 
                 salt, privacy_policy_accepted, 
                 terms_and_conditions_accepted, payment_method,
+                map_theme, html_theme,
                 name, surname, date_of_birth, phone_number
             FROM users WHERE email = $1";
 
@@ -52,30 +56,20 @@ function get_user_by_email($conn, $email)
         throw new NoUserFoundException("No user found with email: $email!");
     }
 
-    $username = $first_line['username'];
-    $name = $first_line['name'];
-    $surname = $first_line['surname'];
-    $date_of_birth = $first_line['date_of_birth'];
-    $phone_number = $first_line['phone_number'];
-    $email = $first_line['email'];
-    $password = $first_line['password'];
-    $salt = $first_line['salt'];
-    $privacy_policy_accepted = $first_line['privacy_policy_accepted'];
-    $terms_and_conditions_accepted = $first_line['terms_and_conditions_accepted'];
-    $payment_method = $first_line['payment_method'];
-
     $user = new User();
-    $user->username = $username;
-    $user->name = $name;
-    $user->surname = $surname;
-    $user->date_of_birth = $date_of_birth;
-    $user->phone_number = $phone_number;
-    $user->email = $email;
-    $user->password = $password;
-    $user->salt = $salt;
-    $user->privacy_policy_accepted = $privacy_policy_accepted;
-    $user->terms_and_conditions_accepted = $terms_and_conditions_accepted;
-    $user->payment_method = $payment_method;
+    $user->username = $first_line['username'];
+    $user->name = $first_line['name'];
+    $user->surname = $first_line['surname'];
+    $user->date_of_birth = $first_line['date_of_birth'];
+    $user->phone_number = $first_line['phone_number'];
+    $user->email = $first_line['email'];
+    $user->password = $first_line['password'];
+    $user->salt = $first_line['salt'];
+    $user->privacy_policy_accepted = $first_line['privacy_policy_accepted'];
+    $user->terms_and_conditions_accepted = $first_line['terms_and_conditions_accepted'];
+    $user->payment_method = $first_line['payment_method'];
+    $user->map_theme = $first_line['map_theme'];
+    $user->html_theme = $first_line['html_theme'];
 
     if ($user->privacy_policy_accepted == 't') {
         $user->privacy_policy_accepted = true;
@@ -120,8 +114,8 @@ function create_new_user($conn, $user)
 {
     $query = "INSERT INTO users \n(username, password, salt, email, privacy_policy_accepted, 
     terms_and_conditions_accepted, payment_method,
-    name, surname, date_of_birth, phone_number
-     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8)";
+    name, surname, date_of_birth, phone_number, map_theme, html_theme
+     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8, 'default', 'light')";
     $result1 = pg_prepare($conn, "create_new_user", $query);
     if (!$result1) {
         throw new Exception("Could not prepare the query: " . pg_last_error());
@@ -210,125 +204,6 @@ function update_user_policy($conn, $email, $privacy_policy, $terms_and_condition
     if (!$result2) {
         throw new Exception("Could not execute the query: " . pg_last_error());
     }
-}
-
-// Function that create a new payment method in the database and return the id of the payment method
-function create_payment_method($conn, $owner, $card_number, $month, $year, $cvv)
-{
-    $query = "INSERT INTO payment_methods \n(owner, card_number, month, year, cvv) \nVALUES ($1, $2, $3, $4, $5) RETURNING id";
-
-    $result1 = pg_prepare($conn, "create_payment_method", $query);
-    if (!$result1) {
-        echo pg_last_error();
-        throw new Exception("Could not prepare the query: " . pg_last_error());
-    }
-
-    $result2 = pg_execute($conn, "create_payment_method", array($owner, $card_number, $month, $year, $cvv));
-    if (!$result2) {
-        throw new Exception("Could not execute the query: " . pg_last_error());
-    }
-
-    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
-    if (!$first_line) {
-        throw new Exception("Could not fetch the result: " . pg_last_error());
-    }
-
-    return $first_line['id'];
-}
-
-class PaymentNotFoundException extends Exception
-{
-    public function __construct($message)
-    {
-        parent::__construct($message, 0, null);
-    }
-}
-
-function get_user_payment_method_id($conn, $email)
-{
-    $query = "SELECT payment_method FROM users WHERE email = $1";
-    $result1 = pg_prepare($conn, "get_user_payment_method", $query);
-    if (!$result1) {
-        throw new Exception("Could not prepare the query: " . pg_last_error());
-    }
-
-    $result2 = pg_execute($conn, "get_user_payment_method", array($email));
-    if (!$result2) {
-        throw new Exception("Could not execute the query: " . pg_last_error());
-    }
-
-    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
-    if (!$first_line) {
-        throw new PaymentNotFoundException("Could not fetch the result: " . pg_last_error());
-    }
-
-    return $first_line['payment_method'];
-}
-
-function update_user_payment_method($conn, $email, $payment_id)
-{
-    $query = "UPDATE users SET payment_method = $1 WHERE email = $2";
-    $result1 = pg_prepare($conn, "update_user_payment_method", $query);
-    if (!$result1) {
-        throw new Exception("Could not prepare the query: " . pg_last_error());
-    }
-
-    $result2 = pg_execute($conn, "update_user_payment_method", array($payment_id, $email));
-    if (!$result2) {
-        throw new Exception("Could not execute the query: " . pg_last_error());
-    }
-}
-
-class PaymentMethod {
-    public $id;
-    public $owner;
-    public $card_number;
-    public $month;
-    public $year;
-    public $cvv;
-}
-
-function get_payment_metod_by_id($conn, $id) {
-    $query = "SELECT * FROM payment_methods WHERE id = $1";
-    $result1 = pg_prepare($conn, "get_payment_metod_by_id", $query);
-    if (!$result1) {
-        throw new Exception("Could not prepare the query: " . pg_last_error());
-    }
-
-    $result2 = pg_execute($conn, "get_payment_metod_by_id", array($id));
-    if (!$result2) {
-        throw new Exception("Could not execute the query: " . pg_last_error());
-    }
-
-    $first_line = pg_fetch_array($result2, null, PGSQL_ASSOC);
-    if (!$first_line) {
-        throw new PaymentNotFoundException("Could not fetch the result: " . pg_last_error());
-    }
-
-    $payment_method = new PaymentMethod();
-
-    $payment_method->id = $first_line['id'];
-    $payment_method->owner = $first_line['owner'];
-    $payment_method->card_number = $first_line['card_number'];
-    $payment_method->month = $first_line['month'];
-    $payment_method->year = $first_line['year'];
-    $payment_method->cvv = $first_line['cvv'];
-
-    return $payment_method;
-}
-
-function delete_payment_method($conn, $payment_id) {
-    $query = "DELETE FROM payment_methods WHERE id = $1";
-    // the foreign key constraint will set to null the payment_method field in the users table
-    $result1 = pg_prepare($conn, "delete_payment_method", $query);
-    if (!$result1) {
-        throw new Exception("Could not prepare the query: " . pg_last_error());
-    }
-
-    $result2 = pg_execute($conn, "delete_payment_method", array($payment_id));
-    if (!$result2) {
-        throw new Exception("Could not execute the query: " . pg_last_error());
-    }    
 }
 
 ?>
