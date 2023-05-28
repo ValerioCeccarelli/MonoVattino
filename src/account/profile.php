@@ -202,7 +202,7 @@ try {
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="#"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="../index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -214,7 +214,10 @@ try {
                         <a class="nav-link" href="/index.php">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About us</a>
+                        <a class="nav-link" href="#"><strong>Profile</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.php">About us</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -226,7 +229,7 @@ try {
         </div>
     </nav>
 
-    <div class="container shadow" style="height: calc(100vh - 78.5px)">
+    <div class="container shadow" style="min-height: calc(100vh - 78.5px)">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="container">
