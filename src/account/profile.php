@@ -370,7 +370,9 @@ try {
                                             <div style="height: 20px"></div>
 
                                             <!-- Change payment method -->
-                                            <a href="/account/payment.php?f=p" class="btn btn-primary">Change payment
+                                            <a href="/account/payment.php?f=p" class="btn btn-primary"
+                                                style="background-color:#FF4500">Change
+                                                payment
                                                 method</a>
 
                                             <!-- Padding -->
@@ -531,22 +533,57 @@ try {
                 </div>
             </div>
         </div>
-        <form method='POST' action='/account/profile.php'>
-            <input type="hidden" name="html_theme" id="html_theme" value="light">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Light</button>
-        </form>
+
+        <!-- Padding -->
+        <div style="height: 30px"></div>
+
+        <p>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample" style="background-color:#FF4500">
+                Map theme
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <img src="/img/thumbnails/default.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Default</h5>
+                            <!-- <form method='POST' action='/account/profile.php'>
+                                <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                <button class="btn btn-primary shadow w-100" id="btnSwitch" type="submit"
+                                    style="background-color:#FF4500">Light</button>
+                            </form> -->
+                            <a href="#" class="btn btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Dark</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="html_theme" id="html_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Dark</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
+                style="background-color:#FF4500">Dark</button>
         </form>
 
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="map_theme" id="map_theme" value="default">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map default</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+                default</button>
         </form>
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="map_theme" id="map_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map Dark</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+                Dark</button>
         </form>
     </div>
 
