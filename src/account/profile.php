@@ -67,6 +67,10 @@ try {
     http_response_code(404);
     echo "404 Not Found";
     exit;
+}catch (MethodNotAllowedException $e) {
+    http_response_code(405);
+    echo "405 Method Not Allowed";
+    exit;
 } catch (Exception $e) {
     error_log("ERROR: profile.php: " . $e->getMessage());
     http_response_code(500);
