@@ -176,7 +176,7 @@ function validate_date_of_birth($date_of_birth)
         throw new InvalidDateOfBirthException("Date of birth is required!");
     }
     if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date_of_birth)) {
-        throw new InvalidDateOfBirthException("Date of birth must be in the format YYYY-MM-DD!");
+        throw new InvalidDateOfBirthException("Date of birth must be in the format DD-MM-YYYY!");
     }
     $date_of_birth = new DateTime($date_of_birth);
     $now = new DateTime();
