@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
@@ -36,7 +36,7 @@ try {
     }
 
     $user = get_user_by_email($conn, $email);
-    
+
     try {
         $payment_method = get_payment_metod_by_id($conn, $user->payment_method);
     } catch (PaymentNotFoundException $e) {
@@ -63,11 +63,11 @@ try {
     http_response_code(404);
     echo "404 Not Found";
     exit;
-} catch (PaymentNotFoundException  $e) {
+} catch (PaymentNotFoundException $e) {
     http_response_code(404);
     echo "404 Not Found";
     exit;
-}catch (MethodNotAllowedException $e) {
+} catch (MethodNotAllowedException $e) {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;
@@ -80,7 +80,7 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="<?php echo $html_theme;?>">
+<html lang="en" data-bs-theme="<?php echo $html_theme; ?>">
 
 <head>
     <meta charset="UTF-8">
@@ -95,7 +95,7 @@ try {
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -104,96 +104,96 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-    .profile-img {
-        width: 30vw !important;
-        height: auto;
-    }
+        .profile-img {
+            width: 30vw !important;
+            height: auto;
+        }
 
-    .form-box {
-        position: relative;
-        width: auto;
-        height: auto;
+        .form-box {
+            position: relative;
+            width: auto;
+            height: auto;
 
-        border: 2px solid rgba(255, 255, 255, 0.5);
-        border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
 
-        background-color: rgba(100, 100, 100, 0.8);
-        /* display: flex; */
-        justify-content: center;
-        align-items: center;
-    }
+            background-color: rgba(100, 100, 100, 0.8);
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+        }
 
-    .form-padding {
-        padding: 0px 20px;
-        padding-top: 15px;
-    }
+        .form-padding {
+            padding: 0px 20px;
+            padding-top: 15px;
+        }
 
-    .form-box h2 {
-        font-size: 2em;
-        color: #fff;
-        text-align: center;
-    }
+        .form-box h2 {
+            font-size: 2em;
+            color: #fff;
+            text-align: center;
+        }
 
-    .inputbox {
-        position: relative;
-        margin-top: 30px;
-        width: auto;
-        border-bottom: 2px solid #fff;
-    }
+        .inputbox {
+            position: relative;
+            margin-top: 30px;
+            width: auto;
+            border-bottom: 2px solid #fff;
+        }
 
-    .inputbox label {
-        position: absolute;
-        top: -5px;
-        left: 5px;
-        transform: translateY(-50%);
-        color: #fff;
-        font-size: 1em;
-        pointer-events: none;
-        transition: .5s;
-    }
+        .inputbox label {
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 1em;
+            pointer-events: none;
+            transition: .5s;
+        }
 
-    .inputbox input {
-        width: 85.4%;
-        height: 50px;
-        background: transparent;
-        border: none;
-        outline: none;
-        font-size: 1em;
+        .inputbox input {
+            width: 85.4%;
+            height: 50px;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 1em;
 
-        padding-left: 5px;
-        color: #fff;
+            padding-left: 5px;
+            color: #fff;
 
-        left: -15px;
-        position: relative;
-    }
+            left: -15px;
+            position: relative;
+        }
 
-    .inputbox ion-icon {
-        position: absolute;
-        right: 8px;
-        color: #fff;
-        font-size: 1.2em;
-        top: 20px;
-    }
+        .inputbox ion-icon {
+            position: absolute;
+            right: 8px;
+            color: #fff;
+            font-size: 1.2em;
+            top: 20px;
+        }
 
-    .forget {
-        margin: -15px 0 15px;
-        font-size: .9em;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-    }
+        .forget {
+            margin: -15px 0 15px;
+            font-size: .9em;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .forget label input {
-        margin-right: 3px;
+        .forget label input {
+            margin-right: 3px;
 
-    }
+        }
 
-    .forget label a {
-        color: #fff;
-        text-decoration: none;
-    }
+        .forget label a {
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -202,7 +202,7 @@ try {
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="#"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="../index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -214,7 +214,10 @@ try {
                         <a class="nav-link" href="/index.php">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About us</a>
+                        <a class="nav-link" href="#"><strong>Profile</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.php">About us</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -226,7 +229,7 @@ try {
         </div>
     </nav>
 
-    <div class="container shadow" style="height: calc(100vh - 78.5px)">
+    <div class="container shadow" style="min-height: calc(100vh - 78.5px)">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="container">
@@ -236,7 +239,9 @@ try {
                     <!-- User name title -->
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h1><?php echo $user->username; ?> Profile</h1>
+                            <h1>
+                                <?php echo $user->username; ?> Profile
+                            </h1>
                         </div>
                     </div>
 
@@ -264,9 +269,9 @@ try {
                                         <h2>
                                             Info
                                             <?php if (!$policy_accepted) { ?>
-                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
-                                                data-placement="top" style="color: yellow;"
-                                                title="You need to firm the terms and conditions"></i>
+                                                <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                    data-placement="top" style="color: yellow;"
+                                                    title="You need to firm the terms and conditions"></i>
                                             <?php } ?>
                                         </h2>
 
@@ -274,7 +279,7 @@ try {
                                         <div class="inputbox">
                                             <ion-icon name="person-outline"></ion-icon>
                                             <input id="name" name="name" type="text" value="<?php echo $user->name; ?>"
-                                                required>
+                                                disabled>
                                             <label id="name_label" for="name">Name</label>
                                         </div>
 
@@ -282,7 +287,7 @@ try {
                                         <div class="inputbox">
                                             <ion-icon name="person-outline"></ion-icon>
                                             <input id="surname" name="surname" type="text"
-                                                value="<?php echo $user->surname; ?>" required>
+                                                value="<?php echo $user->surname; ?>" disabled>
                                             <label id="surname_label" for="surname">Surname</label>
                                         </div>
 
@@ -290,7 +295,7 @@ try {
                                         <div class="inputbox">
                                             <ion-icon name="mail-outline"></ion-icon>
                                             <input id="email" name="email" type="email"
-                                                value="<?php echo $user->email; ?>" disable>
+                                                value="<?php echo $user->email; ?>" disabled>
                                             <label id="email_label" for="email">Email</label>
                                         </div>
 
@@ -298,7 +303,7 @@ try {
                                         <div class="inputbox">
                                             <ion-icon name="person-outline"></ion-icon>
                                             <input id="username" name="username" type="text"
-                                                value="<?php echo $user->username; ?>" disable>
+                                                value="<?php echo $user->username; ?>" disabled>
                                             <label id="username_label" for="username">Username</label>
                                         </div>
 
@@ -306,12 +311,12 @@ try {
                                         <div style="height: 30px"></div>
 
                                         <?php if (!$policy_accepted) { ?>
-                                        <!-- Privacy policy link -->
-                                        <a href="/account/terms.php?f=p" class="btn btn-danger">Firm terms and
-                                            conditions</a>
+                                            <!-- Privacy policy link -->
+                                            <a href="/account/terms.php?f=p" class="btn btn-danger">Firm terms and
+                                                conditions</a>
 
-                                        <!-- Padding -->
-                                        <div style="height: 30px"></div>
+                                            <!-- Padding -->
+                                            <div style="height: 30px"></div>
                                         <?php } ?>
 
                                     </div>
@@ -319,64 +324,67 @@ try {
                                         <!-- Title -->
                                         <h2>Payment
                                             <?php if ($payment_method == null) { ?>
-                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
-                                                data-placement="top" style="color: yellow;"
-                                                title="You need to add a payment method"></i>
+                                                <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                    data-placement="top" style="color: yellow;"
+                                                    title="You need to add a payment method"></i>
                                             <?php } ?>
                                         </h2>
 
                                         <?php if ($payment_method != null) { ?>
-                                        <!-- Owner -->
-                                        <div class="inputbox">
-                                            <ion-icon name="person-outline"></ion-icon>
-                                            <input id="owner" name="owner" type="text"
-                                                value="<?php echo $payment_method->owner; ?>" required>
-                                            <label id="owner_label" for="username">Card holder</label>
-                                        </div>
+                                            <!-- Owner -->
+                                            <div class="inputbox">
+                                                <ion-icon name="person-outline"></ion-icon>
+                                                <input id="owner" name="owner" type="text"
+                                                    value="<?php echo $payment_method->owner; ?>" disabled>
+                                                <label id="owner_label" for="username">Card holder</label>
+                                            </div>
 
-                                        <!-- Card number -->
-                                        <div class="inputbox">
-                                            <ion-icon name="card-outline"></ion-icon>
-                                            <input id="card_number" name="card_number" type="text"
-                                                value="<?php echo $payment_method->card_number; ?>" required>
-                                            <label id="card_number_label" for="card_number">Card number</label>
-                                        </div>
+                                            <!-- Card number -->
+                                            <div class="inputbox">
+                                                <ion-icon name="card-outline"></ion-icon>
+                                                <input id="card_number" name="card_number" type="text"
+                                                    value="•••• •••• •••• <?php echo substr($payment_method->card_number, 12, 4); ?>"
+                                                    disabled>
+                                                <label id="card_number_label" for="card_number">Card number</label>
+                                            </div>
 
-                                        <!-- Expiration date -->
-                                        <div class="inputbox">
-                                            <ion-icon name="calendar-outline"></ion-icon>
-                                            <input id="expiration_date" name="expiration_date" type="text"
-                                                value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
-                                                required>
-                                            <label id="expiration_date_label" for="expiration_date">Expiration
-                                                date</label>
-                                        </div>
+                                            <!-- Expiration date -->
+                                            <div class="inputbox">
+                                                <ion-icon name="calendar-outline"></ion-icon>
+                                                <input id="expiration_date" name="expiration_date" type="text"
+                                                    value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
+                                                    disabled>
+                                                <label id="expiration_date_label" for="expiration_date">Expiration
+                                                    date</label>
+                                            </div>
 
-                                        <!-- CVV -->
-                                        <div class="inputbox">
-                                            <ion-icon name="lock-closed-outline"></ion-icon>
-                                            <input id="cvv" name="cvv" type="text"
-                                                value="<?php echo $payment_method->cvv; ?>" required>
-                                            <label id="cvv_label" for="cvv">CVV</label>
-                                        </div>
+                                            <!-- CVV -->
+                                            <div class="inputbox">
+                                                <ion-icon name="lock-closed-outline"></ion-icon>
+                                                <input id="cvv" name="cvv" type="text"
+                                                    value="<?php echo $payment_method->cvv; ?>" disabled>
+                                                <label id="cvv_label" for="cvv">CVV</label>
+                                            </div>
 
-                                        <!-- Padding -->
-                                        <div style="height: 20px"></div>
+                                            <!-- Padding -->
+                                            <div style="height: 20px"></div>
 
-                                        <!-- Change payment method -->
-                                        <a href="/account/payment.php?f=p" class="btn btn-primary">Change payment
-                                            method</a>
+                                            <!-- Change payment method -->
+                                            <a href="/account/payment.php?f=p" class="btn btn-primary"
+                                                style="background-color:#FF4500">Change
+                                                payment
+                                                method</a>
 
-                                        <!-- Padding -->
-                                        <div style="height: 30px"></div>
+                                            <!-- Padding -->
+                                            <div style="height: 30px"></div>
 
                                         <?php } else { ?>
 
-                                        <!-- No payment method -->
-                                        <a href="/account/payment.php?f=p" class="btn btn-danger">Add new method</a>
+                                            <!-- No payment method -->
+                                            <a href="/account/payment.php?f=p" class="btn btn-danger">Add new method</a>
 
-                                        <!-- Padding -->
-                                        <div style="height: 30px"></div>
+                                            <!-- Padding -->
+                                            <div style="height: 30px"></div>
 
                                         <?php } ?>
                                     </div>
@@ -399,55 +407,63 @@ try {
                     </div>
 
                     <!-- Current trips -->
-                    <?php if (! $reservations) { ?>
-                    <div class="row">
-                        <div class="col-12">
-                            <p>No current trips</p>
+                    <?php if (!$reservations) { ?>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>No current trips</p>
+                            </div>
                         </div>
-                    </div>
                     <?php } else { ?>
-                    <div class="row">
-                        <div class="col-12">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Company</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($reservations as $reservation) { 
-                                        $start_time = strtotime($reservation->date);
-                                        $end_time = strtotime("now");   
-                                    
-                                        $travel_time = $end_time - $start_time;
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Company</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($reservations as $reservation) {
+                                            $start_time = strtotime($reservation->date);
+                                            $end_time = strtotime("now");
 
-                                        $price = $reservation->fixed_cost + $reservation->cost_per_minute * $travel_time  / 60;
-                                        $price = round($price, 2);
+                                            $travel_time = $end_time - $start_time;
 
-                                        $travel_hours = floor($travel_time / 3600);
-                                        $travel_minutes = floor(($travel_time / 60) % 60);
-                                        $travel_time = $travel_hours . "h " . $travel_minutes . "m";
+                                            $price = $reservation->fixed_cost + $reservation->cost_per_minute * $travel_time / 60;
+                                            $price = round($price, 2);
 
-                                        $date = date("d/m/Y", $start_time);
-                                        ?>
-                                    <tr>
+                                            $travel_hours = floor($travel_time / 3600);
+                                            $travel_minutes = floor(($travel_time / 60) % 60);
+                                            $travel_time = $travel_hours . "h " . $travel_minutes . "m";
 
-                                        <td><i class="bi bi-scooter"
-                                                style="color: #<?php echo $reservation->company_color; ?>"></i></td>
-                                        <td><?php echo $reservation->company_name; ?></td>
-                                        <td><?php echo $date; ?></td>
-                                        <td><?php echo $travel_time; ?></td>
-                                        <td><?php echo $price; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                            $date = date("d/m/Y", $start_time);
+                                            ?>
+                                            <tr>
+
+                                                <td><i class="bi bi-scooter"
+                                                        style="color: #<?php echo $reservation->company_color; ?>"></i></td>
+                                                <td>
+                                                    <?php echo $reservation->company_name; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $date; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $travel_time; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $price; ?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
 
                     <!-- Old trips title -->
@@ -458,73 +474,116 @@ try {
                     </div>
 
                     <!-- Old trips -->
-                    <?php if (! $trips) { ?>
-                    <div class="row">
-                        <div class="col-12">
-                            <p>No old trips</p>
+                    <?php if (!$trips) { ?>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>No old trips</p>
+                            </div>
                         </div>
-                    </div>
                     <?php } else { ?>
-                    <div class="row">
-                        <div class="col-12">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Company</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($trips as $trip) {  
-                                    
-                                        $travel_time = $trip->trip_time;
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Company</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($trips as $trip) {
 
-                                        $price = $trip->fixed_cost + $trip->cost_per_minute * $travel_time  / 60;
-                                        $price = round($price, 2);
+                                            $travel_time = $trip->trip_time;
 
-                                        $travel_hours = floor($travel_time / 3600);
-                                        $travel_minutes = floor(($travel_time / 60) % 60);
-                                        $travel_time = $travel_hours . "h " . $travel_minutes . "m";
+                                            $price = $trip->fixed_cost + $trip->cost_per_minute * $travel_time / 60;
+                                            $price = round($price, 2);
 
-                                        $start_time = strtotime($trip->date);
-                                        $date = date("d/m/Y", $start_time);
-                                        ?>
-                                    <tr>
-                                        <td><i class="bi bi-scooter"
-                                                style="color: #<?php echo $trip->company_color; ?>"></i></td>
-                                        <td><?php echo $trip->company_name; ?></td>
-                                        <td><?php echo $date; ?></td>
-                                        <td><?php echo $travel_time; ?></td>
-                                        <td><?php echo $price; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                            $travel_hours = floor($travel_time / 3600);
+                                            $travel_minutes = floor(($travel_time / 60) % 60);
+                                            $travel_time = $travel_hours . "h " . $travel_minutes . "m";
+
+                                            $start_time = strtotime($trip->date);
+                                            $date = date("d/m/Y", $start_time);
+                                            ?>
+                                            <tr>
+                                                <td><i class="bi bi-scooter"
+                                                        style="color: #<?php echo $trip->company_color; ?>"></i></td>
+                                                <td>
+                                                    <?php echo $trip->company_name; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $date; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $travel_time; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $price; ?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                 </div>
             </div>
         </div>
-        <form method='POST' action='/account/profile.php'>
-            <input type="hidden" name="html_theme" id="html_theme" value="light">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Light</button>
-        </form>
+
+        <!-- Padding -->
+        <div style="height: 30px"></div>
+
+        <p>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample" style="background-color:#FF4500">
+                Map theme
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <img src="/img/thumbnails/default.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Default</h5>
+                            <!-- <form method='POST' action='/account/profile.php'>
+                                <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                <button class="btn btn-primary shadow w-100" id="btnSwitch" type="submit"
+                                    style="background-color:#FF4500">Light</button>
+                            </form> -->
+                            <a href="#" class="btn btn-primary stretched-link"></a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Dark</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="html_theme" id="html_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Dark</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
+                style="background-color:#FF4500">Dark</button>
         </form>
 
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="map_theme" id="map_theme" value="default">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map default</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+                default</button>
         </form>
         <form method='POST' action='/account/profile.php'>
             <input type="hidden" name="map_theme" id="map_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map Dark</button>
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+                Dark</button>
         </form>
     </div>
 
