@@ -1,7 +1,7 @@
 <?php 
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
-require_once('../lib/user.php');
+require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 
 try {

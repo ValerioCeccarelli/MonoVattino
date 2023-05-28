@@ -1,9 +1,10 @@
 <?php 
 require_once('../lib/jwt.php');
 require_once('../lib/database.php');
-require_once('../lib/user.php');
-require_once('../lib/reservations.php');
-require_once('../lib/trips.php');
+require_once('../lib/accounts/user.php');
+require_once('../lib/scooters/reservations.php');
+require_once('../lib/scooters/trips.php');
+require_once('../lib/accounts/payments.php');
 
 try {
     $jwt_payload = validate_jwt();

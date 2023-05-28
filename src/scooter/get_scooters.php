@@ -3,7 +3,7 @@
 require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
-require_once('../lib/scooter.php');
+require_once('../lib/scooters/scooter.php');
 require_once('../lib/jwt.php');
 
 function process_get_request() {

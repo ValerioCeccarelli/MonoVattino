@@ -1,4 +1,8 @@
 <?php
+require_once('../lib/accounts/user.php');
+require_once('../lib/accounts/validate_user.php');
+require_once('../lib/database.php');
+require_once('../lib/jwt.php');
 
 $username = "";
 $username_error = null;
@@ -18,8 +22,6 @@ $phone_number_error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once('../lib/user.php');
-    require_once('../lib/validate_user.php');
 
     $username = $_POST['username'];
     $name = $_POST['name'];
@@ -38,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         validate_date_of_birth($date_of_birth);
         validate_phone_number($phone_number);
 
-        require_once('../lib/database.php');
 
         $conn = connect_to_database();
 
@@ -57,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $user->payment_method = null;
 
         create_new_user($conn, $user);
-
-        require_once('../lib/jwt.php');
 
         $jwt_payload = new JwtPayload();
         $jwt_payload->email = $email;
@@ -138,9 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $username_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $username_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Email input -->
@@ -152,9 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $email_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $email_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -166,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         </div>
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $password_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $password_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Name input -->
@@ -180,9 +179,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Name error -->
                         <?php if ($name_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $name_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $name_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Surname input -->
@@ -194,9 +193,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Surname error -->
                         <?php if ($surname_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $surname_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $surname_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Date of birth input -->
@@ -209,9 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Date of birth error -->
                         <?php if ($date_of_birth_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $date_of_birth_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $date_of_birth_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Phone number input -->
@@ -224,9 +223,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Phone number error -->
                         <?php if ($phone_number_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $phone_number_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $phone_number_error; ?>
+                        </h5>
                         <?php } ?>
 
 
@@ -247,32 +246,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
+        }
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
             }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
-        }
+        });
+    }
 
-        setLabelControls('#email', '#email_label');
-        setLabelControls('#password', '#password_label');
-        setLabelControls('#username', '#username_label');
-        setLabelControls('#name', '#name_label');
-        setLabelControls('#surname', '#surname_label');
-        setLabelControls('#date_of_birth', '#date_of_birth_label');
-        setLabelControls('#phone_number', '#phone_number_label');
-        $('#date_of_birth_label').css('top', '-5px')
+    setLabelControls('#email', '#email_label');
+    setLabelControls('#password', '#password_label');
+    setLabelControls('#username', '#username_label');
+    setLabelControls('#name', '#name_label');
+    setLabelControls('#surname', '#surname_label');
+    setLabelControls('#date_of_birth', '#date_of_birth_label');
+    setLabelControls('#phone_number', '#phone_number_label');
+    $('#date_of_birth_label').css('top', '-5px')
 
-        function togglePassword() {
-            $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
-        }
+    function togglePassword() {
+        $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
+    }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
