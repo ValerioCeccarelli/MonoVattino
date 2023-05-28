@@ -31,11 +31,16 @@ try {
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
 
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script> -->
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -52,33 +57,45 @@ try {
 
 <body>
     <!-- NavBar -->
-    <nav class="navbar navbar-expand bg-body-tertiary my-nav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
         <div class="container-fluid">
-            <!-- Scooter img -->
-            <i class="bi bi-scooter navbar-brand my-nav-icon"></i>
-
-            <div class="navbar-collapse " id="navbarSupportedContent">
-                <!-- Title -->
+            <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
+            <a class="navbar-brand" href="#"><strong>MonoVattino</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <?php if ($is_user_logged) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="account/profile.php">Profile</a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
-                        <span class="nav-link active my-pad" aria-current="page" href="#">
-                            <h3 style="margin-bottom: 0%;">MonoVattino</h3>
-                        </span>
+                        <a class="nav-link" href="#">About us</a>
                     </li>
+
                 </ul>
 
-                <!-- Person img -->
-                <a style="color: black" <?php if ($is_user_logged) { ?> href="account/profile.php" <?php } else { ?>
-                    href="account/login.php" <?php } ?>>
-                    <i class="bi bi-person-circle my-nav-icon"></i>
-                </a>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <?php if ($is_user_logged) { ?>
+                            <a class="nav-link" href="account/logout.php">Logout</a>
+                        <?php } else { ?>
+                            <a class="nav-link" href="account/login.php">Login</a>
+                        <?php } ?>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </nav>
 
     <!-- Map -->
     <div class="map" id="map"></div>
-
     <!-- Bottom drawer-->
     <div class="offcanvas offcanvas-bottom my-offcanvas" tabindex="-1" id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel">
@@ -157,6 +174,8 @@ try {
             </div>
         </div>
     </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
