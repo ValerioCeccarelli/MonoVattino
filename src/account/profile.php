@@ -549,6 +549,14 @@ try {
                 Map theme
             </button>
         </p>
+
+        <style>
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        </style>
+
         <div class="collapse container" id="collapseExample">
             <div class="row">
 
