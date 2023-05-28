@@ -17,6 +17,9 @@ class User
     public $terms_and_conditions_accepted;
 
     public $payment_method;
+
+    public $map_theme;
+    public $html_theme;
 }
 
 class NoUserFoundException extends Exception
@@ -34,6 +37,7 @@ function get_user_by_email($conn, $email)
     $query = "SELECT username, email, password, 
                 salt, privacy_policy_accepted, 
                 terms_and_conditions_accepted, payment_method,
+                map_theme, html_theme,
                 name, surname, date_of_birth, phone_number
             FROM users WHERE email = $1";
 
@@ -52,30 +56,20 @@ function get_user_by_email($conn, $email)
         throw new NoUserFoundException("No user found with email: $email!");
     }
 
-    $username = $first_line['username'];
-    $name = $first_line['name'];
-    $surname = $first_line['surname'];
-    $date_of_birth = $first_line['date_of_birth'];
-    $phone_number = $first_line['phone_number'];
-    $email = $first_line['email'];
-    $password = $first_line['password'];
-    $salt = $first_line['salt'];
-    $privacy_policy_accepted = $first_line['privacy_policy_accepted'];
-    $terms_and_conditions_accepted = $first_line['terms_and_conditions_accepted'];
-    $payment_method = $first_line['payment_method'];
-
     $user = new User();
-    $user->username = $username;
-    $user->name = $name;
-    $user->surname = $surname;
-    $user->date_of_birth = $date_of_birth;
-    $user->phone_number = $phone_number;
-    $user->email = $email;
-    $user->password = $password;
-    $user->salt = $salt;
-    $user->privacy_policy_accepted = $privacy_policy_accepted;
-    $user->terms_and_conditions_accepted = $terms_and_conditions_accepted;
-    $user->payment_method = $payment_method;
+    $user->username = $first_line['username'];
+    $user->name = $first_line['name'];
+    $user->surname = $first_line['surname'];
+    $user->date_of_birth = $first_line['date_of_birth'];
+    $user->phone_number = $first_line['phone_number'];
+    $user->email = $first_line['email'];
+    $user->password = $first_line['password'];
+    $user->salt = $first_line['salt'];
+    $user->privacy_policy_accepted = $first_line['privacy_policy_accepted'];
+    $user->terms_and_conditions_accepted = $first_line['terms_and_conditions_accepted'];
+    $user->payment_method = $first_line['payment_method'];
+    $user->map_theme = $first_line['map_theme'];
+    $user->html_theme = $first_line['html_theme'];
 
     if ($user->privacy_policy_accepted == 't') {
         $user->privacy_policy_accepted = true;
@@ -120,8 +114,8 @@ function create_new_user($conn, $user)
 {
     $query = "INSERT INTO users \n(username, password, salt, email, privacy_policy_accepted, 
     terms_and_conditions_accepted, payment_method,
-    name, surname, date_of_birth, phone_number
-     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8)";
+    name, surname, date_of_birth, phone_number, map_theme, html_theme
+     ) \nVALUES ($1, $2, $3, $4, false, false, null, $5, $6, $7, $8, 'default', 'light')";
     $result1 = pg_prepare($conn, "create_new_user", $query);
     if (!$result1) {
         throw new Exception("Could not prepare the query: " . pg_last_error());

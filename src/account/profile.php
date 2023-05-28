@@ -5,12 +5,36 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/scooters/reservations.php');
 require_once('../lib/scooters/trips.php');
 require_once('../lib/accounts/payments.php');
+require_once('../lib/accounts/themes.php');
+require_once('../lib/http_exceptions/method_not_allowed.php');
 
 try {
+    $conn = connect_to_database();
+
     $jwt_payload = validate_jwt();
     $email = $jwt_payload->email;
 
-    $conn = connect_to_database();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        // pass
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['map_theme'])) {
+            $theme = $_POST['map_theme'];
+
+            if (is_valid_map_theme($theme)) {
+                update_map_theme($conn, $email, $theme);
+            }
+        }
+        if (isset($_POST['html_theme'])) {
+            $theme = $_POST['html_theme'];
+
+            if (is_valid_html_theme($theme)) {
+                update_html_theme($conn, $email, $theme);
+            }
+        }
+    } else {
+        throw new MethodNotAllowedException("Method not allowed");
+    }
+
     $user = get_user_by_email($conn, $email);
     
     try {
@@ -24,6 +48,9 @@ try {
     } else {
         $policy_accepted = false;
     }
+
+    // $map_id = theme_to_mapid($user->map_theme);
+    $html_theme = $user->html_theme;
 
     $reservations = get_user_reservation($conn, $email);
     $trips = get_user_trips($conn, $email);
@@ -49,7 +76,7 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="<?php echo $html_theme;?>">
 
 <head>
     <meta charset="UTF-8">
@@ -478,20 +505,36 @@ try {
                 </div>
             </div>
         </div>
-        <button class="btn btn-dark shadow ciao" id="btnSwitch">Toggle Mode</button>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="html_theme" id="html_theme" value="light">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Light</button>
+        </form>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="html_theme" id="html_theme" value="dark">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">Dark</button>
+        </form>
+
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="map_theme" id="map_theme" value="default">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map default</button>
+        </form>
+        <form method='POST' action='/account/profile.php'>
+            <input type="hidden" name="map_theme" id="map_theme" value="dark">
+            <button class="btn btn-primary shadow" id="btnSwitch" type="submit">map Dark</button>
+        </form>
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
-    document.getElementById('btnSwitch').addEventListener('click', () => {
-        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-            document.documentElement.setAttribute('data-bs-theme', 'light')
-        } else {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-        }
-    });
+    // document.getElementById('btnSwitch').addEventListener('click', () => {
+    //     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+    //         document.documentElement.setAttribute('data-bs-theme', 'light')
+    //     } else {
+    //         document.documentElement.setAttribute('data-bs-theme', 'dark')
+    //     }
+    // });
     </script>
 
 </body>

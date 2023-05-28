@@ -30,6 +30,9 @@ CREATE TABLE users (
 	date_of_birth VARCHAR(20) NOT NULL,
 	phone_number VARCHAR(20) NOT NULL,
 
+	map_theme VARCHAR(10) NOT NULL,
+	html_theme VARCHAR(10) NOT NULL,
+
 	FOREIGN KEY (payment_method) REFERENCES payment_methods(id) ON DELETE SET NULL
 );
 
