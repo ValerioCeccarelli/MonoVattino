@@ -107,6 +107,13 @@ try {
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-...=" crossorigin="anonymous" />
+
+    <!-- Flag icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -228,6 +235,9 @@ try {
         height: auto;
         object-fit: cover;
     }
+
+    .my-fi {}
+
     </style>
 </head>
 
@@ -262,11 +272,38 @@ try {
                             Change language
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item"
-                                    href="/account/change_language.php?redirect_to=profile&lang=en">English</a>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=en"
+                                    id="langEN">
+                                    <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                                    <span style="font-size: 14px;">English</span>
+                                </a>
                             </li>
-                            <li><a class="dropdown-item"
-                                    href="/account/change_language.php?redirect_to=profile&lang=it">Italian</a>
+
+
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                    id="langIT">
+                                    <span class="fi fi-it"></span>
+                                    <span style="font-size: 14px;">Italian</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                    id="langDE">
+                                    <span class="fi fi-de"></span>
+                                    <span style="font-size: 14px;">German</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                    id="langES">
+                                    <span class="fi fi-es"></span>
+                                    <span style="font-size: 14px;">Spanish</span>
+                                </a>
+
                             </li>
                         </ul>
                     </li>
