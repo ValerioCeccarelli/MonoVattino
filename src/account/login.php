@@ -3,11 +3,15 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
+require_once('../lib/redirect_to.php');
 
 $email = "";
 $email_error = null;
 $password = "";
 $password_error = null;
+
+$redirect_to = get_redirect_to();
+$id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -25,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             throw new InvalidPasswordException("Invalid password!");
         }
 
-
         $conn = connect_to_database();
 
         $db_user = get_user_by_email($conn, $email);
@@ -41,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $jwt = generate_jwt($db_user);
 
             setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
+
+            try_redirect();
 
             header('Location: /');
             exit;
@@ -89,7 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/login.php" method="POST">
+                    <form
+                        action="/account/login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?><?php if(isset($id)) echo "&id=$id"; ?>"
+                        method="POST">
                         <!-- Title -->
                         <h2>
                             Login
@@ -105,9 +112,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $email_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $email_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Password input -->
@@ -121,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $password_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $password_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -134,7 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Register page link -->
                         <div class="register">
-                            <p>Don't have an account? <a href="/account/register.php">Register</a></p>
+                            <p>Don't have an account? <a
+                                    href="/account/register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Register</a>
+                            </p>
                         </div>
                     </form>
                 </div>
@@ -143,39 +152,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
+        }
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
             }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
-        }
+        });
+    }
+    setLabelControls('#email', '#email_label');
+    setLabelControls('#password', '#password_label');
 
-        function showPassword() {
-            var passwordInput = document.getElementById("password");
-            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+    function showPassword() {
+        var passwordInput = document.getElementById("password");
+        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-            passwordInput.type = "text";
-            togglePasswordIcon.name = "eye-outline";
-        }
+        passwordInput.type = "text";
+        togglePasswordIcon.name = "eye-outline";
+    }
 
-        function hidePassword() {
-            var passwordInput = document.getElementById("password");
-            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+    function hidePassword() {
+        var passwordInput = document.getElementById("password");
+        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-            passwordInput.type = "password";
-            togglePasswordIcon.name = "eye-off-outline";
-        }
-
-
-        setLabelControls('#email', '#email_label');
-        setLabelControls('#password', '#password_label');
+        passwordInput.type = "password";
+        togglePasswordIcon.name = "eye-off-outline";
+    }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

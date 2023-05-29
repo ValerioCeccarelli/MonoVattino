@@ -6,6 +6,7 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/accounts/payments.php');
+require_once('../lib/redirect_to.php');
 
 try {
     $jwt_payload = validate_jwt();
@@ -22,7 +23,7 @@ try {
     $expiration_date_error = null;
     $cvv_error = null;
 
-    $is_from_terms = isset($_GET['f']) && $_GET['f'] === 'p';
+    $redirect_to = get_redirect_to();
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // pass
@@ -50,10 +51,7 @@ try {
 
         update_user_payment_method($conn, $email, $payment_id);
 
-        if ($is_from_terms) {
-            header('Location: /account/profile.php');
-            exit;
-        }
+        try_redirect();
 
         header('Location: /');
         exit;
@@ -114,8 +112,8 @@ try {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/payment.php<?php if ($is_from_terms)
-                        echo "?f=p"; ?>" method="POST">
+                    <form action="/account/payment.php<?php if ($redirect_to)
+                        echo "?redirect_to=$redirect_to"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Payment
@@ -131,9 +129,9 @@ try {
 
                         <!-- Owner error -->
                         <?php if ($owner_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $owner_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $owner_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Card number -->
@@ -146,9 +144,9 @@ try {
 
                         <!-- Card number error -->
                         <?php if ($card_number_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $card_number_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $card_number_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Expiration date -->
@@ -160,9 +158,9 @@ try {
                         </div>
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $expiration_date_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $expiration_date_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- CVV -->
@@ -174,9 +172,9 @@ try {
 
                         <!-- CVV error -->
                         <?php if ($cvv_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $cvv_error; ?>
-                            </h5>
+                        <h5 class="error-msg">
+                            <?php echo $cvv_error; ?>
+                        </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -194,35 +192,24 @@ try {
     </section>
 
     <script>
-        function setLabelControls(input_id, label_id) {
-            if ($(input_id).val() != "") {
-                $(label_id).css('top', '-5px')
-            }
-            $(input_id).focus(function () {
-                $(label_id).css('top', '-5px')
-            });
-            $(input_id).blur(function () {
-                if ($(input_id).val() == "") {
-                    $(label_id).css('top', '50%')
-                }
-            });
+    function setLabelControls(input_id, label_id) {
+        if ($(input_id).val() != "") {
+            $(label_id).css('top', '-5px')
         }
-
-        setLabelControls("#owner", "#owner_label");
-        setLabelControls("#card_number", "#card_number_label");
-        setLabelControls("#expiration_date", "#expiration_date_label");
-        setLabelControls("#cvv", "#cvv_label");
-
-        function addSlashes(element) {
-
-            let ele = document.getElementById(element.id);
-            ele = ele.value.split('/').join('');    // Remove slash (/) if mistakenly entered.
-            if (ele.length < 4 && ele.length > 0) {
-                let finalVal = ele.match(/.{1,2}/g).join('/');
-
-                document.getElementById(element.id).value = finalVal;
+        $(input_id).focus(function() {
+            $(label_id).css('top', '-5px')
+        });
+        $(input_id).blur(function() {
+            if ($(input_id).val() == "") {
+                $(label_id).css('top', '50%')
             }
-        }
+        });
+    }
+
+    setLabelControls("#owner", "#owner_label");
+    setLabelControls("#card_number", "#card_number_label");
+    setLabelControls("#expiration_date", "#expiration_date_label");
+    setLabelControls("#cvv", "#cvv_label");
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

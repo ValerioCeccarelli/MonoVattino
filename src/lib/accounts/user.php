@@ -217,4 +217,18 @@ function update_user_policy($conn, $email, $privacy_policy, $terms_and_condition
     }
 }
 
+function change_language($conn, $email, $language)
+{
+    $query = "UPDATE users SET language = $1 WHERE email = $2";
+    $result1 = pg_prepare($conn, "change_language", $query);
+    if (!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "change_language", array($language, $email));
+    if (!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+}
+
 ?>
