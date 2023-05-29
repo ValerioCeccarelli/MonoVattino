@@ -41,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $jwt_payload->email = $email;
             $jwt_payload->username = $db_user->username;
 
-            $jwt = generate_jwt($db_user);
-
-            setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
+            set_jwt_cookie($jwt_payload);
 
             try_redirect();
 
