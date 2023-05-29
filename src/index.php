@@ -43,7 +43,7 @@ $map_id = theme_to_mapid($map_theme);
 
 <head>
     <script>
-        var map_id = "<?php echo $map_id; ?>";
+    var map_id = "<?php echo $map_id; ?>";
     </script>
 
     <meta charset="UTF-8">
@@ -62,7 +62,7 @@ $map_id = theme_to_mapid($map_theme);
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+    </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script> -->
@@ -97,25 +97,25 @@ $map_id = theme_to_mapid($map_theme);
                         <a class="nav-link" href="#"><strong>Map</strong></a>
                     </li>
                     <?php if ($is_user_logged) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="account/profile.php">Profile</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/profile.php">Profile</a>
+                    </li>
                     <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php">About us</a>
+                        <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="issues/show_issue.php">Issues</a>
+                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
                     </li>
                     <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
-                            <a class="nav-link" href="account/logout.php">Logout</a>
+                        <a class="nav-link" href="/account/logout.php">Logout</a>
                         <?php } else { ?>
-                            <a class="nav-link" href="account/login.php">Login</a>
+                        <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
                 </ul>

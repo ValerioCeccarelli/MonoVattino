@@ -3,6 +3,7 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
+require_once('../lib/redirect_to.php');
 
 $username = "";
 $username_error = null;
@@ -18,6 +19,8 @@ $date_of_birth = "";
 $date_of_birth_error = null;
 $phone_number = "";
 $phone_number_error = null;
+
+$redirect_to = get_redirect_to();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -39,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         validate_surname($surname);
         validate_date_of_birth($date_of_birth);
         validate_phone_number($phone_number);
-
 
         $conn = connect_to_database();
 
@@ -66,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $jwt = generate_jwt($jwt_payload);
 
         setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
+
+        try_redirect();
 
         header('Location: /account/terms.php');
         exit;
@@ -121,7 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/register.php" method="POST">
+                    <form action="/account/register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>"
+                        method="POST">
                         <!-- Title -->
                         <h2>
                             Register
@@ -237,7 +242,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Register page link -->
                         <div class="register">
-                            <p>Already signed up? <a href="login.php">Login</a></p>
+                            <p>Already signed up? <a
+                                    href="login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Login</a>
+                            </p>
                         </div>
                     </form>
                 </div>

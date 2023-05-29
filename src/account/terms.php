@@ -3,6 +3,7 @@ require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
+require_once('../lib/redirect_to.php');
 
 try {
     $jwt_payload = validate_jwt();
@@ -15,10 +16,9 @@ try {
     $privacy_policy_error = null;
     $terms_and_conditions_error = null;
 
-    $is_from_terms = isset($_GET['f']) && $_GET['f'] === 'p';
-
+    $redirect_to = get_redirect_to();
+    
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // pass
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $privacy_policy = $_POST['privacy_policy'];
@@ -37,10 +37,11 @@ try {
         $conn = connect_to_database();
         update_user_policy($conn, $email, $privacy_policy, $terms_and_conditions);
 
-        if ($is_from_terms) {
-            header('Location: /account/profile.php');
-            exit;
-        }
+        // if ($is_from_terms) {
+        //     header('Location: /account/profile.php');
+        //     exit;
+        // }
+        try_redirect();
 
         header('Location: /account/payment.php');
         exit;
@@ -94,7 +95,8 @@ end:
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/terms.php<?php if($is_from_terms) echo "?f=p"; ?>" method="POST">
+                    <form action="/account/terms.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>"
+                        method="POST">
                         <!-- Title -->
                         <h2>
                             Hi <?php echo $username; ?>!
