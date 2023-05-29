@@ -62,8 +62,6 @@ try {
     exit;
 }
 
-end:
-
 ?>
 
 <!DOCTYPE html>
