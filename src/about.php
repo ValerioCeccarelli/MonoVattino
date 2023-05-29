@@ -6,7 +6,6 @@ require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
 $is_user_logged = false;
-$html_theme = 'light';
 
 try {
     $jwt_payload = validate_jwt();
@@ -92,6 +91,29 @@ try {
                             <a class="nav-link" href="/account/register.php">Register</a>
                         </li>
                     <?php } ?>
+                </ul>
+
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <form method='POST' action='/about.php'>
+                                <?php if ($html_theme === 'light') { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } else { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+                        </a>
+                    </li>
 
                 </ul>
             </div>

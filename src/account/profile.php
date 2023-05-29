@@ -258,6 +258,30 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/account/logout.php">Logout</a>
                     </li>
+
+                </ul>
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <form method='POST' action='/account/profile.php'>
+                                <?php if ($html_theme === 'light') { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } else { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+                        </a>
+                    </li>
+
                 </ul>
 
 
@@ -710,7 +734,7 @@ try {
             </div>
         </div>
     </div>
-    <form method='POST' action='/account/profile.php'>
+    <!-- <form method='POST' action='/account/profile.php'>
         <input type="hidden" name="html_theme" id="html_theme" value="light">
         <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
             style="background-color:var(--theme)">Light</button>
@@ -719,19 +743,15 @@ try {
         <input type="hidden" name="html_theme" id="html_theme" value="dark">
         <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
             style="background-color:var(--theme)">Dark</button>
-    </form>
+    </form> -->
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
     <script>
-    // document.getElementById('btnSwitch').addEventListener('click', () => {
-    //     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-    //         document.documentElement.setAttribute('data-bs-theme', 'light')
-    //     } else {
-    //         document.documentElement.setAttribute('data-bs-theme', 'dark')
-    //     }
-    // });
+        if (window.history.replaceState) {
+
+            window.history.replaceState(null, null, window.location.href);
+        }
     </script>
 
 </body>
