@@ -235,6 +235,8 @@ try {
             height: auto;
             object-fit: cover;
         }
+
+        .my-fi {}
     </style>
 </head>
 
@@ -272,28 +274,33 @@ try {
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=en"
                                     id="langEN">
-                                    <span class="fi fi-gb"></span>English
+                                    <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                                    <span style="font-size: 14px;">English</span>
                                 </a>
-
                             </li>
+
+
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
                                     id="langIT">
-                                    <span class="fi fi-it"></span>Italian
+                                    <span class="fi fi-it"></span>
+                                    <span style="font-size: 14px;">Italian</span>
                                 </a>
 
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
                                     id="langDE">
-                                    <span class="fi fi-de"></span>German
+                                    <span class="fi fi-de"></span>
+                                    <span style="font-size: 14px;">German</span>
                                 </a>
 
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
                                     id="langES">
-                                    <span class="fi fi-es"></span>Spanish
+                                    <span class="fi fi-es"></span>
+                                    <span style="font-size: 14px;">Spanish</span>
                                 </a>
 
                             </li>
