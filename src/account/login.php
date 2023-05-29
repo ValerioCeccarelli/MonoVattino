@@ -112,7 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password input -->
                         <div class="inputbox">
-                            <ion-icon name="lock-closed-outline" onclick="togglePassword()"></ion-icon>
+                            <ion-icon id="togglePasswordIcon" name="eye-off-outline" onmouseenter="showPassword()"
+                                onmouseleave="hidePassword()"></ion-icon>
                             <input id="password" name="password" type="password" value="<?php echo $password; ?>"
                                 required>
                             <label id="password_label" for="password">Password</label>
@@ -156,9 +157,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             });
         }
 
-        function togglePassword() {
-            $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+            passwordInput.type = "text";
+            togglePasswordIcon.name = "eye-outline";
         }
+
+        function hidePassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+            passwordInput.type = "password";
+            togglePasswordIcon.name = "eye-off-outline";
+        }
+
 
         setLabelControls('#email', '#email_label');
         setLabelControls('#password', '#password_label');

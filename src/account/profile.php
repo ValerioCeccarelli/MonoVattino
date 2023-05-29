@@ -228,7 +228,7 @@ try {
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="account/logout.php">Logout</a>
+                        <a class="nav-link" href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -377,7 +377,7 @@ try {
 
                                             <!-- Change payment method -->
                                             <a href="/account/payment.php?f=p" class="btn btn-primary"
-                                                style="background-color:#FF4500">Change
+                                                style="background-color:#FF4500; border-color:#FF4500">Change
                                                 payment
                                                 method</a>
 

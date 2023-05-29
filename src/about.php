@@ -184,6 +184,33 @@ try {
 
 
         </div>
+
+        <div class="row">
+            <div style="height: 31px;"></div>
+
+            <div class="col-12 col-md-4">
+                <img src="img/about3.jpg" alt="mission" width="100%">
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div style="height: 1px;"></div>
+                <h1>
+                    Story
+                </h1>
+                <p>
+
+                    MonoVattino, a mobility sharing website, offers electric scooters for convenient and eco-friendly
+                    urban transportation. Founded by <strong>V</strong>alerio and <strong>M</strong>irko, MonoVattino
+                    aims to revolutionize the way people
+                    move and embrace a greener future.
+                </p>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <img src="img/about4.jpg" alt="mission" width="100%">
+            </div>
+
+        </div>
     </div>
     </div>
 
