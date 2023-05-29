@@ -4,6 +4,7 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
+require_once('../lib/account/themes.php');
 
 try {
     $lang = $_GET['lang'];
@@ -13,7 +14,7 @@ try {
     $jwt_payload = validate_jwt();
 
     $conn = connect_to_database();
-    change_language($conn, $jwt_payload->email, $lang); //
+    change_language($conn, $jwt_payload->email, $lang);
 
     try_redirect();
 
