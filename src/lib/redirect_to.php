@@ -14,6 +14,9 @@ function try_redirect() {
         $url = "/";
 
         switch($redirect_to) {
+            case 'index':
+                $url = "/";
+                break;
             case 'login':
                 $url = "/account/login.php";
                 break;

@@ -50,6 +50,9 @@ try {
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+    <!-- Flag icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+
     <style>
         p {
             font-size: 20px;
@@ -82,17 +85,57 @@ try {
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <?php if ($is_user_logged) { ?>
-                            <a class="nav-link" href="/account/logout.php">Logout</a>
-                        <?php } else { ?>
-                            <a class="nav-link" href="/account/login.php">Login</a>
-                        <?php } ?>
+                    <!-- Language selector -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span id="selectedLanguageFlag" class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                            <span id="selectedLanguageText" style="font-size: 1rem;">English</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=about&lang=en"
+                                    id="langEN">
+                                    <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                                    <span style="font-size: 1rem;">English</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=about&lang=it"
+                                    id="langIT">
+                                    <span class="fi fi-it"></span>
+                                    <span style="font-size: 1rem;">Italian</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=about&lang=de"
+                                    id="langDE">
+                                    <span class="fi fi-de"></span>
+                                    <span style="font-size: 1rem;">German</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=about&lang=es"
+                                    id="langES">
+                                    <span class="fi fi-es"></span>
+                                    <span style="font-size: 1rem;">Spanish</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <?php if (!$is_user_logged) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
-                        </li>
+
+                    <?php if ($is_user_logged) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/logout.php">Logout</a>
+                    </li>
+
+                    <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/register.php">Register</a>
+                    </li>
                     <?php } ?>
                 </ul>
 
@@ -262,6 +305,21 @@ try {
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    // Get the current language from the server
+    var currentLanguage = "<?php echo $user->language; ?>";
+
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    var selectedLanguageText = document.getElementById("selectedLanguageText");
+
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    </script>
 </body>
 
 </html>
