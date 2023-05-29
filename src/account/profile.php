@@ -87,7 +87,7 @@ try {
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+    </script>
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -103,125 +103,125 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-        [data-bs-theme="dark"] {
-            --theme: #FF4500;
-        }
+    [data-bs-theme="dark"] {
+        --theme: #FF4500;
+    }
 
-        :root {
-            --theme: #FF4500;
-        }
+    :root {
+        --theme: #FF4500;
+    }
 
-        .profile-img {
-            width: 30vw !important;
-            height: auto;
-        }
+    .profile-img {
+        width: 30vw !important;
+        height: auto;
+    }
 
-        .form-box {
-            position: relative;
-            width: auto;
-            height: auto;
+    .form-box {
+        position: relative;
+        width: auto;
+        height: auto;
 
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
 
-            background-color: rgba(100, 100, 100, 0.8);
-            /* display: flex; */
-            justify-content: center;
-            align-items: center;
-        }
+        background-color: rgba(100, 100, 100, 0.8);
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+    }
 
-        .form-padding {
-            padding: 0px 20px;
-            padding-top: 15px;
-        }
+    .form-padding {
+        padding: 0px 20px;
+        padding-top: 15px;
+    }
 
-        .form-box h2 {
-            font-size: 2em;
-            color: #fff;
-            text-align: center;
-        }
+    .form-box h2 {
+        font-size: 2em;
+        color: #fff;
+        text-align: center;
+    }
 
-        .inputbox {
-            position: relative;
-            margin-top: 30px;
-            width: auto;
-            border-bottom: 2px solid #fff;
-        }
+    .inputbox {
+        position: relative;
+        margin-top: 30px;
+        width: auto;
+        border-bottom: 2px solid #fff;
+    }
 
-        .inputbox label {
-            position: absolute;
-            top: -5px;
-            left: 5px;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 1em;
-            pointer-events: none;
-            transition: .5s;
-        }
+    .inputbox label {
+        position: absolute;
+        top: -5px;
+        left: 5px;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 1em;
+        pointer-events: none;
+        transition: .5s;
+    }
 
-        .inputbox input {
-            width: 85.4%;
-            height: 50px;
-            background: transparent;
-            border: none;
-            outline: none;
-            font-size: 1em;
+    .inputbox input {
+        width: 85.4%;
+        height: 50px;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
 
-            padding-left: 5px;
-            color: #fff;
+        padding-left: 5px;
+        color: #fff;
 
-            left: -15px;
-            position: relative;
-        }
+        left: -15px;
+        position: relative;
+    }
 
-        .inputbox ion-icon {
-            position: absolute;
-            right: 8px;
-            color: #fff;
-            font-size: 1.2em;
-            top: 20px;
-        }
+    .inputbox ion-icon {
+        position: absolute;
+        right: 8px;
+        color: #fff;
+        font-size: 1.2em;
+        top: 20px;
+    }
 
-        .forget {
-            margin: -15px 0 15px;
-            font-size: .9em;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-        }
+    .forget {
+        margin: -15px 0 15px;
+        font-size: .9em;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+    }
 
-        .forget label input {
-            margin-right: 3px;
+    .forget label input {
+        margin-right: 3px;
 
-        }
+    }
 
-        .forget label a {
-            color: #fff;
-            text-decoration: none;
-        }
+    .forget label a {
+        color: #fff;
+        text-decoration: none;
+    }
 
-        .card {
-            border-radius: 4px;
-            background: #fff;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
-            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
-            cursor: pointer;
-        }
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        cursor: pointer;
+    }
 
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
-        }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
 
-        .card-img-top {
-            width: 150px;
-            height: auto;
-            object-fit: cover;
-        }
+    .card-img-top {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+    }
 
-        .my-fi {}
+    .my-fi {}
     </style>
 </head>
 
@@ -250,6 +250,7 @@ try {
                 </ul>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <!-- Language selector -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -287,6 +288,7 @@ try {
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/account/logout.php">Logout</a>
                     </li>
@@ -306,25 +308,25 @@ try {
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
                             </a>
                             <script>
-                                function change_theme(theme) {
-                                    html = document.getElementsByTagName('html')[0];
-                                    if (theme == 'dark') {
-                                        html.setAttribute('data-bs-theme', 'dark');
-                                        document.getElementById('nav_dark').style.display = 'none';
-                                        document.getElementById('nav_light').style.display = 'block';
-                                    } else if (theme == 'light') {
-                                        html.setAttribute('data-bs-theme', 'light');
-                                        document.getElementById('nav_dark').style.display = 'block';
-                                        document.getElementById('nav_light').style.display = 'none';
-                                    }
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/account/change_theme.php",
-                                        data: {
-                                            theme: theme
-                                        }
-                                    });
+                            function change_theme(theme) {
+                                html = document.getElementsByTagName('html')[0];
+                                if (theme == 'dark') {
+                                    html.setAttribute('data-bs-theme', 'dark');
+                                    document.getElementById('nav_dark').style.display = 'none';
+                                    document.getElementById('nav_light').style.display = 'block';
+                                } else if (theme == 'light') {
+                                    html.setAttribute('data-bs-theme', 'light');
+                                    document.getElementById('nav_dark').style.display = 'block';
+                                    document.getElementById('nav_light').style.display = 'none';
                                 }
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/account/change_theme.php",
+                                    data: {
+                                        theme: theme
+                                    }
+                                });
+                            }
                             </script>
 
                         </a>
@@ -377,9 +379,9 @@ try {
                                         <h2>
                                             Info
                                             <?php if (!$policy_accepted) { ?>
-                                                <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
-                                                    data-placement="top" style="color: yellow;"
-                                                    title="You need to firm the terms and conditions"></i>
+                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                data-placement="top" style="color: yellow;"
+                                                title="You need to firm the terms and conditions"></i>
                                             <?php } ?>
                                         </h2>
 
@@ -419,13 +421,13 @@ try {
                                         <div style="height: 30px"></div>
 
                                         <?php if (!$policy_accepted) { ?>
-                                            <!-- Privacy policy link -->
-                                            <a href="/account/terms.php?redirect_to=profile" class="btn btn-danger">Firm
-                                                terms and
-                                                conditions</a>
+                                        <!-- Privacy policy link -->
+                                        <a href="/account/terms.php?redirect_to=profile" class="btn btn-danger">Firm
+                                            terms and
+                                            conditions</a>
 
-                                            <!-- Padding -->
-                                            <div style="height: 30px"></div>
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
                                         <?php } ?>
 
                                     </div>
@@ -433,62 +435,62 @@ try {
                                         <!-- Title -->
                                         <h2>Payment
                                             <?php if ($payment_method == null) { ?>
-                                                <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
-                                                    data-placement="top" style="color: yellow;"
-                                                    title="You need to add a payment method"></i>
+                                            <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
+                                                data-placement="top" style="color: yellow;"
+                                                title="You need to add a payment method"></i>
                                             <?php } ?>
                                         </h2>
 
                                         <?php if ($payment_method != null) { ?>
-                                            <!-- Owner -->
-                                            <div class="inputbox">
-                                                <ion-icon name="person-outline"></ion-icon>
-                                                <input id="owner" name="owner" type="text"
-                                                    value="<?php echo $payment_method->owner; ?>" disabled>
-                                                <label id="owner_label" for="username">Card holder</label>
-                                            </div>
-                                            <!-- Card number -->
-                                            <div class="inputbox">
-                                                <ion-icon name="card-outline"></ion-icon>
-                                                <input id="card_number" name="card_number" type="text"
-                                                    value="•••• •••• •••• <?php echo substr($payment_method->card_number, 12, 4); ?>"
-                                                    disabled>
-                                                <label id="card_number_label" for="card_number">Card number</label>
-                                            </div>
-                                            <!-- Expiration date -->
-                                            <div class="inputbox">
-                                                <ion-icon name="calendar-outline"></ion-icon>
-                                                <input id="expiration_date" name="expiration_date" type="text"
-                                                    value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
-                                                    disabled>
-                                                <label id="expiration_date_label" for="expiration_date">Expiration
-                                                    date</label>
-                                            </div>
-                                            <!-- CVV -->
-                                            <div class="inputbox">
-                                                <ion-icon name="lock-closed-outline"></ion-icon>
-                                                <input id="cvv" name="cvv" type="text"
-                                                    value="<?php echo $payment_method->cvv; ?>" disabled>
-                                                <label id="cvv_label" for="cvv">CVV</label>
-                                            </div>
-                                            <!-- Padding -->
-                                            <div style="height: 20px"></div>
-                                            <!-- Change payment method -->
-                                            <a href="/account/payment.php?redirect_to=profile" class="btn btn-primary"
-                                                style="background-color:var(--theme); border-color: var(--theme)">Change
-                                                payment
-                                                method</a>
-                                            <!-- Padding -->
-                                            <div style="height: 30px"></div>
+                                        <!-- Owner -->
+                                        <div class="inputbox">
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            <input id="owner" name="owner" type="text"
+                                                value="<?php echo $payment_method->owner; ?>" disabled>
+                                            <label id="owner_label" for="username">Card holder</label>
+                                        </div>
+                                        <!-- Card number -->
+                                        <div class="inputbox">
+                                            <ion-icon name="card-outline"></ion-icon>
+                                            <input id="card_number" name="card_number" type="text"
+                                                value="•••• •••• •••• <?php echo substr($payment_method->card_number, 12, 4); ?>"
+                                                disabled>
+                                            <label id="card_number_label" for="card_number">Card number</label>
+                                        </div>
+                                        <!-- Expiration date -->
+                                        <div class="inputbox">
+                                            <ion-icon name="calendar-outline"></ion-icon>
+                                            <input id="expiration_date" name="expiration_date" type="text"
+                                                value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
+                                                disabled>
+                                            <label id="expiration_date_label" for="expiration_date">Expiration
+                                                date</label>
+                                        </div>
+                                        <!-- CVV -->
+                                        <div class="inputbox">
+                                            <ion-icon name="lock-closed-outline"></ion-icon>
+                                            <input id="cvv" name="cvv" type="text"
+                                                value="<?php echo $payment_method->cvv; ?>" disabled>
+                                            <label id="cvv_label" for="cvv">CVV</label>
+                                        </div>
+                                        <!-- Padding -->
+                                        <div style="height: 20px"></div>
+                                        <!-- Change payment method -->
+                                        <a href="/account/payment.php?redirect_to=profile" class="btn btn-primary"
+                                            style="background-color:var(--theme); border-color: var(--theme)">Change
+                                            payment
+                                            method</a>
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
 
                                         <?php } else { ?>
 
-                                            <!-- No payment method -->
-                                            <a href="/account/payment.php?redirect_to=profile" class="btn btn-danger">Add
-                                                new method</a>
+                                        <!-- No payment method -->
+                                        <a href="/account/payment.php?redirect_to=profile" class="btn btn-danger">Add
+                                            new method</a>
 
-                                            <!-- Padding -->
-                                            <div style="height: 30px"></div>
+                                        <!-- Padding -->
+                                        <div style="height: 30px"></div>
 
                                         <?php } ?>
                                     </div>
@@ -512,26 +514,26 @@ try {
 
                     <!-- Current trips -->
                     <?php if (!$reservations) { ?>
-                        <div class="row">
-                            <div class="col-12">
-                                <p>No current trips</p>
-                            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>No current trips</p>
                         </div>
+                    </div>
                     <?php } else { ?>
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Company</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($reservations as $reservation) {
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($reservations as $reservation) {
                                             $start_time = strtotime($reservation->date);
                                             $end_time = strtotime("now");
 
@@ -546,28 +548,28 @@ try {
 
                                             $date = date("d/m/Y", $start_time);
                                             ?>
-                                            <tr>
+                                    <tr>
 
-                                                <td><i class="bi bi-scooter"
-                                                        style="color: #<?php echo $reservation->company_color; ?>"></i></td>
-                                                <td>
-                                                    <?php echo $reservation->company_name; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $date; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $travel_time; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $price; ?>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <td><i class="bi bi-scooter"
+                                                style="color: #<?php echo $reservation->company_color; ?>"></i></td>
+                                        <td>
+                                            <?php echo $reservation->company_name; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $date; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $travel_time; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $price; ?>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
                     <?php } ?>
 
                     <!-- Old trips title -->
@@ -579,26 +581,26 @@ try {
 
                     <!-- Old trips -->
                     <?php if (!$trips) { ?>
-                        <div class="row">
-                            <div class="col-12">
-                                <p>No old trips</p>
-                            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>No old trips</p>
                         </div>
+                    </div>
                     <?php } else { ?>
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Company</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($trips as $trip) {
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($trips as $trip) {
 
                                             $travel_time = $trip->trip_time;
 
@@ -612,27 +614,27 @@ try {
                                             $start_time = strtotime($trip->date);
                                             $date = date("d/m/Y", $start_time);
                                             ?>
-                                            <tr>
-                                                <td><i class="bi bi-scooter"
-                                                        style="color: #<?php echo $trip->company_color; ?>"></i></td>
-                                                <td>
-                                                    <?php echo $trip->company_name; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $date; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $travel_time; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $price; ?>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <tr>
+                                        <td><i class="bi bi-scooter"
+                                                style="color: #<?php echo $trip->company_color; ?>"></i></td>
+                                        <td>
+                                            <?php echo $trip->company_name; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $date; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $travel_time; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $price; ?>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
                     <?php } ?>
                 </div>
             </div>
@@ -650,28 +652,28 @@ try {
         </p>
 
         <style>
-            a {
-                text-decoration: none;
-                color: inherit;
-            }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-            .selected-card {
-                background-color: #f8f9fa;
-                /* Set the desired background color */
-                border: 2.1px solid #007bff;
-                /* Set the desired border color */
-            }
+        .selected-card {
+            background-color: #f8f9fa;
+            /* Set the desired background color */
+            border: 2.1px solid #007bff;
+            /* Set the desired border color */
+        }
 
-            .card-body {
-                background-color: #575758;
-                color: #fdfdfd;
-            }
+        .card-body {
+            background-color: #575758;
+            color: #fdfdfd;
+        }
 
-            .my-card {
-                border-radius: var(--bs-card-inner-border-radius);
-                background-color: #575758;
-                color: #fdfdfd;
-            }
+        .my-card {
+            border-radius: var(--bs-card-inner-border-radius);
+            background-color: #575758;
+            color: #fdfdfd;
+        }
         </style>
 
         <div class="collapse container text-center" id="collapseExample">
@@ -792,23 +794,23 @@ try {
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        if (window.history.replaceState) {
+    if (window.history.replaceState) {
 
-            window.history.replaceState(null, null, window.location.href);
-        }
-        // Get the current language from the server-side or any other source
-        var currentLanguage = "de"; // Replace with the appropriate language code
+        window.history.replaceState(null, null, window.location.href);
+    }
+    // Get the current language from the server
+    var currentLanguage = "<?php echo $user->language; ?>";
 
-        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-        var selectedLanguageText = document.getElementById("selectedLanguageText");
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-        // Update the toggle element to show the current language
-        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-        toggleElement.classList.add("active");
-        toggleElement.setAttribute("aria-current", "true");
-        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
 
 </body>
