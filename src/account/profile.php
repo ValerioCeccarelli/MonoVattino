@@ -303,7 +303,7 @@ try {
                             </a>
                             <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
                                 display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold;" />
                             </a>
                             <script>
                                 function change_theme(theme) {
@@ -778,16 +778,6 @@ try {
             </div>
         </div>
     </div>
-    <!-- <form method='POST' action='/account/profile.php'>
-        <input type="hidden" name="html_theme" id="html_theme" value="light">
-        <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
-            style="background-color:var(--theme)">Light</button>
-    </form>
-    <form method='POST' action='/account/profile.php'>
-        <input type="hidden" name="html_theme" id="html_theme" value="dark">
-        <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
-            style="background-color:var(--theme)">Dark</button>
-    </form> -->
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

@@ -6,7 +6,7 @@ require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
 $is_user_logged = false;
-
+$html_theme = "light";
 try {
     $jwt_payload = validate_jwt();
     $is_user_logged = true;
@@ -39,7 +39,7 @@ try {
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script> -->
@@ -51,9 +51,9 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style>
-    p {
-        font-size: 20px;
-    }
+        p {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -73,9 +73,9 @@ try {
                         <a class="nav-link" href="/index.php">Map</a>
                     </li>
                     <?php if ($is_user_logged) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/profile.php">Profile</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/profile.php">Profile</a>
+                        </li>
                     <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="#"> <strong>About us</strong></a>
@@ -84,15 +84,15 @@ try {
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
-                        <a class="nav-link" href="/account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">Logout</a>
                         <?php } else { ?>
-                        <a class="nav-link" href="/account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
                     <?php if (!$is_user_logged) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/register.php">Register</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/register.php">Register</a>
+                        </li>
                     <?php } ?>
                 </ul>
 
@@ -109,28 +109,29 @@ try {
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
                             </a>
                             <script>
-                            function change_theme(theme) {
-                                html = document.getElementsByTagName('html')[0];
-                                if (theme == 'dark') {
-                                    html.setAttribute('data-bs-theme', 'dark');
-                                    document.getElementById('nav_dark').style.display = 'none';
-                                    document.getElementById('nav_light').style.display = 'block';
-                                } else if (theme == 'light') {
-                                    html.setAttribute('data-bs-theme', 'light');
-                                    document.getElementById('nav_dark').style.display = 'block';
-                                    document.getElementById('nav_light').style.display = 'none';
-                                }
-                                $.ajax({
-                                    type: "GET",
-                                    url: "/account/change_theme.php",
-                                    data: {
-                                        theme: theme
+                                function change_theme(theme) {
+                                    html = document.getElementsByTagName('html')[0];
+                                    if (theme == 'dark') {
+                                        html.setAttribute('data-bs-theme', 'dark');
+                                        document.getElementById('nav_dark').style.display = 'none';
+                                        document.getElementById('nav_light').style.display = 'block';
+                                    } else if (theme == 'light') {
+                                        html.setAttribute('data-bs-theme', 'light');
+                                        document.getElementById('nav_dark').style.display = 'block';
+                                        document.getElementById('nav_light').style.display = 'none';
                                     }
-                                });
-                            }
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/account/change_theme.php",
+                                        data: {
+                                            theme: theme
+                                        }
+                                    });
+                                }
                             </script>
 
                         </a>
+
                     </li>
 
                 </ul>
