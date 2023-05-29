@@ -30,7 +30,7 @@ try {
     $username = null;
 } catch (Exception $e) {
     error_log("ERROR: index.php: " . $e->getMessage());
-    
+
     $is_user_logged = false;
     $username = null;
 }
@@ -49,7 +49,7 @@ $map_id = theme_to_mapid($map_theme);
     <meta charset="UTF-8">
 
     <!-- favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <title>MonoVattino</title>
 
@@ -77,7 +77,7 @@ $map_id = theme_to_mapid($map_theme);
     <script src="index.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 
 <body>
@@ -85,7 +85,7 @@ $map_id = theme_to_mapid($map_theme);
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="index.php"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="/index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -98,24 +98,24 @@ $map_id = theme_to_mapid($map_theme);
                     </li>
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="account/profile.php">Profile</a>
+                            <a class="nav-link" href="/account/profile.php">Profile</a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php">About us</a>
+                        <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="issues/show_issue.php">Issues</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                        </li>
                     <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
-                            <a class="nav-link" href="account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">Logout</a>
                         <?php } else { ?>
-                            <a class="nav-link" href="account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
                 </ul>

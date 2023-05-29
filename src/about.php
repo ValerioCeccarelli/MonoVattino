@@ -59,7 +59,7 @@ try {
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="index.php"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="/index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ try {
                     </li>
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="account/profile.php">Profile</a>
+                            <a class="nav-link" href="/account/profile.php">Profile</a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
@@ -82,9 +82,9 @@ try {
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
-                            <a class="nav-link" href="account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">Logout</a>
                         <?php } else { ?>
-                            <a class="nav-link" href="account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
                 </ul>

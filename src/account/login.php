@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="/account/form.css">
 </head>
 
 <body>
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Register page link -->
                         <div class="register">
-                            <p>Don't have an account? <a href="register.php">Register</a></p>
+                            <p>Don't have an account? <a href="/account/register.php">Register</a></p>
                         </div>
                     </form>
                 </div>
