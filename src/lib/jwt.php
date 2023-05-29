@@ -11,12 +11,6 @@ class JwtPayload
     public $email;
 }
 
-function set_jwt_cookie($payload)
-{
-    $jwt = generate_jwt($jwt_payload);
-    setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
-}
-
 function generate_jwt($payload)
 {
     $secret = $_ENV['JWT_SECRET'];

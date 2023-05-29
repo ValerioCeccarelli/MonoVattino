@@ -4,17 +4,16 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/database.php');
 require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
-require_once('../lib/account/themes.php');
 
 try {
     $lang = $_GET['lang'];
-
     // validate_language($lang); //
 
     $jwt_payload = validate_jwt();
-
     $conn = connect_to_database();
     change_language($conn, $jwt_payload->email, $lang);
+
+    error_log("INFO: change_language.php: $jwt_payload->email changed language to $lang");
 
     try_redirect();
 
