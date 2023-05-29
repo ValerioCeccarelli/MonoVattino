@@ -28,7 +28,10 @@ function try_redirect() {
                 $url = "/about.php";
                 break;
             case 'report_issue':
-                $url = "/issues/report_issue.php";
+                $scooter_id = $_GET['id'];
+                if (isset($scooter_id)) {
+                    $url = "/issues/report_issue.php?id=$scooter_id";
+                }
                 break;
             default:
                 return;

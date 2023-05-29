@@ -32,8 +32,7 @@ try {
     echo "404 Not Found";
     exit;
 } catch (InvalidJWTException $e) {
-    header("Location: /account/login.php");
-    // TODO: redirect to login page e di alla login page che venivi da qui...
+    header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
     exit;
 } catch (MethodNotAllowedException $e) {
     http_response_code(405);

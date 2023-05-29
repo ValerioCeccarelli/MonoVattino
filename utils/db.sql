@@ -194,6 +194,25 @@ CREATE TABLE issues (
 	FOREIGN KEY (user_email) REFERENCES users(email)
 );
 
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (1, 'utente1@mail.com', 'Title1', 'Description1', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (2, 'utente1@mail.com', 'Title2', 'Description2', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (3, 'utente1@mail.com', 'Title3', 'Description3', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (4, 'utente1@mail.com', 'Title4', 'Description4', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (5, 'utente1@mail.com', 'Title5', 'Description5', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (6, 'utente1@mail.com', 'Title6', 'Description6', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (7, 'utente1@mail.com', 'Title7', 'Description7', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (8, 'utente1@mail.com', 'Title8', 'Description8', 'open', '2023-05-29 12:01:26.214972');
+
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (10, 'utente2@mail.com', 'Title10', 'Description10', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (20, 'utente2@mail.com', 'Title20', 'Description20', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (30, 'utente2@mail.com', 'Title30', 'Description30', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (40, 'utente2@mail.com', 'Title40', 'Description40', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (50, 'utente2@mail.com', 'Title50', 'Description50', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (60, 'utente2@mail.com', 'Title60', 'Description60', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (70, 'utente2@mail.com', 'Title70', 'Description70', 'accepted', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (80, 'utente2@mail.com', 'Title80', 'Description80', 'open', '2023-05-29 12:01:26.214972');
+
+
 CREATE TABLE reservations (
 	start_time TIMESTAMP NOT NULL,
 	scooter_id INTEGER PRIMARY KEY,
@@ -208,8 +227,9 @@ CREATE TABLE reservations (
 -- INSERT INTO reservations(start_time, scooter_id, user_email) VALUES ('2023-05-29 12:01:26.214972', 1, 'user1@mail.com');
 
 CREATE TABLE trips (
+	id SERIAL PRIMARY KEY,
 	trip_time INTEGER NOT NULL,
-	scooter_id INTEGER PRIMARY KEY,
+	scooter_id INTEGER NOT NULL,
 	user_email VARCHAR(50) NOT NULL,
 	date TIMESTAMP NOT NULL,
 
@@ -217,18 +237,18 @@ CREATE TABLE trips (
 	FOREIGN KEY (user_email) REFERENCES users(email)
 );
 
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 1, 'user1@mail.com', '2023-05-29 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 2, 'user1@mail.com', '2023-05-01 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 3, 'user1@mail.com', '2023-05-02 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 4, 'user1@mail.com', '2023-05-03 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 5, 'user1@mail.com', '2023-05-04 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 6, 'user1@mail.com', '2023-05-05 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 7, 'user1@mail.com', '2023-05-06 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 1, 'utente1@mail.com', '2023-05-29 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 2, 'utente1@mail.com', '2023-05-01 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 3, 'utente1@mail.com', '2023-05-02 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 4, 'utente1@mail.com', '2023-05-03 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 5, 'utente1@mail.com', '2023-05-04 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 6, 'utente1@mail.com', '2023-05-05 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 7, 'utente1@mail.com', '2023-05-06 12:01:26.214972');
 
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 7, 'user2@mail.com', '2023-05-29 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 6, 'user2@mail.com', '2023-05-01 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 5, 'user2@mail.com', '2023-05-02 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 4, 'user2@mail.com', '2023-05-03 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 3, 'user2@mail.com', '2023-05-04 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 2, 'user2@mail.com', '2023-05-05 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 1, 'user2@mail.com', '2023-05-06 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 7, 'utente2@mail.com', '2023-05-29 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 6, 'utente2@mail.com', '2023-05-01 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 5, 'utente2@mail.com', '2023-05-02 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 4, 'utente2@mail.com', '2023-05-03 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 3, 'utente2@mail.com', '2023-05-04 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 2, 'utente2@mail.com', '2023-05-05 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 1, 'utente2@mail.com', '2023-05-06 12:01:26.214972');
