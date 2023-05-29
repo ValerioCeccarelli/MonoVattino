@@ -107,7 +107,7 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="/account/form.css">
 </head>
 
 <body>

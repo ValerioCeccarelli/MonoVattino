@@ -118,6 +118,11 @@ $map_id = theme_to_mapid($map_theme);
                             <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
+                    <?php if (!$is_user_logged) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/register.php">Register</a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
