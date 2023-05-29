@@ -15,7 +15,13 @@ try {
     $email = $jwt_payload->email;
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // pass
+        if (isset($_GET['map'])) {
+            $theme = $_GET['map'];
+
+            if (is_valid_map_theme($theme)) {
+                update_map_theme($conn, $email, $theme);
+            }
+        }
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['map_theme'])) {
             $theme = $_POST['map_theme'];
@@ -543,49 +549,127 @@ try {
                 Map theme
             </button>
         </p>
-        <div class="collapse" id="collapseExample">
-            <div class="row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                    <div class="card">
-                        <img src="/img/thumbnails/default.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Default</h5>
-                            <!-- <form method='POST' action='/account/profile.php'>
-                                <input type="hidden" name="html_theme" id="html_theme" value="light">
-                                <button class="btn btn-primary shadow w-100" id="btnSwitch" type="submit"
-                                    style="background-color:#FF4500">Light</button>
-                            </form> -->
-                            <a href="#" class="btn btn-primary stretched-link"></a>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Dark</h5>
+        <style>
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        </style>
+
+        <div class="collapse container" id="collapseExample">
+            <div class="row">
+
+                <div class="col mb-3 mb-sm-0">
+                    <a href="/account/profile.php?map=default">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/default.png" class="card-img-top" alt="default"
+                                style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Default
+                                </h5>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=dark">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark" style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Dark
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=light">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/light.png" class="card-img-top" alt="light" style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Light
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=grey">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey" style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Grey
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=classic">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic"
+                                style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Classic
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=night">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/night.png" class="card-img-top" alt="night" style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Night
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="/account/profile.php?map=atlas">
+                        <div class="card" style="width: max-content;">
+                            <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas" style="width: 250px;">
+                            <div class="card card-body">
+                                <h5 class="card-title">Atlas
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
             </div>
         </div>
-        <form method='POST' action='/account/profile.php'>
-            <input type="hidden" name="html_theme" id="html_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
-                style="background-color:#FF4500">Dark</button>
-        </form>
-
-        <form method='POST' action='/account/profile.php'>
-            <input type="hidden" name="map_theme" id="map_theme" value="default">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
-                default</button>
-        </form>
-        <form method='POST' action='/account/profile.php'>
-            <input type="hidden" name="map_theme" id="map_theme" value="dark">
-            <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
-                Dark</button>
-        </form>
     </div>
+    <form method='POST' action='/account/profile.php'>
+        <input type="hidden" name="html_theme" id="html_theme" value="light">
+        <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
+            style="background-color:#FF4500">Light</button>
+    </form>
+    <form method='POST' action='/account/profile.php'>
+        <input type="hidden" name="html_theme" id="html_theme" value="dark">
+        <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
+            style="background-color:#FF4500">Dark</button>
+    </form>
+
+    <!-- <form method='POST' action='/account/profile.php'>
+        <input type="hidden" name="map_theme" id="map_theme" value="default">
+        <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+            default</button>
+    </form>
+    <form method='POST' action='/account/profile.php'>
+        <input type="hidden" name="map_theme" id="map_theme" value="dark">
+        <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
+            Dark</button>
+    </form> -->
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
