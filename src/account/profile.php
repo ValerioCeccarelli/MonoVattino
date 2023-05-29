@@ -22,21 +22,6 @@ try {
                 update_map_theme($conn, $email, $theme);
             }
         }
-    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['map_theme'])) {
-            $theme = $_POST['map_theme'];
-
-            if (is_valid_map_theme($theme)) {
-                update_map_theme($conn, $email, $theme);
-            }
-        }
-        if (isset($_POST['html_theme'])) {
-            $theme = $_POST['html_theme'];
-
-            if (is_valid_html_theme($theme)) {
-                update_html_theme($conn, $email, $theme);
-            }
-        }
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
@@ -68,11 +53,11 @@ try {
     exit;
 } catch (NoUserFoundException $e) {
     http_response_code(404);
-    echo "404 Not Found";
+    echo "404 Not Found (User)";
     exit;
 } catch (PaymentNotFoundException $e) {
     http_response_code(404);
-    echo "404 Not Found";
+    echo "404 Not Found (Payment)";
     exit;
 } catch (MethodNotAllowedException $e) {
     http_response_code(405);
@@ -237,7 +222,6 @@ try {
     }
 
     .my-fi {}
-
     </style>
 </head>
 
@@ -290,7 +274,7 @@ try {
 
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
                                     <span style="font-size: 14px;">German</span>
@@ -298,7 +282,7 @@ try {
 
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
                                     <span style="font-size: 14px;">Spanish</span>

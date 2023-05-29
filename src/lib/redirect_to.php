@@ -38,6 +38,7 @@ function try_redirect() {
                 $url = "/";
                 return;
         }
+        error_log("INFO: redirect_to.php: redirecting to $url");
         header("Location: $url");
         exit();
     }
