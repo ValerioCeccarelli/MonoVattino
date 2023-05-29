@@ -5,6 +5,8 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/redirect_to.php');
 
+// TODO: add validatiomn with bad request invece che goto
+
 try {
     $jwt_payload = validate_jwt();
     $email = $jwt_payload->email;

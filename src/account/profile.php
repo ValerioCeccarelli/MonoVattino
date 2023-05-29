@@ -673,6 +673,18 @@ try {
             Dark</button>
     </form> -->
 
+    <div class="dropdown">
+        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Change language
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=en">English</a>
+            </li>
+            <li><a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it">Italian</a>
+            </li>
+        </ul>
+    </div>
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
