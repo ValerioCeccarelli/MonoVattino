@@ -1,6 +1,7 @@
 <?php
 
-function is_valid_map_theme($theme) {
+function is_valid_map_theme($theme)
+{
     switch ($theme) {
         case 'dark':
         case 'night':
@@ -15,7 +16,8 @@ function is_valid_map_theme($theme) {
     }
 }
 
-function theme_to_mapid($theme) {
+function theme_to_mapid($theme)
+{
     switch ($theme) {
         case 'dark':
             return "a4960208d9b76361";
@@ -35,7 +37,8 @@ function theme_to_mapid($theme) {
     }
 }
 
-function is_valid_html_theme($theme) {
+function is_valid_html_theme($theme)
+{
     switch ($theme) {
         case 'dark':
         case 'light':
@@ -45,7 +48,8 @@ function is_valid_html_theme($theme) {
     }
 }
 
-function update_map_theme($conn, $user_email, $theme) {
+function update_map_theme($conn, $user_email, $theme)
+{
     $query = "UPDATE users SET map_theme = $1 WHERE email = $2";
     $result1 = pg_prepare($conn, "update_map_theme", $query);
     if (!$result1) {
@@ -58,7 +62,8 @@ function update_map_theme($conn, $user_email, $theme) {
     }
 }
 
-function update_html_theme($conn, $user_email, $theme) {
+function update_html_theme($conn, $user_email, $theme)
+{
     $query = "UPDATE users SET html_theme = $1 WHERE email = $2";
     $result1 = pg_prepare($conn, "update_html_theme", $query);
     if (!$result1) {
@@ -70,5 +75,3 @@ function update_html_theme($conn, $user_email, $theme) {
         throw new Exception("Could not execute the query: " . pg_last_error());
     }
 }
-
-?>

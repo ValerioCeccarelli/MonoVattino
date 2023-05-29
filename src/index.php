@@ -30,7 +30,7 @@ try {
     $username = null;
 } catch (Exception $e) {
     error_log("ERROR: index.php: " . $e->getMessage());
-    
+
     $is_user_logged = false;
     $username = null;
 }
@@ -49,7 +49,7 @@ $map_id = theme_to_mapid($map_theme);
     <meta charset="UTF-8">
 
     <!-- favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <title>MonoVattino</title>
 
@@ -77,7 +77,7 @@ $map_id = theme_to_mapid($map_theme);
     <script src="index.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 
 <body>
@@ -85,7 +85,7 @@ $map_id = theme_to_mapid($map_theme);
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="index.php"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="/index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -97,6 +97,7 @@ $map_id = theme_to_mapid($map_theme);
                         <a class="nav-link" href="#"><strong>Map</strong></a>
                     </li>
                     <?php if ($is_user_logged) { ?>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/account/profile.php">Profile</a>
                     </li>
@@ -118,6 +119,34 @@ $map_id = theme_to_mapid($map_theme);
                         <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
+                    <?php if (!$is_user_logged) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/register.php">Register</a>
+                        </li>
+                    <?php } ?>
+                </ul>
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <form method='POST' action='/index.php'>
+                                <?php if ($html_theme === 'light') { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } else { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -206,6 +235,7 @@ $map_id = theme_to_mapid($map_theme);
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>

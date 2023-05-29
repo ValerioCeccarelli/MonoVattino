@@ -57,6 +57,7 @@ try {
 
     // $map_id = theme_to_mapid($user->map_theme);
     $html_theme = $user->html_theme;
+    $map_theme = $user->map_theme;
 
     $reservations = get_user_reservation($conn, $email);
     $trips = get_user_trips($conn, $email);
@@ -111,6 +112,14 @@ try {
 
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+    [data-bs-theme="dark"] {
+        --theme: #FF4500;
+    }
+
+    :root {
+        --theme: #FF4500;
+    }
 
     .profile-img {
         width: 30vw !important;
@@ -200,6 +209,25 @@ try {
         color: #fff;
         text-decoration: none;
     }
+
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
+
+    .card-img-top {
+        width: 150px;
+        height: auto;
+        object-fit: cover;
+    }
     </style>
 </head>
 
@@ -208,7 +236,7 @@ try {
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="../index.php"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="/index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -230,7 +258,33 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/account/logout.php">Logout</a>
                     </li>
+
                 </ul>
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <form method='POST' action='/account/profile.php'>
+                                <?php if ($html_theme === 'light') { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } else { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+                        </a>
+                    </li>
+
+                </ul>
+
+
             </div>
         </div>
     </nav>
@@ -345,8 +399,7 @@ try {
                                                 value="<?php echo $payment_method->owner; ?>" disabled>
                                             <label id="owner_label" for="username">Card holder</label>
                                         </div>
-
-                                        <!-- Card number -->
+                                      <!-- Card number -->
                                         <div class="inputbox">
                                             <ion-icon name="card-outline"></ion-icon>
                                             <input id="card_number" name="card_number" type="text"
@@ -354,8 +407,7 @@ try {
                                                 disabled>
                                             <label id="card_number_label" for="card_number">Card number</label>
                                         </div>
-
-                                        <!-- Expiration date -->
+                                      <!-- Expiration date -->
                                         <div class="inputbox">
                                             <ion-icon name="calendar-outline"></ion-icon>
                                             <input id="expiration_date" name="expiration_date" type="text"
@@ -364,24 +416,20 @@ try {
                                             <label id="expiration_date_label" for="expiration_date">Expiration
                                                 date</label>
                                         </div>
-
-                                        <!-- CVV -->
+                                      <!-- CVV -->
                                         <div class="inputbox">
                                             <ion-icon name="lock-closed-outline"></ion-icon>
                                             <input id="cvv" name="cvv" type="text"
                                                 value="<?php echo $payment_method->cvv; ?>" disabled>
                                             <label id="cvv_label" for="cvv">CVV</label>
                                         </div>
-
-                                        <!-- Padding -->
+                                      <!-- Padding -->
                                         <div style="height: 20px"></div>
-
-                                        <!-- Change payment method -->
-                                        <a href="/account/payment.php?redirect_to=profile" class="btn btn-primary"
-                                            style="background-color:#FF4500">Change
-                                            payment
-                                            method</a>
-
+                                      <!-- Change payment method -->
+                                            <a href="/account/payment.php?redirect_to=profile" class="btn btn-primary"
+                                                style="background-color:var(--theme); border-color: var(--theme)">Change
+                                                payment
+                                                method</a>
                                         <!-- Padding -->
                                         <div style="height: 30px"></div>
 
@@ -547,7 +595,8 @@ try {
 
         <p>
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample" style="background-color:#FF4500">
+                aria-expanded="false" aria-controls="collapseExample"
+                style="background-color: var(--theme); border-color: var(--theme) ">
                 Map theme
             </button>
         </p>
@@ -557,16 +606,35 @@ try {
             text-decoration: none;
             color: inherit;
         }
+
+        .selected-card {
+            background-color: #f8f9fa;
+            /* Set the desired background color */
+            border: 2.1px solid #007bff;
+            /* Set the desired border color */
+        }
+
+        .card-body {
+            background-color: #575758;
+            color: #fdfdfd;
+        }
+
+        .my-card {
+            border-radius: var(--bs-card-inner-border-radius);
+            background-color: #575758;
+            color: #fdfdfd;
+        }
         </style>
 
-        <div class="collapse container" id="collapseExample">
+        <div class="collapse container text-center" id="collapseExample">
             <div class="row">
 
                 <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=default">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/default.png" class="card-img-top" alt="default"
-                                style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/default.png" class="card-img-top" alt="default">
                             <div class="card card-body">
                                 <h5 class="card-title">Default
                                 </h5>
@@ -575,10 +643,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=dark">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark" style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark">
                             <div class="card card-body">
                                 <h5 class="card-title">Dark
                                 </h5>
@@ -587,10 +657,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=light">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/light.png" class="card-img-top" alt="light" style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/light.png" class="card-img-top" alt="light">
                             <div class="card card-body">
                                 <h5 class="card-title">Light
                                 </h5>
@@ -599,10 +671,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=grey">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey" style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey">
                             <div class="card card-body">
                                 <h5 class="card-title">Grey
                                 </h5>
@@ -611,11 +685,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
-                    <a href="/account/profile.php?map=classic">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic"
-                                style="width: 250px;">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
+                    <a href="/account/profile.php?map=night">
+                        <div class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic">
                             <div class="card card-body">
                                 <h5 class="card-title">Classic
                                 </h5>
@@ -624,10 +699,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=night">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/night.png" class="card-img-top" alt="night" style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/night.png" class="card-img-top" alt="night">
                             <div class="card card-body">
                                 <h5 class="card-title">Night
                                 </h5>
@@ -636,10 +713,12 @@ try {
                     </a>
                 </div>
 
-                <div class="col">
+                <div class="col mb-3 mb-sm-0">
+                    <div style="height: 21px;"></div>
                     <a href="/account/profile.php?map=atlas">
-                        <div class="card" style="width: max-content;">
-                            <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas" style="width: 250px;">
+                        <div class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
+                            style="width: max-content;">
+                            <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas">
                             <div class="card card-body">
                                 <h5 class="card-title">Atlas
                                 </h5>
@@ -651,26 +730,15 @@ try {
             </div>
         </div>
     </div>
-    <form method='POST' action='/account/profile.php'>
+    <!-- <form method='POST' action='/account/profile.php'>
         <input type="hidden" name="html_theme" id="html_theme" value="light">
         <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
-            style="background-color:#FF4500">Light</button>
+            style="background-color:var(--theme)">Light</button>
     </form>
     <form method='POST' action='/account/profile.php'>
         <input type="hidden" name="html_theme" id="html_theme" value="dark">
         <button class="btn btn-primary shadow" id="btnSwitch" type="submit"
-            style="background-color:#FF4500">Dark</button>
-    </form>
-
-    <!-- <form method='POST' action='/account/profile.php'>
-        <input type="hidden" name="map_theme" id="map_theme" value="default">
-        <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
-            default</button>
-    </form>
-    <form method='POST' action='/account/profile.php'>
-        <input type="hidden" name="map_theme" id="map_theme" value="dark">
-        <button class="btn btn-primary shadow" id="btnSwitch" type="submit" style="background-color:#FF4500">map
-            Dark</button>
+            style="background-color:var(--theme)">Dark</button>
     </form> -->
 
     <div class="dropdown">
@@ -687,15 +755,11 @@ try {
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
     <script>
-    // document.getElementById('btnSwitch').addEventListener('click', () => {
-    //     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-    //         document.documentElement.setAttribute('data-bs-theme', 'light')
-    //     } else {
-    //         document.documentElement.setAttribute('data-bs-theme', 'dark')
-    //     }
-    // });
+        if (window.history.replaceState) {
+
+            window.history.replaceState(null, null, window.location.href);
+        }
     </script>
 
 </body>

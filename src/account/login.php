@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="/account/form.css">
 </head>
 
 <body>
@@ -119,7 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password input -->
                         <div class="inputbox">
-                            <ion-icon name="lock-closed-outline" onclick="togglePassword()"></ion-icon>
+                            <ion-icon id="togglePasswordIcon" name="eye-off-outline" onmouseenter="showPassword()"
+                                onmouseleave="hidePassword()"></ion-icon>
                             <input id="password" name="password" type="password" value="<?php echo $password; ?>"
                                 required>
                             <label id="password_label" for="password">Password</label>
@@ -141,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <!-- Register page link -->
                         <div class="register">
                             <p>Don't have an account? <a
-                                    href="register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Register</a>
+                                    href="/account/register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Register</a>
                             </p>
                         </div>
                     </form>
@@ -164,13 +165,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
         });
     }
-
-    function togglePassword() {
-        $('#password').attr('type', $('#password').attr('type') == 'password' ? 'text' : 'password');
-    }
-
     setLabelControls('#email', '#email_label');
     setLabelControls('#password', '#password_label');
+
+    function showPassword() {
+        var passwordInput = document.getElementById("password");
+        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+        passwordInput.type = "text";
+        togglePasswordIcon.name = "eye-outline";
+    }
+
+    function hidePassword() {
+        var passwordInput = document.getElementById("password");
+        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+        passwordInput.type = "password";
+        togglePasswordIcon.name = "eye-off-outline";
+    }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

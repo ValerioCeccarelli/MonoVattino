@@ -33,9 +33,8 @@ try {
         validate_card_number($card_number);
         validate_expiration_date($expiration_date);
         validate_cvv($cvv);
-
-        $month = substr($expiration_date, 0, 2);
-        $year = substr($expiration_date, 3, 2);
+        $year = substr($expiration_date, 0, 4);
+        $month = substr($expiration_date, 5, 2);
 
         $conn = connect_to_database();
 
@@ -105,7 +104,7 @@ try {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="/account/form.css">
 </head>
 
 <body>
@@ -153,11 +152,10 @@ try {
                         <!-- Expiration date -->
                         <div class="inputbox">
                             <ion-icon name="calendar-outline"></ion-icon>
-                            <input id="expiration_date" name="expiration_date" type="text"
+                            <input id="expiration_date" type="month" name="expiration_date" maxlength="7"
                                 value="<?php echo $expiration_date; ?>" required>
                             <label id="expiration_date_label" for="expiration_date">Expiration date</label>
                         </div>
-
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
                         <h5 class="error-msg">

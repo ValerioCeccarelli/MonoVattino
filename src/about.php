@@ -6,7 +6,6 @@ require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
 
 $is_user_logged = false;
-$html_theme = 'light';
 
 try {
     $jwt_payload = validate_jwt();
@@ -59,7 +58,7 @@ try {
     <nav class="navbar navbar-expand-lg navbar-light shadow px-4">
         <div class="container-fluid">
             <i class="bi bi-scooter navbar-brand" style="font-size: 35px;"></i>
-            <a class="navbar-brand" href="index.php"><strong>MonoVattino</strong></a>
+            <a class="navbar-brand" href="/index.php"><strong>MonoVattino</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -72,7 +71,7 @@ try {
                     </li>
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="account/profile.php">Profile</a>
+                            <a class="nav-link" href="/account/profile.php">Profile</a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
@@ -82,11 +81,40 @@ try {
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <?php if ($is_user_logged) { ?>
-                            <a class="nav-link" href="account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">Logout</a>
                         <?php } else { ?>
-                            <a class="nav-link" href="account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">Login</a>
                         <?php } ?>
                     </li>
+                    <?php if (!$is_user_logged) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/register.php">Register</a>
+                        </li>
+                    <?php } ?>
+                </ul>
+
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <form method='POST' action='/about.php'>
+                                <?php if ($html_theme === 'light') { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } else { ?>
+                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
+                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
+                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
+                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                    </button>
+                                <?php } ?>
+
+                            </form>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -184,9 +212,37 @@ try {
 
 
         </div>
-    </div>
-    </div>
 
+        <div class="row">
+            <div style="height: 31px;"></div>
+
+            <div class="col-12 col-md-4">
+                <img src="img/about3.jpg" alt="mission" width="100%">
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div style="height: 1px;"></div>
+                <h1>
+                    Story
+                </h1>
+                <p>
+
+                    MonoVattino, a mobility sharing website, offers electric scooters for convenient and eco-friendly
+                    urban transportation. Founded by <strong>V</strong>alerio and <strong>M</strong>irko, MonoVattino
+                    aims to revolutionize the way people
+                    move and embrace a greener future.
+                </p>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <img src="img/about4.jpg" alt="mission" width="100%">
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
