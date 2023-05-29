@@ -120,30 +120,46 @@ $map_id = theme_to_mapid($map_theme);
                         <?php } ?>
                     </li>
                     <?php if (!$is_user_logged) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/register.php">Register</a>
+                    </li>
                     <?php } ?>
                 </ul>
+
+                <!-- Theme mode -->
                 <ul class="navbar-nav ml-auto mt-2">
                     <li>
                         <a id="btnSwitch" @click="toggleTheme">
-                            <form method='POST' action='/index.php'>
-                                <?php if ($html_theme === 'light') { ?>
-                                    <input type="hidden" name="html_theme" id="html_theme" value="dark">
-                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
-                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
-                                        <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
-                                    </button>
-                                <?php } else { ?>
-                                    <input type="hidden" name="html_theme" id="html_theme" value="light">
-                                    <button class="btn btn-primary" id="btnSwitch" type="submit"
-                                        style="background-color:var(--theme); background:none; padding:0px; border:none;">
-                                        <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
-                                    </button>
-                                <?php } ?>
+                            <a id="nav_dark" class="btn btn-primary" onclick="change_theme('dark')" style="background-color:var(--theme); background:none; padding:0px; border:none; 
+                                display:<?php echo $html_theme === "light" ? "block" : "none" ?>;">
+                                <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                            </a>
+                            <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
+                                display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
+                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                            </a>
+                            <script>
+                            function change_theme(theme) {
+                                html = document.getElementsByTagName('html')[0];
+                                if (theme == 'dark') {
+                                    html.setAttribute('data-bs-theme', 'dark');
+                                    document.getElementById('nav_dark').style.display = 'none';
+                                    document.getElementById('nav_light').style.display = 'block';
+                                } else if (theme == 'light') {
+                                    html.setAttribute('data-bs-theme', 'light');
+                                    document.getElementById('nav_dark').style.display = 'block';
+                                    document.getElementById('nav_light').style.display = 'none';
+                                }
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/account/change_theme.php",
+                                    data: {
+                                        theme: theme
+                                    }
+                                });
+                            }
+                            </script>
 
-                            </form>
                         </a>
                     </li>
 
