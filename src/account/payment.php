@@ -32,9 +32,8 @@ try {
         validate_card_number($card_number);
         validate_expiration_date($expiration_date);
         validate_cvv($cvv);
-
-        $month = substr($expiration_date, 0, 2);
-        $year = substr($expiration_date, 3, 2);
+        $year = substr($expiration_date, 0, 4);
+        $month = substr($expiration_date, 5, 2);
 
         $conn = connect_to_database();
 
@@ -155,11 +154,10 @@ try {
                         <!-- Expiration date -->
                         <div class="inputbox">
                             <ion-icon name="calendar-outline"></ion-icon>
-                            <input id="expiration_date" name="expiration_date" type="text"
+                            <input id="expiration_date" type="month" name="expiration_date" maxlength="7"
                                 value="<?php echo $expiration_date; ?>" required>
                             <label id="expiration_date_label" for="expiration_date">Expiration date</label>
                         </div>
-
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
                             <h5 class="error-msg">
@@ -214,6 +212,17 @@ try {
         setLabelControls("#card_number", "#card_number_label");
         setLabelControls("#expiration_date", "#expiration_date_label");
         setLabelControls("#cvv", "#cvv_label");
+
+        function addSlashes(element) {
+
+            let ele = document.getElementById(element.id);
+            ele = ele.value.split('/').join('');    // Remove slash (/) if mistakenly entered.
+            if (ele.length < 4 && ele.length > 0) {
+                let finalVal = ele.match(/.{1,2}/g).join('/');
+
+                document.getElementById(element.id).value = finalVal;
+            }
+        }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -233,17 +233,15 @@ function validate_expiration_date($expiration_date)
     if (empty($expiration_date)) {
         throw new InvalidExpirationDateException("Expiry date is required!");
     }
-    if (!preg_match('/^[0-9]{2}\/[0-9]{2}$/', $expiration_date)) {
-        throw new InvalidExpirationDateException("Expiry date must be in the format MM/YY!");
-    }
-    $month = substr($expiration_date, 0, 2);
-    $year = substr($expiration_date, 3, 2);
+
+    $year = substr($expiration_date, 0, 4);
+    $month = substr($expiration_date, 5, 2);
     if ($month < 1 || $month > 12) {
         throw new InvalidExpirationDateException("Invalid month!");
     }
 
     $current_date = new DateTime();
-    $current_year = $current_date->format('y');
+    $current_year = $current_date->format('Y');
     $current_month = $current_date->format('m');
 
     if ($year < $current_year) {

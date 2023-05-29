@@ -258,7 +258,6 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/account/logout.php">Logout</a>
                     </li>
-
                 </ul>
 
 

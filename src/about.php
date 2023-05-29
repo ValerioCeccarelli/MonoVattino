@@ -92,6 +92,15 @@ try {
                             <a class="nav-link" href="/account/register.php">Register</a>
                         </li>
                     <?php } ?>
+
+                    <li>
+                        <!--Switch for dark/light mode-->
+                        <div class="form-check form-switch align-self: center;">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                                checked>
+                            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
