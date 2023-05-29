@@ -5,8 +5,7 @@ require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/accounts/user.php');
-
-// TODO: add validation to title and description
+require_once('../lib/http_exceptions/bad_request.php');
 
 try {
     $scooter_id = $_GET['id'];
@@ -26,13 +25,16 @@ try {
 
         if (empty($title)) {
             $title_error = "Title is required";
-            goto end;
+            throw new BadRequestException("Title is required");
         }
 
         if (empty($description)) {
             $description_error = "Description is required";
-            goto end;
+            throw new BadRequestException("Description is required");
         }
+
+        // thows ScooterNotFoundException if the scooter does not exist
+        get_scooter_by_id($conn, $scooter_id);
 
         create_issue($conn, $email, $scooter_id, $title, $description);
 
@@ -40,6 +42,8 @@ try {
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
+} catch(BadRequestException $e) {
+    // pass
 } catch (ScooterNotFoundException $e) {
     http_response_code(404);
     echo "404 Not Found";

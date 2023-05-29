@@ -10,7 +10,6 @@ function get_redirect_to() {
 
 function try_redirect() {
     $redirect_to = $_GET['redirect_to'];
-    error_log("REDIRECT TO 1: -" . $redirect_to . "-");
     if (isset($redirect_to)) {
         $url = "/";
 
@@ -31,12 +30,14 @@ function try_redirect() {
                 $scooter_id = $_GET['id'];
                 if (isset($scooter_id)) {
                     $url = "/issues/report_issue.php?id=$scooter_id";
+                } else {
+                    $url = "/";
                 }
                 break;
             default:
+                $url = "/";
                 return;
         }
-        error_log("REDIRECT TO 2: $url");
         header("Location: $url");
         exit();
     }

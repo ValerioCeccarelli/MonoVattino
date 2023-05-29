@@ -11,6 +11,7 @@ $password = "";
 $password_error = null;
 
 $redirect_to = get_redirect_to();
+$id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # pass
@@ -93,7 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>"
+                    <form
+                        action="/account/login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?><?php if(isset($id)) echo "&id=$id"; ?>"
                         method="POST">
                         <!-- Title -->
                         <h2>
