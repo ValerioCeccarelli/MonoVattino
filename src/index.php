@@ -198,7 +198,7 @@ $trans = get_translation($language, 'translations');
                         <a id="btnSwitch" @click="toggleTheme">
                             <a id="nav_dark" class="btn btn-primary" onclick="change_theme('dark')" style="background-color:var(--theme); background:none; padding:0px; border:none; 
                                 display:<?php echo $html_theme === "light" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                <ion-icon class="p-3" name="moon-outline" style="font-size: 23px; color:#888888" />
                             </a>
                             <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
                                 display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
@@ -369,7 +369,7 @@ $trans = get_translation($language, 'translations');
                 <!-- Grid row -->
                 <div class="row mt-3">
                     <!-- Grid column -->
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 text-center">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
                             <i class="bi bi-scooter me-2"></i>MONOVATTINO
@@ -381,7 +381,7 @@ $trans = get_translation($language, 'translations');
                     <!-- Grid column -->
 
                     <!-- Grid column -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 text-center">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
                             <?php echo $trans["BUILT WITH"]; ?>
@@ -409,7 +409,7 @@ $trans = get_translation($language, 'translations');
                     <!-- Grid column -->
 
                     <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 text-center">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
                             <?php echo $trans["Contact"]; ?>
@@ -424,8 +424,8 @@ $trans = get_translation($language, 'translations');
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>

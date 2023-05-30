@@ -145,8 +145,8 @@
                             <i class="fas fa-envelope me-3"></i>
                             info@example.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>

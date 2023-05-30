@@ -743,8 +743,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=default&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('default')">
+                        <div id="default_card"
+                            class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/default.png" class="card-img-top" alt="default">
                             <div class="card card-body">
@@ -757,8 +758,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=dark&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('dark')">
+                        <div id="dark_card"
+                            class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark">
                             <div class="card card-body">
@@ -771,8 +773,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=light&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('light')">
+                        <div id="light_card"
+                            class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/light.png" class="card-img-top" alt="light">
                             <div class="card card-body">
@@ -785,8 +788,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=grey&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('grey')">
+                        <div id="grey_card"
+                            class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey">
                             <div class="card card-body">
@@ -799,8 +803,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=classic&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('classic')">
+                        <div id="classic_card"
+                            class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic">
                             <div class="card card-body">
@@ -813,8 +818,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=night&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('night')">
+                        <div id="night_card"
+                            class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/night.png" class="card-img-top" alt="night">
                             <div class="card card-body">
@@ -827,8 +833,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=atlas&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('atlas')">
+                        <div id="atlas_card"
+                            class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas">
                             <div class="card card-body">
@@ -940,8 +947,8 @@ try {
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>
@@ -974,6 +981,25 @@ try {
         toggleElement.classList.add("active");
         toggleElement.setAttribute("aria-current", "true");
         toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+
+        var currentSelectedMapTheme = "<?php echo $map_theme; ?>";
+        function change_map_theme(theme) {
+            var id = currentSelectedMapTheme + "_card";
+            document.getElementById(id).classList.remove("selected-card");
+
+            var new_id = theme + "_card";
+            document.getElementById(new_id).classList.add("selected-card");
+            currentSelectedMapTheme = theme;
+
+            $.ajax({
+                url: "/account/change_map.php",
+                type: "GET",
+                data: {
+                    map: theme
+                },
+            });
+
+        }
     </script>
 
 </body>

@@ -6,6 +6,7 @@ require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/bad_request.php');
+require_once('../translations/translation.php');
 
 session_start();
 
@@ -13,6 +14,7 @@ $is_user_logged = isset($_SESSION['user_email']);
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
 $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
+$trans = get_translation($language, '../translations');
 
 try {
     $scooter_id = $_GET['id'];
@@ -85,7 +87,9 @@ catch (MethodNotAllowedException $e) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report issue</title>
+    <title>
+        <?php echo $trans['Report issue']; ?> | MV
+    </title>
 
     <!-- Bootsrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -374,8 +378,8 @@ catch (MethodNotAllowedException $e) {
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>
