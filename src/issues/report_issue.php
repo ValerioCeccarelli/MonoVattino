@@ -282,7 +282,7 @@ catch (MethodNotAllowedException $e) {
 
     <script>
     // Get the current language from the server
-    var currentLanguage = "<?php echo $user->language; ?>";
+    var currentLanguage = "<?php echo $language; ?>";
 
     var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
     var selectedLanguageText = document.getElementById("selectedLanguageText");

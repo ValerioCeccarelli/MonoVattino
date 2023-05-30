@@ -3,13 +3,19 @@
 require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/trips.php');
 
+session_start();
+
 function process_post_request() {
 
-    $jwt_payload = validate_jwt();
+    if (! isset($_SESSION['user_email'])) {
+        // unauthorized 
+        // TODO: maybe we should return 401 instead of 400 Bad Request
+        throw new BadRequestException("You need to be logged in to reserve a scooter");
+    }
 
     $scooter_id = $_POST['scooter_id'];
     $longitude = $_POST['longitude'];
@@ -19,13 +25,15 @@ function process_post_request() {
         throw new BadRequestException("Missing parameters");
     }
 
+    $email = $_SESSION['user_email'];
+
     $conn = connect_to_database();
 
     $travel_time = get_travel_time($conn, $scooter_id);
     move_to_position($conn, $scooter_id, $longitude, $latitude);
     free_scoter($conn, $scooter_id);
 
-    create_trip($conn, $scooter_id, $jwt_payload->email, $travel_time);
+    create_trip($conn, $scooter_id, $email, $travel_time);
 
     $costs = get_scooter_costs($conn, $scooter_id);
 
@@ -55,10 +63,6 @@ try {
 } catch (ScooterAlreayReservedException $e) {
     http_response_code(409);
     echo "409 Conflict";
-    exit;
-} catch (InvalidJWTException $e) {
-    http_response_code(401);
-    echo "401 Unauthorized";
     exit;
 } catch (Exception $e) {
     error_log("ERROR: scooter.php: " . $e->getMessage());

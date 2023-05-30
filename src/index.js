@@ -208,7 +208,7 @@ async function onScooterReleaseClick(scooter) {
         $('#info_scooter').hide();
 
         $('#success_modal_title').text("Scooter released!");
-        $('#success_modal_mody').text("You paid: " + payment.total_cost + "€");
+        $('#success_modal_body').text("You paid: " + payment.total_cost + "€");
         $('#success_modal').modal('show');
 
         const {
