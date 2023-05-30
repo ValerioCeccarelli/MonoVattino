@@ -1,5 +1,25 @@
 {
-    "hello": "hello",
-    "world": "world",
-    "hello world": "hello world"
+    "Map": "Map",
+    "Profile": "Profile",
+    "About us": "About us",
+    "Issues": "Issues",
+    "Logout": "Logout",
+    "Login": "Login",
+    "Register": "Register",
+    "Info Scooter": "Info Scooter",
+    "Battery": "Battery",
+    "Company": "Company",
+    "Base cost": "Base cost",
+    "Per minute": "Per minute",
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "Reserve": "Reserve",
+    "Report": "Report",
+    "Scooter reserved": "Scooter reserved",
+    "Error": "Error",
+    "Something went wrong! Please refresh the page and try again.": "Something went wrong! Please refresh the page and try again.",
+    "Get connected with us on social networks": "Get connected with us on social networks",
+    "FooterMVDesc": "<strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility. Ride, unlock, and explore with ease. Join us in shaping a greener future of transportation.",
+    "BUILT WITH": "BUILT WITH",
+    "Contact": "Contact"
 }

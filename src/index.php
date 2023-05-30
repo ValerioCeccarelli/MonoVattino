@@ -4,6 +4,7 @@ require_once('lib/jwt.php');
 require_once('lib/accounts/user.php');
 require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
+require_once('translations/translation.php');
 
 session_start();
 
@@ -17,6 +18,7 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 
 $map_id = theme_to_mapid($map_theme);
 
+$trans = get_translation($language, 'translations');
 // try {
 //     // $jwt_payload = validate_jwt();
 //     // $is_user_logged = true;
@@ -100,20 +102,28 @@ $map_id = theme_to_mapid($map_theme);
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><strong>Map</strong></a>
+                        <a class="nav-link" href="#"><strong>
+                                <?php echo $trans['Map']; ?>
+                            </strong></a>
                     </li>
                     <?php if ($is_user_logged) { ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/profile.php">Profile</a>
+                            <a class="nav-link" href="/account/profile.php">
+                                <?php echo $trans['Profile']; ?>
+                            </a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.php">About us</a>
+                        <a class="nav-link" href="/about.php">
+                            <?php echo $trans['About us']; ?>
+                        </a>
                     </li>
                     <?php if ($is_admin) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                            <a class="nav-link" href="/issues/show_issue.php">
+                                <?php echo $trans['Issues']; ?>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -137,21 +147,21 @@ $map_id = theme_to_mapid($map_theme);
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>
@@ -159,15 +169,21 @@ $map_id = theme_to_mapid($map_theme);
 
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">
+                                <?php echo $trans['Logout']; ?>
+                            </a>
                         </li>
 
                     <?php } else { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">
+                                <?php echo $trans['Login']; ?>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
+                            <a class="nav-link" href="/account/register.php">
+                                <?php echo $trans['Register']; ?>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -220,7 +236,9 @@ $map_id = theme_to_mapid($map_theme);
     <div class="offcanvas offcanvas-bottom my-offcanvas" tabindex="-1" id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel">
         <div class="offcanvas-header my-offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Info Scooter</h5>
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+                <?php echo $trans['Info Scooter']; ?>
+            </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body medium">
@@ -228,37 +246,41 @@ $map_id = theme_to_mapid($map_theme);
                 <div class="col">
                     <p>
                         <i class="bi bi-battery-charging"></i>
-                        Battery: <span id="scooter_battery">69</span>%
+                        <?php echo $trans['Battery']; ?>: <span id="scooter_battery">69</span>%
                     </p>
                     <p>
                         <i class="bi bi-building"></i>
-                        Company: <span id="scooter_company">mirko_scuscu</span>
+                        <?php echo $trans["Company"]; ?>: <span id="scooter_company">mirko_scuscu</span>
                     </p>
                 </div>
                 <div class="col">
                     <p>
                         <i class="bi bi-currency-euro"></i>
-                        Base cost: <span id="scooter_fixed_cost">1</span>€
+                        <?php echo $trans["Base cost"]; ?>: <span id="scooter_fixed_cost">1</span>€
                     </p>
                     <p>
                         <i class="bi bi-currency-euro"></i>
-                        Per minute: <span id="scooter_cost_per_minute">0.36</span>€
+                        <?php echo $trans["Per minute"]; ?>: <span id="scooter_cost_per_minute">0.36</span>€
                     </p>
                 </div>
                 <div class="col d-none d-md-block">
                     <p>
                         <i class="bi bi-geo-alt"></i>
-                        Latitude: <span id="scooter_latitude">41.03456</span>
+                        <?php echo $trans["Latitude"]; ?>: <span id="scooter_latitude">41.03456</span>
                     </p>
                     <p>
                         <i class="bi bi-geo-alt"></i>
-                        Longitude: <span id="scooter_longitude">12.456</span>
+                        <?php echo $trans["Longitude"]; ?>: <span id="scooter_longitude">12.456</span>
                     </p>
                 </div>
             </div>
 
-            <button class="btn btn-primary" id="offcanvas_button" type="button">Reserve</button>
-            <button class="btn btn-warning" id="offcanvas_report_button" type="button">Report</button>
+            <button class="btn btn-primary" id="offcanvas_button" type="button">
+                <?php echo $trans["Reserve"]; ?>
+            </button>
+            <button class="btn btn-warning" id="offcanvas_report_button" type="button">
+                <?php echo $trans["Report"]; ?>
+            </button>
         </div>
     </div>
 
@@ -268,7 +290,9 @@ $map_id = theme_to_mapid($map_theme);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="success_modal_title">Scooter reserved!</h5>
+                    <h5 class="modal-title" id="success_modal_title">
+                        <?php echo $trans["Scooter reserved"]; ?>!
+                    </h5>
                 </div>
                 <div class="modal-body" id="success_modal_body">
                     Ok!
@@ -286,11 +310,13 @@ $map_id = theme_to_mapid($map_theme);
             <div class="modal-content">
                 <div class="modal-header">
                     <i class="bi bi-exclamation-triangle-fill pe-4 fs-3" style="color: red;"></i>
-                    <h1 class="modal-title fs-5" id="error_modal_title">Error!</h1>
+                    <h1 class="modal-title fs-5" id="error_modal_title">
+                        <?php echo $trans["Error"]; ?>!
+                    </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="error_modal_body">
-                    Something went wrong! Please refresh the page and try again.
+                    <?php echo $trans["Something went wrong! Please refresh the page and try again."]; ?>
                 </div>
             </div>
         </div>
@@ -302,7 +328,9 @@ $map_id = theme_to_mapid($map_theme);
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <!-- Left -->
             <div class="me-5 d-none d-lg-block">
-                <span>Get connected with us on social networks:</span>
+                <span>
+                    <?php echo $trans["Get connected with us on social networks"]; ?>:
+                </span>
             </div>
             <!-- Left -->
 
@@ -343,9 +371,7 @@ $map_id = theme_to_mapid($map_theme);
                             <i class="bi bi-scooter me-2"></i>MONOVATTINO
                         </h6>
                         <p>
-                            <strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility.
-                            Ride, unlock, and explore with
-                            ease. Join us in shaping a greener future of transportation.
+                            <?php echo $trans["FooterMVDesc"]; ?>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -354,7 +380,7 @@ $map_id = theme_to_mapid($map_theme);
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            BUILT WITH
+                            <?php echo $trans["BUILT WITH"]; ?>
                         </h6>
                         <p>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="text-reset">HTML</a>
@@ -381,7 +407,9 @@ $map_id = theme_to_mapid($map_theme);
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <?php echo $trans["Contact"]; ?>
+                        </h6>
                         <p>
                             <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"
                                 style="text-decoration:none; color:inherit;"><i class="fas fa-home me-3"></i> Piazzale

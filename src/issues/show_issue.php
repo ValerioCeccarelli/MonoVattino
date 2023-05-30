@@ -134,21 +134,21 @@ catch (ForbiddenException $e) {
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>

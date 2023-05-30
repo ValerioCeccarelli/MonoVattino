@@ -1,5 +1,24 @@
 {
-    "hello": "ciao",
-    "world": "mondo",
-    "hello world": "ciao mondo"
+    "Map": "Mappa",
+    "Profile": "Profilo",
+    "About us": "Chi siamo",
+    "Issues": "Segnalazioni",
+    "Logout": "Esci",
+    "Login": "Accedi",
+    "Register": "Registrati",
+    "Info Scooter": "Info Monopattino",
+    "Battery": "Batteria",
+    "Company": "Compagnia",
+    "Base cost": "Costo base",
+    "Per minute": "Al minuto",
+    "Latitude": "Latitudine",
+    "Longitude": "Longitudine",
+    "Reserve": "Prenota",
+    "Report": "Segnala",
+    "Scooter reserved": "Monopattino prenotato",
+    "Error": "Errore",
+    "Something went wrong! Please refresh the page and try again.": "Qualcosa è andato storto! Per favore aggiorna la pagina e riprova.",
+    "FooterMVDesc": "<strong>M</strong>ono<strong>V</strong>attino: App di mobilità urbana. Guida, sblocca ed esplora con facilità. Unisciti a noi per plasmare un futuro più verde dei trasporti.",
+    "BUILT WITH": "REALIZZATO CON",
+    "Contact": "Contatti"
 }

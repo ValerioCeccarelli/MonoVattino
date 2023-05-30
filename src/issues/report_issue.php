@@ -170,7 +170,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
@@ -178,7 +178,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
@@ -186,7 +186,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>
