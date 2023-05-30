@@ -3,16 +3,20 @@
 require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/accounts/user.php');
 
+session_start();
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $jwt_payload = validate_jwt();
-        $email = $jwt_payload->email;
+        if (! isset($_SESSION['user_email'])) {
+            // unauthorized
+            throw new UserCanNotReserveException("You need to be logged in to reserve a scooter");
+        }
 
-        error_log("ciaoooooooo " . $email . "ciaooooooooo");
+        $email = $_SESSION['user_email'];
 
         $scooter_id = $_POST['scooter_id'];
 
@@ -21,8 +25,6 @@ try {
         }
 
         $conn = connect_to_database();
-
-        error_log("00000000");
 
         check_if_user_can_reserve($conn, $email);
 
@@ -42,10 +44,6 @@ try {
 } catch (ScooterAlreayReservedException $e) {
     http_response_code(409);
     echo "409 Conflict";
-    exit;
-} catch (InvalidJWTException $e) {
-    http_response_code(401);
-    echo "401 Unauthorized";
     exit;
 } catch (UserCanNotReserveException $e) {
     http_response_code(403);

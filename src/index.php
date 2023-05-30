@@ -46,7 +46,7 @@ $map_id = theme_to_mapid($map_theme);
 
 <head>
     <script>
-        var map_id = "<?php echo $map_id; ?>";
+    var map_id = "<?php echo $map_id; ?>";
     </script>
 
     <meta charset="UTF-8">
@@ -65,7 +65,7 @@ $map_id = theme_to_mapid($map_theme);
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+    </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script> -->
@@ -104,17 +104,17 @@ $map_id = theme_to_mapid($map_theme);
                     </li>
                     <?php if ($is_user_logged) { ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/profile.php">Profile</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/profile.php">Profile</a>
+                    </li>
                     <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                    </li>
                     <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -158,17 +158,17 @@ $map_id = theme_to_mapid($map_theme);
                     </li>
 
                     <?php if ($is_user_logged) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/logout.php">Logout</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/logout.php">Logout</a>
+                    </li>
 
                     <?php } else { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/register.php">Register</a>
+                    </li>
                     <?php } ?>
                 </ul>
 
@@ -185,25 +185,25 @@ $map_id = theme_to_mapid($map_theme);
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
                             </a>
                             <script>
-                                function change_theme(theme) {
-                                    html = document.getElementsByTagName('html')[0];
-                                    if (theme == 'dark') {
-                                        html.setAttribute('data-bs-theme', 'dark');
-                                        document.getElementById('nav_dark').style.display = 'none';
-                                        document.getElementById('nav_light').style.display = 'block';
-                                    } else if (theme == 'light') {
-                                        html.setAttribute('data-bs-theme', 'light');
-                                        document.getElementById('nav_dark').style.display = 'block';
-                                        document.getElementById('nav_light').style.display = 'none';
-                                    }
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/account/change_theme.php",
-                                        data: {
-                                            theme: theme
-                                        }
-                                    });
+                            function change_theme(theme) {
+                                html = document.getElementsByTagName('html')[0];
+                                if (theme == 'dark') {
+                                    html.setAttribute('data-bs-theme', 'dark');
+                                    document.getElementById('nav_dark').style.display = 'none';
+                                    document.getElementById('nav_light').style.display = 'block';
+                                } else if (theme == 'light') {
+                                    html.setAttribute('data-bs-theme', 'light');
+                                    document.getElementById('nav_dark').style.display = 'block';
+                                    document.getElementById('nav_light').style.display = 'none';
                                 }
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/account/change_theme.php",
+                                    data: {
+                                        theme: theme
+                                    }
+                                });
+                            }
                             </script>
 
                         </a>
@@ -270,7 +270,7 @@ $map_id = theme_to_mapid($map_theme);
                 <div class="modal-header">
                     <h5 class="modal-title" id="success_modal_title">Scooter reserved!</h5>
                 </div>
-                <div class="modal-body" id="success_modal_mody">
+                <div class="modal-body" id="success_modal_body">
                     Ok!
                 </div>
                 <div class="modal-footer">
@@ -399,19 +399,19 @@ $map_id = theme_to_mapid($map_theme);
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-        // Get the current language from the server
-        var currentLanguage = "<?php echo $user->language; ?>";
+    // Get the current language from the server
+    var currentLanguage = "<?php echo $user->language; ?>";
 
-        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-        var selectedLanguageText = document.getElementById("selectedLanguageText");
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-        // Update the toggle element to show the current language
-        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-        toggleElement.classList.add("active");
-        toggleElement.setAttribute("aria-current", "true");
-        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
     <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
 </body>
