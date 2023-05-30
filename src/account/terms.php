@@ -7,10 +7,18 @@ require_once('../lib/redirect_to.php');
 
 // TODO: add validatiomn with bad request invece che goto
 
+session_start();
+
 try {
-    $jwt_payload = validate_jwt();
-    $email = $jwt_payload->email;
-    $username = $jwt_payload->username;
+    if(!isset($_SESSION['user_email'])) {
+        header('Location: /account/login.php?redirect_to=terms');
+        exit;
+    }
+    // $jwt_payload = validate_jwt();
+    // $email = $jwt_payload->email;
+    // $username = $jwt_payload->username;
+    $email = $_SESSION['user_email'];
+    $username = $_SESSION['user_username'];
 
     $privacy_policy = true;
     $terms_and_conditions = false;
@@ -50,11 +58,13 @@ try {
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
-} catch (InvalidJWTException $e) {
-    http_response_code(401);
-    echo "401 Unauthorized";
-    exit;
-} catch (NoUserFoundException $e) {
+} 
+// catch (InvalidJWTException $e) {
+//     http_response_code(401);
+//     echo "401 Unauthorized";
+//     exit;
+// } 
+catch (NoUserFoundException $e) {
     http_response_code(404);
     echo "404 Not Found";
     exit;

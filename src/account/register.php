@@ -5,6 +5,8 @@ require_once('../lib/database.php');
 require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
 
+session_start();
+
 $username = "";
 $username_error = null;
 $name = "";
@@ -61,13 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         create_new_user($conn, $user);
 
-        $jwt_payload = new JwtPayload();
-        $jwt_payload->email = $email;
-        $jwt_payload->username = $username;
+        // $jwt_payload = new JwtPayload();
+        // $jwt_payload->email = $email;
+        // $jwt_payload->username = $username;
 
-        $jwt = generate_jwt($db_user);
+        // $jwt = generate_jwt($db_user);
 
-        setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
+        // setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
+
+        $_SESSION['user_email'] = $email;
+        $_SESSION['user_username'] = $username;
+        $_SESSION['html_theme'] = 'light';
+        $_SESSION['map_theme'] = 'default';
+        $_SESSION['language'] = 'en';
+        $_SESSION['is_admin'] = false;
 
         try_redirect();
 

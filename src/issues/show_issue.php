@@ -1,39 +1,42 @@
 <?php
 
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/http_exceptions/forbidden.php');
 require_once('../lib/accounts/user.php');
 
-$is_admin = false;
-$html_theme = "light";
+session_start();
+
+$is_user_logged = isset($_SESSION['user_email']);
+$html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
+$language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
+$is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 
 try {
-    $jwt_payload = validate_jwt();
-    $email = $jwt_payload->email;
+    if (!$is_user_logged) {
+        header("Location: /account/login.php?redirect_to=show_issue");
+        exit;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $conn = connect_to_database();
 
-        $user = get_user_by_email($conn, $email);
-
-        $is_admin = $user->is_admin;
-        $html_theme = $user->html_theme;
-
-        if (!$user->is_admin) {
+        if (! $is_admin) {
             throw new ForbiddenException("You are not an admin!");
         }
 
+        $conn = connect_to_database();
         $issues = get_issues_info($conn);
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
-} catch (InvalidJWTException $e) {
-    header("Location: /account/login.php");
-    exit;
-} catch (ForbiddenException $e) {
+} 
+// catch (InvalidJWTException $e) {
+//     header("Location: /account/login.php");
+//     exit;
+// } 
+catch (ForbiddenException $e) {
     http_response_code(403);
     echo "403 Forbidden";
     exit;

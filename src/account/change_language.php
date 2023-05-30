@@ -2,22 +2,29 @@
 
 require_once('../lib/accounts/user.php');
 require_once('../lib/database.php');
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
 
+session_start();
+
 try {
-    $lang = $_GET['lang'];
-    // validate_language($lang); //
+    if (isset($_SESSION['user_email'])) {
+        $lang = $_GET['lang'];
 
-    $jwt_payload = validate_jwt();
-    $conn = connect_to_database();
-    change_language($conn, $jwt_payload->email, $lang);
+        // $jwt_payload = validate_jwt();
 
-    error_log("INFO: change_language.php: $jwt_payload->email changed language to $lang");
+        // TODO: check if lang is valid
 
-    try_redirect();
+        $conn = connect_to_database();
+        change_language($conn, $email, $lang);
 
-    header('Location: /');
+        try_redirect();
+
+        header('Location: /');
+    } else {
+        //TODO da cambiare in 401 unauthorized
+        throw new Exception("Unauthorized");
+    }
 } catch (Exception $e) {
     http_response_code(500);
     error_log("ERROR: change_language.php: " . $e->getMessage());

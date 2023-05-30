@@ -1,29 +1,37 @@
 <?php
 
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/bad_request.php');
 
+session_start();
+
+$is_user_logged = isset($_SESSION['user_email']);
+$html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
+$language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
+$is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
+
 try {
-    $is_admin = false;
+    if(!$is_user_logged) {
+        header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
+        exit;
+    }
+
     $scooter_id = $_GET['id'];
 
-    $jwt_payload = validate_jwt();
-    $email = $jwt_payload->email;
-
-    $conn = connect_to_database();
-    $user = get_user_by_email($conn, $email);
-    $html_theme = $user->html_theme;
-    $is_admin = $user->is_admin;
+    // $jwt_payload = validate_jwt();
+    // $email = $jwt_payload->email;
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // pass
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];
         $description = $_POST['description'];
+
+        $email = $_SESSION['user_email'];
 
         if (empty($title)) {
             $title_error = "Title is required";
@@ -34,10 +42,12 @@ try {
             $description_error = "Description is required";
             throw new BadRequestException("Description is required");
         }
+        $conn = connect_to_database();
 
         // thows ScooterNotFoundException if the scooter does not exist
         get_scooter_by_id($conn, $scooter_id);
 
+        // TODO: far si che sia questa funzione a lanciare l'eccezione se non esiste lo scooter
         create_issue($conn, $email, $scooter_id, $title, $description);
 
         header("Location: /");
@@ -50,10 +60,12 @@ try {
     http_response_code(404);
     echo "404 Not Found";
     exit;
-} catch (InvalidJWTException $e) {
-    header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
-    exit;
-} catch (MethodNotAllowedException $e) {
+} 
+// catch (InvalidJWTException $e) {
+//     header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
+//     exit;
+// } 
+catch (MethodNotAllowedException $e) {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;
