@@ -8,6 +8,8 @@ require_once('../lib/accounts/payments.php');
 require_once('../lib/accounts/themes.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 
+$is_admin = false;
+
 try {
     $conn = connect_to_database();
 
@@ -27,6 +29,8 @@ try {
     }
 
     $user = get_user_by_email($conn, $email);
+
+    $is_admin = $user->is_admin;
 
     try {
         $payment_method = get_payment_metod_by_id($conn, $user->payment_method);
@@ -247,6 +251,11 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
+                    <?php if ($is_admin) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                    </li>
+                    <?php } ?>
                 </ul>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -333,8 +342,6 @@ try {
                     </li>
 
                 </ul>
-
-
             </div>
         </div>
     </nav>
@@ -679,9 +686,22 @@ try {
         <div class="collapse container text-center" id="collapseExample">
             <div class="row">
 
+                <!-- <script>
+                
+                function change_map_theme(theme) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/account/change_map.php",
+                        data: {
+                            map: theme
+                        }
+                    });
+                }
+                </script> -->
+
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=default">
+                    <a href="/account/change_map.php?map=default&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/default.png" class="card-img-top" alt="default">
@@ -695,7 +715,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=dark">
+                    <a href="/account/change_map.php?map=dark&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark">
@@ -709,7 +729,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=light">
+                    <a href="/account/change_map.php?map=light&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/light.png" class="card-img-top" alt="light">
@@ -723,7 +743,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=grey">
+                    <a href="/account/change_map.php?map=grey&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey">
@@ -737,7 +757,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=night">
+                    <a href="/account/change_map.php?map=classic&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic">
@@ -751,7 +771,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=night">
+                    <a href="/account/change_map.php?map=night&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/night.png" class="card-img-top" alt="night">
@@ -765,7 +785,7 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/profile.php?map=atlas">
+                    <a href="/account/change_map.php?map=atlas&redirect_to=profile">
                         <div class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas">

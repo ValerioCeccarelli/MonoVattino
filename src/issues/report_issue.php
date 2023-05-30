@@ -8,6 +8,7 @@ require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/bad_request.php');
 
 try {
+    $is_admin = false;
     $scooter_id = $_GET['id'];
 
     $jwt_payload = validate_jwt();
@@ -16,6 +17,7 @@ try {
     $conn = connect_to_database();
     $user = get_user_by_email($conn, $email);
     $html_theme = $user->html_theme;
+    $is_admin = $user->is_admin;
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // pass
@@ -83,6 +85,16 @@ try {
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-...=" crossorigin="anonymous" />
+
+    <!-- Flag icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <style>
     .error-msg {
         padding-top: 5px;
@@ -118,11 +130,98 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
+                    <?php if ($is_admin) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                    </li>
+                    <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <!-- Language selector -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span id="selectedLanguageFlag" class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                            <span id="selectedLanguageText" style="font-size: 1rem;">English</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=en"
+                                    id="langEN">
+                                    <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
+                                    <span style="font-size: 1rem;">English</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=it"
+                                    id="langIT">
+                                    <span class="fi fi-it"></span>
+                                    <span style="font-size: 1rem;">Italian</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=de"
+                                    id="langDE">
+                                    <span class="fi fi-de"></span>
+                                    <span style="font-size: 1rem;">German</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=es"
+                                    id="langES">
+                                    <span class="fi fi-es"></span>
+                                    <span style="font-size: 1rem;">Spanish</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/account/logout.php">Logout</a>
                     </li>
+                </ul>
+
+                <!-- Theme mode -->
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li>
+                        <a id="btnSwitch" @click="toggleTheme">
+                            <a id="nav_dark" class="btn btn-primary" onclick="change_theme('dark')" style="background-color:var(--theme); background:none; padding:0px; border:none; 
+                                display:<?php echo $html_theme === "light" ? "block" : "none" ?>;">
+                                <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                            </a>
+                            <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
+                                display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
+                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold;" />
+                            </a>
+                            <script>
+                            function change_theme(theme) {
+                                html = document.getElementsByTagName('html')[0];
+                                if (theme == 'dark') {
+                                    html.setAttribute('data-bs-theme', 'dark');
+                                    document.getElementById('nav_dark').style.display = 'none';
+                                    document.getElementById('nav_light').style.display = 'block';
+                                } else if (theme == 'light') {
+                                    html.setAttribute('data-bs-theme', 'light');
+                                    document.getElementById('nav_dark').style.display = 'block';
+                                    document.getElementById('nav_light').style.display = 'none';
+                                }
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/account/change_theme.php",
+                                    data: {
+                                        theme: theme
+                                    }
+                                });
+                            }
+                            </script>
+
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -165,6 +264,25 @@ try {
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+    // Get the current language from the server
+    var currentLanguage = "<?php echo $user->language; ?>";
+
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    var selectedLanguageText = document.getElementById("selectedLanguageText");
+
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    </script>
 </body>
 
 </html>
