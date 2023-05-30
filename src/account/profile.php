@@ -43,6 +43,7 @@ try {
         $trips = get_user_trips($conn, $email);
 
         $username = $user->username;
+        $language = $user->language;
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
@@ -250,7 +251,6 @@ try {
                 </ul>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                    <!-- Language selector -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -259,28 +259,28 @@ try {
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=en"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=en"
                                     id="langEN">
                                     <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
                                     <span style="font-size: 1rem;">English</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
                                     <span style="font-size: 1rem;">Italian</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=de"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
                                     <span style="font-size: 1rem;">German</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=es"
+                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=index&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
                                     <span style="font-size: 1rem;">Spanish</span>
@@ -907,10 +907,6 @@ try {
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        if (window.history.replaceState) {
-
-            window.history.replaceState(null, null, window.location.href);
-        }
         // Get the current language from the server
         var currentLanguage = "<?php echo $language; ?>";
 

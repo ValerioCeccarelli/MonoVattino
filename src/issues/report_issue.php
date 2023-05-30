@@ -15,12 +15,12 @@ $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 
 try {
+    $scooter_id = $_GET['id'];
     if (!$is_user_logged) {
         header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
         exit;
     }
 
-    $scooter_id = $_GET['id'];
 
     // $jwt_payload = validate_jwt();
     // $email = $jwt_payload->email;
