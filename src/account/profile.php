@@ -8,6 +8,8 @@ require_once('../lib/accounts/payments.php');
 require_once('../lib/accounts/themes.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 
+$is_admin = false;
+
 try {
     $conn = connect_to_database();
 
@@ -27,6 +29,8 @@ try {
     }
 
     $user = get_user_by_email($conn, $email);
+
+    $is_admin = $user->is_admin;
 
     try {
         $payment_method = get_payment_metod_by_id($conn, $user->payment_method);
@@ -247,6 +251,11 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
+                    <?php if ($is_admin) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                    </li>
+                    <?php } ?>
                 </ul>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -333,8 +342,6 @@ try {
                     </li>
 
                 </ul>
-
-
             </div>
         </div>
     </nav>
