@@ -1,28 +1,11 @@
 <?php
 
-require_once('lib/jwt.php');
-require_once('lib/accounts/user.php');
-require_once('lib/accounts/themes.php');
-require_once('lib/database.php');
+session_start();
 
-$is_user_logged = false;
-$html_theme = "light";
-
-$is_admin = false;
-
-try {
-    $jwt_payload = validate_jwt();
-    $is_user_logged = true;
-    $username = $jwt_payload->username;
-
-    $conn = connect_to_database();
-    $user = get_user_by_email($conn, $jwt_payload->email);
-    $html_theme = $user->html_theme;
-    $is_admin = $user->is_admin;
-} catch (InvalidJWTException $e) {
-    $is_user_logged = false;
-    $username = null;
-}
+$is_user_logged = isset($_SESSION['user_email']);
+$html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
+$language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
+$is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 
 ?>
 
@@ -134,17 +117,17 @@ try {
                     </li>
 
                     <?php if ($is_user_logged) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/logout.php">Logout</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/logout.php">Logout</a>
+                    </li>
 
                     <?php } else { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/register.php">Register</a>
+                    </li>
                     <?php } ?>
                 </ul>
 
@@ -318,19 +301,19 @@ try {
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-        // Get the current language from the server
-        var currentLanguage = "<?php echo $user->language; ?>";
+    // Get the current language from the server
+    var currentLanguage = "<?php echo $user->language; ?>";
 
-        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-        var selectedLanguageText = document.getElementById("selectedLanguageText");
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-        // Update the toggle element to show the current language
-        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-        toggleElement.classList.add("active");
-        toggleElement.setAttribute("aria-current", "true");
-        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
 </body>
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../lib/jwt.php');
+// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
@@ -8,10 +8,19 @@ require_once('../lib/accounts/validate_user.php');
 require_once('../lib/accounts/payments.php');
 require_once('../lib/redirect_to.php');
 
+session_start();
+
 try {
-    $jwt_payload = validate_jwt();
-    $email = $jwt_payload->email;
-    $username = $jwt_payload->username;
+    if(!isset($_SESSION['user_email'])) {
+        header('Location: /account/login.php?redirect_to=payment');
+        exit;
+    }
+    // $jwt_payload = validate_jwt();
+    // $email = $jwt_payload->email;
+    // $username = $jwt_payload->username;
+
+    $email = $_SESSION['user_email'];
+    $username = $_SESSION['user_username'];
 
     $owner = $_POST['owner'];
     $card_number = $_POST['card_number'];

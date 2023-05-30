@@ -14,6 +14,12 @@ function try_redirect() {
         $url = "/";
 
         switch($redirect_to) {
+            case 'payment':
+                $url = "/account/payment.php";
+                break;
+            case 'terms':
+                $url = "/account/terms.php";
+                break;
             case 'index':
                 $url = "/";
                 break;
