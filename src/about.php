@@ -1,12 +1,14 @@
 <?php
 
+require_once('translations/translation.php');
+
 session_start();
 
 $is_user_logged = isset($_SESSION['user_email']);
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
 $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
-
+$trans = get_translation($language, 'translations');
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +17,9 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>About us | MV</title>
+    <title>
+        <?php echo $trans['About us']; ?> | MV
+    </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -33,6 +37,10 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-...=" crossorigin="anonymous" />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -407,7 +415,6 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
     </footer>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
     <script>
         // Get the current language from the server
         var currentLanguage = "<?php echo $language; ?>";

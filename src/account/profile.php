@@ -76,7 +76,9 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>
+        <?php echo $trans['Profile']; ?> | MV
+    </title>
 
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -699,7 +701,7 @@ try {
         </p>
 
         <style>
-            a {
+            #collapseExample a {
                 text-decoration: none;
                 color: inherit;
             }
@@ -929,7 +931,8 @@ try {
                             <?php echo $trans["Contact"]; ?>
                         </h6>
                         <p>
-                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"><i class="fas fa-home me-3"></i> Piazzale
+                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7" style="text-decoration: none;
+                color: inherit;"><i class="fas fa-home me-3"></i> Piazzale
                                 della
                                 Stazione Ponte Mammolo, Rome 00156, IT</a>
                         </p>

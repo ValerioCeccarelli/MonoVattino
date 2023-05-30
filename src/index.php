@@ -75,6 +75,10 @@ $trans = get_translation($language, 'translations');
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-...=" crossorigin="anonymous" />
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -454,7 +458,6 @@ $trans = get_translation($language, 'translations');
         toggleElement.setAttribute("aria-current", "true");
         toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
-    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -394,7 +394,6 @@ catch (MethodNotAllowedException $e) {
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
 
     <script>
         // Get the current language from the server
