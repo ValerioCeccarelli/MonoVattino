@@ -46,7 +46,7 @@ $map_id = theme_to_mapid($map_theme);
 
 <head>
     <script>
-    var map_id = "<?php echo $map_id; ?>";
+        var map_id = "<?php echo $map_id; ?>";
     </script>
 
     <meta charset="UTF-8">
@@ -65,7 +65,7 @@ $map_id = theme_to_mapid($map_theme);
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script> -->
@@ -104,17 +104,17 @@ $map_id = theme_to_mapid($map_theme);
                     </li>
                     <?php if ($is_user_logged) { ?>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/profile.php">Profile</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/profile.php">Profile</a>
+                        </li>
                     <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/issues/show_issue.php">Issues</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                        </li>
                     <?php } ?>
                 </ul>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -158,17 +158,17 @@ $map_id = theme_to_mapid($map_theme);
                     </li>
 
                     <?php if ($is_user_logged) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/logout.php">Logout</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/logout.php">Logout</a>
+                        </li>
 
                     <?php } else { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/login.php">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/register.php">Register</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/register.php">Register</a>
+                        </li>
                     <?php } ?>
                 </ul>
 
@@ -185,25 +185,25 @@ $map_id = theme_to_mapid($map_theme);
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
                             </a>
                             <script>
-                            function change_theme(theme) {
-                                html = document.getElementsByTagName('html')[0];
-                                if (theme == 'dark') {
-                                    html.setAttribute('data-bs-theme', 'dark');
-                                    document.getElementById('nav_dark').style.display = 'none';
-                                    document.getElementById('nav_light').style.display = 'block';
-                                } else if (theme == 'light') {
-                                    html.setAttribute('data-bs-theme', 'light');
-                                    document.getElementById('nav_dark').style.display = 'block';
-                                    document.getElementById('nav_light').style.display = 'none';
-                                }
-                                $.ajax({
-                                    type: "GET",
-                                    url: "/account/change_theme.php",
-                                    data: {
-                                        theme: theme
+                                function change_theme(theme) {
+                                    html = document.getElementsByTagName('html')[0];
+                                    if (theme == 'dark') {
+                                        html.setAttribute('data-bs-theme', 'dark');
+                                        document.getElementById('nav_dark').style.display = 'none';
+                                        document.getElementById('nav_light').style.display = 'block';
+                                    } else if (theme == 'light') {
+                                        html.setAttribute('data-bs-theme', 'light');
+                                        document.getElementById('nav_dark').style.display = 'block';
+                                        document.getElementById('nav_light').style.display = 'none';
                                     }
-                                });
-                            }
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/account/change_theme.php",
+                                        data: {
+                                            theme: theme
+                                        }
+                                    });
+                                }
                             </script>
 
                         </a>
@@ -295,6 +295,8 @@ $map_id = theme_to_mapid($map_theme);
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
     <footer class="text-center text-lg-start footer-light text-muted">
         <!-- Section: Social media -->
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
@@ -306,22 +308,22 @@ $map_id = theme_to_mapid($map_theme);
 
             <!-- Right -->
             <div>
-                <a href class="me-4 text-reset">
-                    <i class="fab fa-facebook"></i>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class=" fab fa-facebook"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
+                <a href class="me-4 text-reset" style="text-decoration:none;">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
+                <a href class="me-4 text-reset" style="text-decoration:none;">
                     <i class="fab fa-google"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
+                <a href class="me-4 text-reset" style="text-decoration:none;">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
+                <a href class="me-4 text-reset" style="text-decoration:none;">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
+                <a href class="me-4 text-reset" style="text-decoration:none;">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
@@ -338,7 +340,7 @@ $map_id = theme_to_mapid($map_theme);
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem me-3"></i>MONOVATTINO
+                            <i class="bi bi-scooter me-2"></i>MONOVATTINO
                         </h6>
                         <p>
                             <strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility.
@@ -355,16 +357,23 @@ $map_id = theme_to_mapid($map_theme);
                             BUILT WITH
                         </h6>
                         <p>
-                            <a href="#!" class="text-reset">HTML</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="text-reset">HTML</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-reset">PHP</a>
+                            <a href="https://www.php.net/docs.php" class="text-reset">PHP</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-reset">Bootstrap</a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                class="text-reset">JavaScript</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-reset">JavaScript</a>
+                            <a href="https://getbootstrap.com/" class="text-reset">Bootstrap</a>
+                        </p>
+                        <p>
+                            <a href="https://api.jquery.com/" class="text-reset">jQuery</a>
+                        </p>
+                        <p>
+                            <a href="https://www.postgresql.org/docs/" class="text-reset">PostgreSQL</a>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -373,11 +382,15 @@ $map_id = theme_to_mapid($map_theme);
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                        <p><i class="fas fa-home me-3"></i> Rome, RM 00156, IT</p>
-                        <p><i class="fas fa-home me-3"></i> Piazzale della Stazione Ponte Mammolo</p>
+                        <p>
+                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"
+                                style="text-decoration:none; color:inherit;"><i class="fas fa-home me-3"></i> Piazzale
+                                della
+                                Stazione Ponte Mammolo, Rome 00156, IT</a>
+                        </p>
                         <p>
                             <i class="fas fa-envelope me-3"></i>
-                            info@example.com
+                            info@monovattino.com
                         </p>
                         <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
                         <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
@@ -399,19 +412,19 @@ $map_id = theme_to_mapid($map_theme);
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-    // Get the current language from the server
-    var currentLanguage = "<?php echo $language; ?>";
+        // Get the current language from the server
+        var currentLanguage = "<?php echo $language; ?>";
 
-    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-    var selectedLanguageText = document.getElementById("selectedLanguageText");
+        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+        var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-    // Update the toggle element to show the current language
-    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-    toggleElement.classList.add("active");
-    toggleElement.setAttribute("aria-current", "true");
-    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+        // Update the toggle element to show the current language
+        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+        toggleElement.classList.add("active");
+        toggleElement.setAttribute("aria-current", "true");
+        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
     <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
 </body>

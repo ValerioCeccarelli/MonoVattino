@@ -22,7 +22,7 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-        if (! $is_admin) {
+        if (!$is_admin) {
             throw new ForbiddenException("You are not an admin!");
         }
 
@@ -31,7 +31,7 @@ try {
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
-} 
+}
 // catch (InvalidJWTException $e) {
 //     header("Location: /account/login.php");
 //     exit;
@@ -40,7 +40,7 @@ catch (ForbiddenException $e) {
     http_response_code(403);
     echo "403 Forbidden";
     exit;
-}catch (MethodNotAllowedException $e) {
+} catch (MethodNotAllowedException $e) {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;
@@ -69,7 +69,7 @@ catch (ForbiddenException $e) {
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -105,9 +105,9 @@ catch (ForbiddenException $e) {
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/issues/show_issue.php"><strong>Issues</strong></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/issues/show_issue.php"><strong>Issues</strong></a>
+                        </li>
                     <?php } ?>
                 </ul>
 
@@ -170,25 +170,25 @@ catch (ForbiddenException $e) {
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold;" />
                             </a>
                             <script>
-                            function change_theme(theme) {
-                                html = document.getElementsByTagName('html')[0];
-                                if (theme == 'dark') {
-                                    html.setAttribute('data-bs-theme', 'dark');
-                                    document.getElementById('nav_dark').style.display = 'none';
-                                    document.getElementById('nav_light').style.display = 'block';
-                                } else if (theme == 'light') {
-                                    html.setAttribute('data-bs-theme', 'light');
-                                    document.getElementById('nav_dark').style.display = 'block';
-                                    document.getElementById('nav_light').style.display = 'none';
-                                }
-                                $.ajax({
-                                    type: "GET",
-                                    url: "/account/change_theme.php",
-                                    data: {
-                                        theme: theme
+                                function change_theme(theme) {
+                                    html = document.getElementsByTagName('html')[0];
+                                    if (theme == 'dark') {
+                                        html.setAttribute('data-bs-theme', 'dark');
+                                        document.getElementById('nav_dark').style.display = 'none';
+                                        document.getElementById('nav_light').style.display = 'block';
+                                    } else if (theme == 'light') {
+                                        html.setAttribute('data-bs-theme', 'light');
+                                        document.getElementById('nav_dark').style.display = 'block';
+                                        document.getElementById('nav_light').style.display = 'none';
                                     }
-                                });
-                            }
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/account/change_theme.php",
+                                        data: {
+                                            theme: theme
+                                        }
+                                    });
+                                }
                             </script>
 
                         </a>
@@ -214,29 +214,39 @@ catch (ForbiddenException $e) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($issues as $issue) { 
-                    $is_updated = $issue->status == 'accepted'?>
-                <tr>
-                    <th scope="row"><?php echo $issue->id ?></th>
-                    <td><?php echo $issue->user_email ?></td>
-                    <td><?php echo $issue->scooter_id ?></td>
-                    <td><?php echo $issue->title ?></td>
-                    <td><?php echo $issue->created_at ?></td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a class="btn btn-primary" onclick="openInfo('<?php echo $issue->id; ?>');">
-                                Info
-                            </a>
-                            <a class="btn <?php echo $is_updated ? 'btn-secondary' : 'btn-success'; ?>
+                <?php foreach ($issues as $issue) {
+                    $is_updated = $issue->status == 'accepted' ?>
+                    <tr>
+                        <th scope="row">
+                            <?php echo $issue->id ?>
+                        </th>
+                        <td>
+                            <?php echo $issue->user_email ?>
+                        </td>
+                        <td>
+                            <?php echo $issue->scooter_id ?>
+                        </td>
+                        <td>
+                            <?php echo $issue->title ?>
+                        </td>
+                        <td>
+                            <?php echo $issue->created_at ?>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" onclick="openInfo('<?php echo $issue->id; ?>');">
+                                    Info
+                                </a>
+                                <a class="btn <?php echo $is_updated ? 'btn-secondary' : 'btn-success'; ?>
                              ?>" href="/issues/update_issue.php?id=<?php echo $issue->id; ?>">
-                                Update
-                            </a disabled>
-                            <a class="btn btn-danger" href="/issues/delete_issue.php?id=<?php echo $issue->id; ?>">
-                                Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
+                                    Update
+                                </a disabled>
+                                <a class="btn btn-danger" href="/issues/delete_issue.php?id=<?php echo $issue->id; ?>">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
@@ -259,29 +269,144 @@ catch (ForbiddenException $e) {
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start footer-light text-muted">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
+
+            <!-- Right -->
+            <div>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class=" fab fa-facebook"></i>
+                </a>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href class="me-4 text-reset" style="text-decoration:none;">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="bi bi-scooter me-2"></i>MONOVATTINO
+                        </h6>
+                        <p>
+                            <strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility.
+                            Ride, unlock, and explore with
+                            ease. Join us in shaping a greener future of transportation.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            BUILT WITH
+                        </h6>
+                        <p>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="text-reset">HTML</a>
+                        </p>
+                        <p>
+                            <a href="https://www.php.net/docs.php" class="text-reset">PHP</a>
+                        </p>
+                        <p>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                class="text-reset">JavaScript</a>
+                        </p>
+                        <p>
+                            <a href="https://getbootstrap.com/" class="text-reset">Bootstrap</a>
+                        </p>
+                        <p>
+                            <a href="https://api.jquery.com/" class="text-reset">jQuery</a>
+                        </p>
+                        <p>
+                            <a href="https://www.postgresql.org/docs/" class="text-reset">PostgreSQL</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <p>
+                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"
+                                style="text-decoration:none; color:inherit;"><i class="fas fa-home me-3"></i> Piazzale
+                                della
+                                Stazione Ponte Mammolo, Rome 00156, IT</a>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            info@monovattino.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2023 Copyright:
+            <a class="text-reset fw-bold" href="/index.php">MonoVattino</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-    function openInfo(issue_id) {
-        var description = document.getElementById("description_" + issue_id).innerHTML;
-        var modal = document.getElementById("info_modal_mody");
-        modal.innerHTML = description;
-        var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
-        myModal.show();
-    }
+        function openInfo(issue_id) {
+            var description = document.getElementById("description_" + issue_id).innerHTML;
+            var modal = document.getElementById("info_modal_mody");
+            modal.innerHTML = description;
+            var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
+            myModal.show();
+        }
 
-    var currentLanguage = "<?php echo $language; ?>";
+        var currentLanguage = "<?php echo $language; ?>";
 
-    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-    var selectedLanguageText = document.getElementById("selectedLanguageText");
+        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+        var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-    // Update the toggle element to show the current language
-    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-    selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-    toggleElement.classList.add("active");
-    toggleElement.setAttribute("aria-current", "true");
-    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+        // Update the toggle element to show the current language
+        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+        toggleElement.classList.add("active");
+        toggleElement.setAttribute("aria-current", "true");
+        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
 </body>
 
