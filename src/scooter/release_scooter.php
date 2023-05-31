@@ -12,9 +12,9 @@ session_start();
 function process_post_request() {
 
     if (! isset($_SESSION['user_email'])) {
-        // unauthorized 
-        // TODO: maybe we should return 401 instead of 400 Bad Request
-        throw new BadRequestException("You need to be logged in to reserve a scooter");
+        http_response_code(401);
+        echo "401 Unauthorized";
+        exit;
     }
 
     $scooter_id = $_POST['scooter_id'];
