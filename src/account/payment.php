@@ -11,7 +11,7 @@ require_once('../lib/redirect_to.php');
 session_start();
 
 try {
-    if(!isset($_SESSION['user_email'])) {
+    if (!isset($_SESSION['user_email'])) {
         header('Location: /account/login.php?redirect_to=payment');
         exit;
     }
@@ -138,9 +138,9 @@ try {
 
                         <!-- Owner error -->
                         <?php if ($owner_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $owner_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $owner_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Card number -->
@@ -153,9 +153,9 @@ try {
 
                         <!-- Card number error -->
                         <?php if ($card_number_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $card_number_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $card_number_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Expiration date -->
@@ -167,9 +167,9 @@ try {
                         </div>
                         <!-- Expiration date error -->
                         <?php if ($expiration_date_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $expiration_date_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $expiration_date_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- CVV -->
@@ -181,9 +181,9 @@ try {
 
                         <!-- CVV error -->
                         <?php if ($cvv_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $cvv_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $cvv_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -201,24 +201,25 @@ try {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls("#owner", "#owner_label");
-    setLabelControls("#card_number", "#card_number_label");
-    setLabelControls("#expiration_date", "#expiration_date_label");
-    setLabelControls("#cvv", "#cvv_label");
+        setLabelControls("#owner", "#owner_label");
+        setLabelControls("#card_number", "#card_number_label");
+        setLabelControls("#expiration_date", "#expiration_date_label");
+        setLabelControls("#cvv", "#cvv_label");
+        $('#expiration_date_label').css('top', '-5px')
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
