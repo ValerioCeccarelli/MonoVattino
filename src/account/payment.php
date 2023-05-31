@@ -164,30 +164,27 @@ try {
                         <!-- Expiration date -->
                         <div class="inputbox">
                             <ion-icon name="calendar-outline"></ion-icon>
-                            <input id="expiration_date" type="month" name="expiration_date" maxlength="7"
-                                value="<?php echo $expiration_date; ?>" required>
+                            <input id="expiration_date" type="month" onfocusout="checkExpDate()" name="expiration_date"
+                                maxlength="7" value="<?php echo $expiration_date; ?>" required>
                             <label id="expiration_date_label" for="expiration_date">Expiration date</label>
                         </div>
                         <!-- Expiration date error -->
-                        <?php if ($expiration_date_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $expiration_date_error; ?>
-                            </h5>
-                        <?php } ?>
+                        <h5 id="exp_error" class="error-msg">
+                            <?php echo $expiration_date_error; ?>
+                        </h5>
 
                         <!-- CVV -->
                         <div class="inputbox">
                             <ion-icon name="lock-closed-outline"></ion-icon>
-                            <input id="cvv" name="cvv" type="text" value="<?php echo $cvv; ?>" required>
+                            <input id="cvv" name="cvv" onfocusout="checkCVV()" type="text" value="<?php echo $cvv; ?>"
+                                required>
                             <label id="cvv_label" for="cvv">CVV</label>
                         </div>
 
                         <!-- CVV error -->
-                        <?php if ($cvv_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $cvv_error; ?>
-                            </h5>
-                        <?php } ?>
+                        <h5 id="cvv_error" class="error-msg">
+                            <?php echo $cvv_error; ?>
+                        </h5>
 
                         <!-- Padding -->
                         <div style="height: 30px"></div>
@@ -218,6 +215,28 @@ try {
             });
         }
 
+        function checkExpDate() {
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var input = $('#expiration_date').val().split('-');
+            var exp_error = $('#exp_error');
+            if (input[0] < year || (input[0] == year && input[1] < month)) {
+                exp_error.text('Invalid expiration date');
+            }
+
+        }
+
+        function checkCVV() {
+            var cvv = $('#cvv').val();
+            var cvv_error = $('#cvv_error');
+            if (cvv.length != 3) {
+                cvv_error.text('Invalid CVV');
+            }
+            if (isNaN(cvv)) {
+                cvv_error.text('Invalid CVV');
+            }
+        }
         setLabelControls("#owner", "#owner_label");
         setLabelControls("#card_number", "#card_number_label");
         setLabelControls("#expiration_date", "#expiration_date_label");
