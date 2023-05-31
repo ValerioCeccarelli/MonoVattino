@@ -7,6 +7,8 @@ require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/accounts/payments.php');
 require_once('../lib/redirect_to.php');
+require_once('../translations/translation.php');
+
 
 session_start();
 
@@ -33,6 +35,7 @@ try {
     $cvv_error = null;
 
     $redirect_to = get_redirect_to();
+
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // pass

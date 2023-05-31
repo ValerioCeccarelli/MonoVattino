@@ -46,5 +46,19 @@
     "Classic": "Classic",
     "Night": "Night",
     "Report issue": "Report issue",
-    "Change password": "Change password"
+    "Change password": "Change password",
+    "Mission": "<strong>M</strong></font>ission",
+    "MissionDesc": "<strong>M</strong>ono<strong>V</strong>attino provides cities with the world's safest and most advanced small vehicle technologies.",
+    "Vision": "<strong>V</strong></font>ision",
+    "VisionDesc": "We en<strong>v</strong>ision a world in which all cities have safe, green, free-flowing streets, and all city residents have easy access to reliable transportation, without having to download each one of the <strong>m</strong>obility apps.",
+    "Values": "<strong>V</strong></font>alues",
+    "SafetyDesc": "<strong>Safety</strong> - we keep riders and pedestrians safe through rigorous engineering and ingenuity",
+    "SustainabilityDesc": "<strong>Sustainability</strong> - we are committed to reducing the environmental impact of transportation",
+    "PartnershipDesc": "<strong>Partnership</strong> - we partner with cities to meet their unique needs",
+    "InnovationDesc": "<strong>Innovation</strong> - we are constantly pushing the boundaries of what is possible",
+    "AccessDesc": " <strong>Access</strong> - we are expanding access to sustainable and lighter electric vehicles",
+    "Modern": "<strong>M</strong></font>odern",
+    "ModernDesc": "MonoVattino offers a <strong>m</strong>odern solution for urban transportation. With its sleek design and user-friendly interface, users can easily locate, unlock, and ride motorized scooters with just one finger. It promotes eco-friendly and efficient tra<strong>v</strong>el, making short-distance commuting hassle-free and stylish.",
+    "Story": "Story",
+    "StoryDesc": "MonoVattino, a mobility sharing website, offers electric scooters for convenient and eco-friendly urban transportation. Founded by <strong>V</strong>alerio and <strong>M</strong>irko, MonoVattino aims to revolutionize the way people move and embrace a greener future."
 }
