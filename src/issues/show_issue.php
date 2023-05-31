@@ -253,6 +253,9 @@ catch (ForbiddenException $e) {
                             </a>
                         </div>
                     </td>
+                    <div style="display: none;" id="description_<?php echo $issue->id; ?>">
+                        <?php echo $issue->description; ?>
+                    </div>
                 </tr>
                 <?php } ?>
             </tbody>
@@ -394,11 +397,15 @@ catch (ForbiddenException $e) {
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
     function openInfo(issue_id) {
-        var description = document.getElementById("description_" + issue_id).innerHTML;
-        var modal = document.getElementById("info_modal_mody");
-        modal.innerHTML = description;
-        var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
-        myModal.show();
+        // var description = document.getElementById("description_" + issue_id).innerHTML;
+        // var modal = document.getElementById("info_modal_mody");
+        // modal.innerHTML = description;
+        // var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
+        // myModal.show();
+        var id = "#description_" + issue_id;
+        var description = $(id).html();
+        $("#info_modal_mody").html(description);
+        $("#info_modal").modal("show");
     }
 
     var currentLanguage = "<?php echo $language; ?>";
