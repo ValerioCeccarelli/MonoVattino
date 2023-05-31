@@ -582,7 +582,7 @@ try {
                                             $travel_time = $end_time - $start_time;
 
                                             $price = $reservation->fixed_cost + $reservation->cost_per_minute * $travel_time / 60;
-                                            $price = round($price, 2);
+                                            $price = number_format($price, 2, '.', '');
 
                                             $travel_hours = floor($travel_time / 3600);
                                             $travel_minutes = floor(($travel_time / 60) % 60);
@@ -604,6 +604,7 @@ try {
                                                     <?php echo $travel_time; ?>
                                                 </td>
                                                 <td>
+                                                    €
                                                     <?php echo $price; ?>
                                                 </td>
                                             </tr>
@@ -659,7 +660,7 @@ try {
                                             $travel_time = $trip->trip_time;
 
                                             $price = $trip->fixed_cost + $trip->cost_per_minute * $travel_time / 60;
-                                            $price = round($price, 2);
+                                            $price = number_format($price, 2, '.', '');
 
                                             $travel_hours = floor($travel_time / 3600);
                                             $travel_minutes = floor(($travel_time / 60) % 60);
@@ -681,6 +682,7 @@ try {
                                                     <?php echo $travel_time; ?>
                                                 </td>
                                                 <td>
+                                                    €
                                                     <?php echo $price; ?>
                                                 </td>
                                             </tr>
@@ -697,13 +699,15 @@ try {
         <!-- Padding -->
         <div style="height: 30px"></div>
 
-        <p>
+        <div class="container text-center">
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                 aria-expanded="false" aria-controls="collapseExample"
                 style="background-color: var(--theme); border-color: var(--theme) ">
                 <?php echo $trans['Map theme']; ?>
             </button>
-        </p>
+        </div>
+
+        <div style="height: 30px"></div>
 
         <style>
             #collapseExample a {
@@ -732,19 +736,6 @@ try {
 
         <div class="collapse container text-center" id="collapseExample">
             <div class="row">
-
-                <!-- <script>
-                
-                function change_map_theme(theme) {
-                    $.ajax({
-                        type: "GET",
-                        url: "/account/change_map.php",
-                        data: {
-                            map: theme
-                        }
-                    });
-                }
-                </script> -->
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>

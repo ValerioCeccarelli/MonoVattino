@@ -214,17 +214,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <!-- Date of birth input -->
                         <div class="inputbox">
                             <ion-icon name="calendar-outline"></ion-icon>
-                            <input id="date_of_birth" name="date_of_birth" type="date"
+                            <input id="date_of_birth" onfocusout="checkDOB()" name="date_of_birth" type="date"
                                 value="<?php echo $date_of_birth; ?>" required>
                             <label id="date_of_birth_label" for="date_of_birth">Date of birth</label>
                         </div>
 
                         <!-- Date of birth error -->
-                        <?php if ($date_of_birth_error) { ?>
-                            <h5 class="error-msg">
-                                <?php echo $date_of_birth_error; ?>
-                            </h5>
-                        <?php } ?>
+                        <h5 id="DOB_err" class="error-msg">
+                            <?php echo $date_of_birth_error; ?>
+                        </h5>
 
                         <!-- Phone number input -->
                         <div class="inputbox">
@@ -324,6 +322,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             passwordLabel.innerHTML = errorMsg;
 
+        }
+        function checkDOB() {
+            var dateOfBirth = $('#date_of_birth').val();
+            var dateOfBirthLabel = $('#DOB_err');
+
+            var errorMsg = "";
+
+            var today = new Date();
+            var birthDate = new Date(dateOfBirth);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var month = today.getMonth() - birthDate.getMonth();
+
+            if (age < 18) {
+                errorMsg = "You must be at least 18 years old to register";
+            }
+            else if (age == 18 && month < 0) {
+                errorMsg = "You must be at least 18 years old to register";
+            }
+
+            dateOfBirthLabel.html(errorMsg);
         }
     </script>
 
