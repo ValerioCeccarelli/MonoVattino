@@ -151,6 +151,7 @@ button {
     padding-top: 5px;
     color: #FF9494;
     font-size: 0.8em;
+    max-width: 310px;
 }
 
 /* Fix style of chrome autocomplete */

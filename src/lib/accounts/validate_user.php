@@ -122,6 +122,9 @@ function validate_password($password)
     if (!preg_match('/[0-9]/', $password)) {
         throw new InvalidPasswordException("Password must contain at least one number!");
     }
+    if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/', $password)) {
+        throw new InvalidPasswordException("Password must contain at least one special character!");
+    }
 }
 
 function validate_username($username)

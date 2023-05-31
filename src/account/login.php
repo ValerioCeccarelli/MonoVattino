@@ -103,9 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form
-                        action="/account/login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?><?php if(isset($id)) echo "&id=$id"; ?>"
-                        method="POST">
+                    <form action="/account/login.php<?php if ($redirect_to)
+                        echo "?redirect_to=$redirect_to"; ?><?php if (isset($id))
+                              echo "&id=$id"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Login
@@ -121,15 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Email error -->
                         <?php if ($email_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $email_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $email_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Password input -->
                         <div class="inputbox">
                             <ion-icon id="togglePasswordIcon" name="eye-off-outline" onmouseenter="showPassword()"
-                                onmouseleave="hidePassword()"></ion-icon>
+                                onmouseleave="hidePassword()" onfocusout="checkPassword()"></ion-icon>
                             <input id="password" name="password" type="password" value="<?php echo $password; ?>"
                                 required>
                             <label id="password_label" for="password">Password</label>
@@ -137,9 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Password error -->
                         <?php if ($password_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $password_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $password_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Padding -->
@@ -150,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Register page link -->
                         <div class="register">
-                            <p>Don't have an account? <a
-                                    href="/account/register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Register</a>
+                            <p>Don't have an account? <a href="/account/register.php<?php if ($redirect_to)
+                                echo "?redirect_to=$redirect_to"; ?>">Register</a>
                             </p>
                         </div>
                     </form>
@@ -161,37 +161,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
 
-    function showPassword() {
-        var passwordInput = document.getElementById("password");
-        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-        passwordInput.type = "text";
-        togglePasswordIcon.name = "eye-outline";
-    }
+            passwordInput.type = "text";
+            togglePasswordIcon.name = "eye-outline";
+        }
 
-    function hidePassword() {
-        var passwordInput = document.getElementById("password");
-        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+        function hidePassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-        passwordInput.type = "password";
-        togglePasswordIcon.name = "eye-off-outline";
-    }
+            passwordInput.type = "password";
+            togglePasswordIcon.name = "eye-off-outline";
+        }
+        function checkPassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+
+            if (passwordInput.value != "") {
+                passwordInput.type = "password";
+                togglePasswordIcon.name = "eye-off-outline";
+            }
+        }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

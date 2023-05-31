@@ -5,6 +5,7 @@ require_once('../lib/database.php');
 // require_once('../lib/jwt.php');
 require_once('../lib/accounts/themes.php');
 require_once('../lib/redirect_to.php');
+require_once('../lib/http_exceptions/bad_request.php');
 
 session_start();
 
