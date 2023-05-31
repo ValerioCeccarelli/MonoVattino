@@ -156,6 +156,22 @@ function create_new_user($conn, $user)
     }
 }
 
+function update_password($conn, $email, $new_password) {
+    $salt = generate_random_string(10);
+    $password_hash = hash('sha256', $new_password . $salt);
+
+    $query = "UPDATE users SET password = $1, salt = $2 WHERE email = $3";
+    $result1 = pg_prepare($conn, "update_password", $query);
+    if (!$result1) {
+        throw new Exception("Could not prepare the query: " . pg_last_error());
+    }
+
+    $result2 = pg_execute($conn, "update_password", array($password_hash, $salt, $email));
+    if (!$result2) {
+        throw new Exception("Could not execute the query: " . pg_last_error());
+    }
+}
+
 class UserCanNotReserveException extends Exception
 {
     public function __construct($message)
