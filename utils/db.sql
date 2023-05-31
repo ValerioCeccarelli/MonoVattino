@@ -195,22 +195,22 @@ CREATE TABLE issues (
 );
 
 INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (1, 'utente1@mail.com', 'Title1', 'Description1', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (2, 'utente1@mail.com', 'Title2', 'Description2', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (3, 'utente1@mail.com', 'Title3', 'Description3', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (4, 'utente1@mail.com', 'Title4', 'Description4', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (5, 'utente1@mail.com', 'Title5', 'Description5', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (6, 'utente1@mail.com', 'Title6', 'Description6', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (7, 'utente1@mail.com', 'Title7', 'Description7', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (2, 'utente1@mail.com', 'Title2', 'Description2', 'accepted', '2023-05-28 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (3, 'utente1@mail.com', 'Title3', 'Description3', 'open', '2023-05-26 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (4, 'utente1@mail.com', 'Title4', 'Description4', 'accepted', '2023-05-24 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (5, 'utente1@mail.com', 'Title5', 'Description5', 'accepted', '2023-05-22 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (6, 'utente1@mail.com', 'Title6', 'Description6', 'open', '2023-05-29 10:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (7, 'utente1@mail.com', 'Title7', 'Description7', 'open', '2023-05-29 12:02:26.214972');
 INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (8, 'utente1@mail.com', 'Title8', 'Description8', 'open', '2023-05-29 12:01:26.214972');
 
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (10, 'utente2@mail.com', 'Title10', 'Description10', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (20, 'utente2@mail.com', 'Title20', 'Description20', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (30, 'utente2@mail.com', 'Title30', 'Description30', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (40, 'utente2@mail.com', 'Title40', 'Description40', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (50, 'utente2@mail.com', 'Title50', 'Description50', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (60, 'utente2@mail.com', 'Title60', 'Description60', 'open', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (70, 'utente2@mail.com', 'Title70', 'Description70', 'accepted', '2023-05-29 12:01:26.214972');
-INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (80, 'utente2@mail.com', 'Title80', 'Description80', 'open', '2023-05-29 12:01:26.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (10, 'utente2@mail.com', 'Title10', 'Description10', 'open', '2023-05-30 12:01:26.314972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (20, 'utente2@mail.com', 'Title20', 'Description20', 'open', '2023-05-29 12:02:26.314972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (30, 'utente2@mail.com', 'Title30', 'Description30', 'accepted', '2023-05-27 12:01:36.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (40, 'utente2@mail.com', 'Title40', 'Description40', 'accepted', '2023-05-25 12:01:36.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (50, 'utente2@mail.com', 'Title50', 'Description50', 'open', '2023-05-23 12:01:36.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (60, 'utente2@mail.com', 'Title60', 'Description60', 'open', '2023-05-21 12:01:36.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (70, 'utente2@mail.com', 'Title70', 'Description70', 'accepted', '2023-05-19 12:01:36.214972');
+INSERT INTO issues (scooter_id, user_email, title, description, status, created_at) VALUES (80, 'utente2@mail.com', 'Title80', 'Description80', 'open', '2023-05-17 12:01:36.214972');
 
 
 CREATE TABLE reservations (

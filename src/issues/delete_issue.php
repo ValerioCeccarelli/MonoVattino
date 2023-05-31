@@ -5,8 +5,20 @@ require_once('../lib/database.php');
 require_once('../lib/scooters/issues.php');
 
 try {
-    $jwt_payload = validate_jwt();
-    $email = $jwt_payload->email;
+    $user_email = $_SESSION['user_email'];
+    $is_admin = $_SESSION['is_admin'];
+
+    if (!isset($user_email)) {
+        // TODO: dare errore
+        header('Location: /');
+        exit;
+    }
+
+    if (!$is_admin) {
+        // TODO: dare errore
+        header('Location: /');
+        exit;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $issue_id = $_GET['id'];
