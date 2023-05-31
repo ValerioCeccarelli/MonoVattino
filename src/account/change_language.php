@@ -8,8 +8,8 @@ session_start();
 
 try {
     $lang = $_GET['lang'];
-    
-    if (!in_array($lang, array('en', 'it', 'de', 'se'))) {
+
+    if (!in_array($lang, array('en', 'it', 'de', 'es'))) {
         $lang = 'en';
     }
 

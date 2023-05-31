@@ -315,11 +315,11 @@ try {
                         <a id="btnSwitch" @click="toggleTheme">
                             <a id="nav_dark" class="btn btn-primary" onclick="change_theme('dark')" style="background-color:var(--theme); background:none; padding:0px; border:none; 
                                 display:<?php echo $html_theme === "light" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                <ion-icon class="p-3" name="moon-outline" style="font-size: 23px; color:#888888" />
                             </a>
                             <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
                                 display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold;" />
+                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 23px; color:gold;" />
                             </a>
                             <script>
                                 function change_theme(theme) {

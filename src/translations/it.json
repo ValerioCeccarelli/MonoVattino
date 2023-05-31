@@ -46,5 +46,19 @@
     "Classic": "Classico",
     "Night": "Notte",
     "Report issue": "Segnala problema",
-    "Change password": "Cambia password"
+    "Change password": "Cambia password",
+    "Mission": "<strong>M</strong></font>issione",
+    "MissionDesc": "<strong>M</strong>ono<strong>V</strong>attino è un'applicazione di mobilità urbana che ti permette di guidare, sbloccare ed esplorare con facilità.",
+    "Vision": "<strong>V</strong></font>isione",
+    "VisionDesc": "Immaginiamo un <strong>m</strong>ondo in cui le strade di tutte le città sono sicure, eco-sostenibili, e tutti i cittadini hanno accesso a un trasporto affidabile, senza do<strong>v</strong>er scaricare ciascuna applicazione di sharing di monopattini.",
+    "Values": "<strong>V</strong></font>alori",
+    "SafetyDesc": "<strong>Sicurezza</strong> - la nostra priorità. Ci impegniamo a fornire un servizio sicuro e affidabile per tutti i nostri utenti.",
+    "SustainabilityDesc": "<strong>Sostenibilità</strong> - siamo impegnati a ridurre le emissioni di carbonio e a rendere le città più verdi.",
+    "PartnershipDesc": "<strong>Partnership</strong> - cerchiamo di collaborare con le città per aiutare a risolvere i problemi di mobilità urbana",
+    "InnovationDesc": "<strong>Innovazione</strong> - siamo alla ricerca di nuovi modi per migliorare la mobilità urbana",
+    "AccessDesc": " <strong>Accesso</strong> - stiamo lavorando per rendere i nostri servizi accessibili a tutti",
+    "Modern": "<strong>M</strong></font>oderno",
+    "ModernDesc": "L'applicazione è stata progettata per essere semplice e intuiti<strong>v</strong>a. Con un design moderno e pulito l'utente può facil<strong>m</strong>ente localizzare, prenotare e usare monopattini con un solo dito.",
+    "Story": "Storia",
+    "StoryDesc": "MonoVattino, un sito web di mobility sharing, offre monopattini elettrici per un trasporto urbano conveniente ed eco-sostenibile.Ideato da <strong>V</strong>alerio and <strong>M</strong>irko, MonoVattino ha l'obiettivo di rivoluzionare la mobilità di milioni di persone con un futuro più verde."
 }

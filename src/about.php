@@ -63,19 +63,27 @@ $trans = get_translation($language, 'translations');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.php">Map</a>
+                        <a class="nav-link" href="/index.php">
+                            <?php echo $trans["Map"] ?>
+                        </a>
                     </li>
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/profile.php">Profile</a>
+                            <a class="nav-link" href="/account/profile.php">
+                                <?php echo $trans["Profile"] ?>
+                            </a>
                         </li>
                     <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> <strong>About us</strong></a>
+                        <a class="nav-link" href="#"> <strong>
+                                <?php echo $trans["About us"] ?>
+                            </strong></a>
                     </li>
                     <?php if ($is_admin) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                            <a class="nav-link" href="/issues/show_issue.php">
+                                <?php echo $trans["Issues"] ?>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -121,15 +129,21 @@ $trans = get_translation($language, 'translations');
 
                     <?php if ($is_user_logged) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/logout.php">Logout</a>
+                            <a class="nav-link" href="/account/logout.php">
+                                <?php echo $trans["Logout"] ?>
+                            </a>
                         </li>
 
                     <?php } else { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/login.php">Login</a>
+                            <a class="nav-link" href="/account/login.php">
+                                <?php echo $trans["Login"] ?>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/account/register.php">Register</a>
+                            <a class="nav-link" href="/account/register.php">
+                                <?php echo $trans["Register"] ?>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -140,11 +154,11 @@ $trans = get_translation($language, 'translations');
                         <a id="btnSwitch" @click="toggleTheme">
                             <a id="nav_dark" class="btn btn-primary" onclick="change_theme('dark')" style="background-color:var(--theme); background:none; padding:0px; border:none; 
                                 display:<?php echo $html_theme === "light" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="moon-outline" style="font-size: 20px; color:gold" />
+                                <ion-icon class="p-3" name="moon-outline" style="font-size: 23px; color:#888888" />
                             </a>
                             <a id="nav_light" class="btn btn-primary" onclick="change_theme('light')" style="background-color:var(--theme); background:none; padding:0px; border:none;
                                 display:<?php echo $html_theme === "dark" ? "block" : "none" ?>;">
-                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 20px; color:gold" />
+                                <ion-icon class="p-3" name="sunny-outline" style="font-size: 23px; color:gold" />
                             </a>
                             <script>
                                 function change_theme(theme) {
@@ -176,19 +190,24 @@ $trans = get_translation($language, 'translations');
             </div>
         </div>
     </nav>
-
+    <style>
+        #missionTag::first-letter {
+            font-size: 1.5em;
+            color: var(--theme);
+        }
+    </style>
 
     <div class="container text-center" style="font-size = 30em">
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-12 col-md-6">
                 <div style="height: 31px;"></div>
                 <h2>
-                    <font size="21"> <strong>M</strong></font>ission
+                    <section size="21" id="missionTag">
+                        <?php echo $trans["Mission"] ?>
+                    </section>
                 </h2>
                 <p style="font-size: 20px;">
-                    <strong>M</strong>ono<strong>V</strong>attino provides cities with the world’s safest and most
-                    advanced
-                    small vehicle technologies.
+                    <?php echo $trans["MissionDesc"] ?>
                 </p>
             </div>
 
@@ -197,44 +216,38 @@ $trans = get_translation($language, 'translations');
             <div class="col-12 col-md-6">
                 <div style="height: 31px;"></div>
                 <h2>
-                    <font size="21"><strong>V</strong></font>ision
+                    <font size="21">
+                        <?php echo $trans["Vision"] ?>
                 </h2>
                 <p style="font-size: 20px;">
-                    We en<strong>v</strong>ision a world in which all cities have safe, green, free-flowing streets, and
-                    all
-                    city residents
-                    have easy access to reliable transportation, without having to download each one of the
-                    <strong>m</strong>obility apps.
+                    <?php echo $trans["VisionDesc"] ?>
                 </p>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <div style="height: 31px;"></div>
 
             <div class="col-12 col-md-6">
                 <h2>
-                    <font size="21"><strong>V</strong></font>alues
+                    <font size="21">
+                        <?php echo $trans["Values"] ?>
                 </h2>
                 <div style="height: 21px;"></div>
-                <p class="text-start" style="font-size: 20px;"> <strong>Safety</strong> – we keep riders and pedestrians
-                    safe through rigorous
-                    engineering and
-                    ingenuity
+                <p class="text-start" style="font-size: 20px;">
+                    <?php echo $trans["SafetyDesc"] ?>
                 </p>
 
                 <p class="text-start" style="font-size: 20px;">
-                    <strong>Sustainability</strong> – we get people out of cars and into right-sized transportation.
+                    <?php echo $trans["SustainabilityDesc"] ?>
                 </p>
                 <p class="text-start" style="font-size: 20px;">
-                    <strong>Partnership</strong> – we partner with cities to meet their unique needs
+                    <?php echo $trans["PartnershipDesc"] ?>
                 </p>
                 <p class="text-start" style="font-size: 20px;">
-                    <strong>Innovation</strong> – we create cutting-edge technology to enable the safest and most
-                    efficient
-                    operations
+                    <?php echo $trans["InnovationDesc"] ?>
                 </p>
                 <p class="text-start" style="font-size: 20px;">
-                    <strong>Access</strong> – we are expanding access to sustainable and lighter electric vehicles
+                    <?php echo $trans["AccessDesc"] ?>
                 </p>
             </div>
 
@@ -244,7 +257,7 @@ $trans = get_translation($language, 'translations');
 
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             <div style="height: 31px;"></div>
 
             <div class="col-12 col-md-6">
@@ -254,41 +267,31 @@ $trans = get_translation($language, 'translations');
             <div class="col-12 col-md-6">
                 <div style="height: 1px;"></div>
                 <h2>
-                    <font size="21"><strong>M</strong></font>odern
+                    <font size="21">
+                        <?php echo $trans["Modern"] ?>
                 </h2>
                 <p style="font-size: 20px;">
-                    MonoVattino offers a <strong>m</strong>odern solution for urban transportation.
-                    With its sleek
-                    design and user-friendly interface, users can easily locate, unlock, and ride motorized scooters
-                    with
-                    just one finger. It
-                    promotes eco-friendly and efficient tra<strong>v</strong>el, making short-distance commuting
-                    hassle-free
-                    and stylish.
+                    <?php echo $trans["ModernDesc"] ?>
                 </p>
             </div>
 
 
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             <div style="height: 31px;"></div>
 
             <div class="col-12 col-md-4">
                 <img src="img/about3.jpg" alt="mission" width="100%">
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 my-auto">
                 <div style="height: 1px;"></div>
                 <h1>
-                    Story
+                    <?php echo $trans["Story"] ?>
                 </h1>
                 <p style="font-size: 20px;">
-
-                    MonoVattino, a mobility sharing website, offers electric scooters for convenient and eco-friendly
-                    urban transportation. Founded by <strong>V</strong>alerio and <strong>M</strong>irko, MonoVattino
-                    aims to revolutionize the way people
-                    move and embrace a greener future.
+                    <?php echo $trans["StoryDesc"] ?>
                 </p>
             </div>
 
@@ -306,7 +309,9 @@ $trans = get_translation($language, 'translations');
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <!-- Left -->
             <div class="me-5 d-none d-lg-block">
-                <span>Get connected with us on social networks:</span>
+                <span>
+                    <?php echo $trans["Get connected with us on social networks"]; ?>:
+                </span>
             </div>
             <!-- Left -->
 
@@ -347,9 +352,7 @@ $trans = get_translation($language, 'translations');
                             <i class="bi bi-scooter me-2"></i>MONOVATTINO
                         </h6>
                         <p>
-                            <strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility.
-                            Ride, unlock, and explore with
-                            ease. Join us in shaping a greener future of transportation.
+                            <?php echo $trans["FooterMVDesc"]; ?>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -358,7 +361,7 @@ $trans = get_translation($language, 'translations');
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            BUILT WITH
+                            <?php echo $trans["BUILT WITH"]; ?>
                         </h6>
                         <p>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="text-reset">HTML</a>
@@ -385,7 +388,9 @@ $trans = get_translation($language, 'translations');
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <?php echo $trans["Contact"] ?>
+                        </h6>
                         <p>
                             <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"
                                 style="text-decoration:none; color:inherit;"><i class="fas fa-home me-3"></i> Piazzale
