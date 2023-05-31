@@ -281,7 +281,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         setLabelControls('#username', '#username_label');
         setLabelControls('#name', '#name_label');
         setLabelControls('#surname', '#surname_label');
-        setLabelControls('#date_of_birth', '#date_of_birth_label');
         setLabelControls('#phone_number', '#phone_number_label');
         $('#date_of_birth_label').css('top', '-5px')
 
