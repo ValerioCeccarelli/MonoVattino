@@ -307,6 +307,10 @@ async function renderScooter(scooter) {
     return scooterMarker;
 }
 
+async function removeRender(scooterMarker) {
+    scooterMarker.setMap(null);
+}
+
 async function renderMe(latitude, longitude) {
     const {
         AdvancedMarkerView,
@@ -333,7 +337,7 @@ async function onDocumentReady() {
             longitude: 12.492234,
             latitude: 41.889819,
         }
-        let radius = 3000000000000;
+        let radius = 300000;
 
         const initial_position = colosseo;
 
@@ -394,6 +398,10 @@ async function onDocumentReady() {
         scooters_response = await scooters_promise;
         scooters = scooters_response.scooters;
         my_scooters = scooters_response.reserved_scooters;
+
+        // scooter_markers.forEach(scooterMarker => {
+        //     removeRender(scooterMarker);
+        // });
 
         scooters.forEach(scooter => {
             renderScooter(scooter);
