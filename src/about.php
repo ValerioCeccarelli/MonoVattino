@@ -190,15 +190,21 @@ $trans = get_translation($language, 'translations');
             </div>
         </div>
     </nav>
-
+    <style>
+        #missionTag::first-letter {
+            font-size: 1.5em;
+            color: var(--theme);
+        }
+    </style>
 
     <div class="container text-center" style="font-size = 30em">
         <div class="row mt-5">
             <div class="col-12 col-md-6">
                 <div style="height: 31px;"></div>
                 <h2>
-                    <font size="21">
+                    <section size="21" id="missionTag">
                         <?php echo $trans["Mission"] ?>
+                    </section>
                 </h2>
                 <p style="font-size: 20px;">
                     <?php echo $trans["MissionDesc"] ?>
@@ -279,7 +285,7 @@ $trans = get_translation($language, 'translations');
                 <img src="img/about3.jpg" alt="mission" width="100%">
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 my-auto">
                 <div style="height: 1px;"></div>
                 <h1>
                     <?php echo $trans["Story"] ?>
@@ -382,7 +388,9 @@ $trans = get_translation($language, 'translations');
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <?php echo $trans["Contact"] ?>
+                        </h6>
                         <p>
                             <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"
                                 style="text-decoration:none; color:inherit;"><i class="fas fa-home me-3"></i> Piazzale
