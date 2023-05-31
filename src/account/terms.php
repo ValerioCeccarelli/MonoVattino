@@ -3,9 +3,8 @@ require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
+require_once('../lib/http_exceptions/bad_request.php');;
 require_once('../lib/redirect_to.php');
-
-// TODO: add validatiomn with bad request invece che goto
 
 session_start();
 
@@ -36,21 +35,17 @@ try {
         
         if (!isset($privacy_policy) || $privacy_policy !== 'on') {
             $privacy_policy_error = "You must accept the privacy policy";
-            goto end;
+            throw new BadRequestException("You must accept the privacy policy");
         }
         
         if (!isset($terms_and_conditions) || $terms_and_conditions !== 'on') {
             $terms_and_conditions_error = "You must accept the terms and conditions";
-            goto end;
+            throw new BadRequestException("You must accept the terms and conditions");
         }
         
         $conn = connect_to_database();
         update_user_policy($conn, $email, $privacy_policy, $terms_and_conditions);
 
-        // if ($is_from_terms) {
-        //     header('Location: /account/profile.php');
-        //     exit;
-        // }
         try_redirect();
 
         header('Location: /account/payment.php');
@@ -59,11 +54,9 @@ try {
         throw new MethodNotAllowedException("Method not allowed");
     }
 } 
-// catch (InvalidJWTException $e) {
-//     http_response_code(401);
-//     echo "401 Unauthorized";
-//     exit;
-// } 
+catch (BadRequestException $e) {
+    // pass
+}
 catch (NoUserFoundException $e) {
     http_response_code(404);
     echo "404 Not Found";
