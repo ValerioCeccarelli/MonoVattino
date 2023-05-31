@@ -8,10 +8,9 @@ session_start();
 
 try {
     $lang = $_GET['lang'];
-
     // TODO: check if lang is valid
-
     if (isset($_SESSION['user_email'])) {
+        $email = $_SESSION['user_email'];
         $conn = connect_to_database();
         change_language($conn, $email, $lang);
     }

@@ -7,6 +7,7 @@ require_once('../lib/scooters/trips.php');
 require_once('../lib/accounts/payments.php');
 require_once('../lib/accounts/themes.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
+require_once('../translations/translation.php');
 
 session_start();
 
@@ -26,7 +27,7 @@ try {
 
         $payment_method = null;
         if ($user->payment_method) {
-            $payment_method = $user->payment_method;
+            $payment_method = get_payment_method_by_id($conn, $user->payment_method);
         }
 
         if ($user->privacy_policy_accepted && $user->terms_and_conditions_accepted) {
@@ -43,6 +44,8 @@ try {
         $trips = get_user_trips($conn, $email);
 
         $username = $user->username;
+        $language = $user->language;
+        $trans = get_translation($language, '../translations');
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
@@ -73,7 +76,9 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>
+        <?php echo $trans['Profile']; ?> | MV
+    </title>
 
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -234,23 +239,30 @@ try {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.php">Map</a>
+                        <a class="nav-link" href="/index.php">
+                            <?php echo $trans['Map']; ?>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><strong>Profile</strong></a>
+                        <a class="nav-link" href="#"><strong>
+                                <?php echo $trans['Profile']; ?>
+                            </strong></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.php">About us</a>
+                        <a class="nav-link" href="/about.php">
+                            <?php echo $trans['About us']; ?>
+                        </a>
                     </li>
                     <?php if ($is_admin) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/issues/show_issue.php">Issues</a>
+                            <a class="nav-link" href="/issues/show_issue.php">
+                                <?php echo $trans['Issues']; ?>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
 
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                    <!-- Language selector -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -269,28 +281,30 @@ try {
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/account/logout.php">Logout</a>
+                        <a class="nav-link" href="/account/logout.php">
+                            <?php echo $trans['Logout']; ?>
+                        </a>
                     </li>
 
                 </ul>
@@ -348,7 +362,8 @@ try {
                     <div class="row">
                         <div class="col-12 text-center">
                             <h1>
-                                <?php echo $user->username; ?> Profile
+                                <?php echo $user->username; ?>
+                                <?php echo $trans['Profile']; ?>
                             </h1>
                         </div>
                     </div>
@@ -388,7 +403,9 @@ try {
                                             <ion-icon name="person-outline"></ion-icon>
                                             <input id="name" name="name" type="text" value="<?php echo $user->name; ?>"
                                                 disabled>
-                                            <label id="name_label" for="name">Name</label>
+                                            <label id="name_label" for="name">
+                                                <?php echo $trans['Name']; ?>
+                                            </label>
                                         </div>
 
                                         <!-- Surname input -->
@@ -396,7 +413,9 @@ try {
                                             <ion-icon name="person-outline"></ion-icon>
                                             <input id="surname" name="surname" type="text"
                                                 value="<?php echo $user->surname; ?>" disabled>
-                                            <label id="surname_label" for="surname">Surname</label>
+                                            <label id="surname_label" for="surname">
+                                                <?php echo $trans['Surname']; ?>
+                                            </label>
                                         </div>
 
                                         <!-- Email input -->
@@ -420,9 +439,9 @@ try {
 
                                         <?php if (!$policy_accepted) { ?>
                                             <!-- Privacy policy link -->
-                                            <a href="/account/terms.php?redirect_to=profile" class="btn btn-danger">Firm
-                                                terms and
-                                                conditions</a>
+                                            <a href="/account/terms.php?redirect_to=profile" class="btn btn-danger">
+                                                <?php echo $trans['Firm terms and conditions']; ?>
+                                            </a>
 
                                             <!-- Padding -->
                                             <div style="height: 30px"></div>
@@ -431,7 +450,8 @@ try {
                                     </div>
                                     <div class="col-12 col-sm-6 text-center">
                                         <!-- Title -->
-                                        <h2>Payment
+                                        <h2>
+                                            <?php echo $trans['Payment']; ?>
                                             <?php if ($payment_method == null) { ?>
                                                 <i class="bi bi-exclamation-triangle-fill" data-toggle="tooltip"
                                                     data-placement="top" style="color: yellow;"
@@ -445,7 +465,9 @@ try {
                                                 <ion-icon name="person-outline"></ion-icon>
                                                 <input id="owner" name="owner" type="text"
                                                     value="<?php echo $payment_method->owner; ?>" disabled>
-                                                <label id="owner_label" for="username">Card holder</label>
+                                                <label id="owner_label" for="username">
+                                                    <?php echo $trans['Card holder']; ?>
+                                                </label>
                                             </div>
                                             <!-- Card number -->
                                             <div class="inputbox">
@@ -453,7 +475,9 @@ try {
                                                 <input id="card_number" name="card_number" type="text"
                                                     value="•••• •••• •••• <?php echo substr($payment_method->card_number, 12, 4); ?>"
                                                     disabled>
-                                                <label id="card_number_label" for="card_number">Card number</label>
+                                                <label id="card_number_label" for="card_number">
+                                                    <?php echo $trans['Card number']; ?>
+                                                </label>
                                             </div>
                                             <!-- Expiration date -->
                                             <div class="inputbox">
@@ -461,31 +485,34 @@ try {
                                                 <input id="expiration_date" name="expiration_date" type="text"
                                                     value="<?php echo $payment_method->month; ?>/<?php echo $payment_method->year; ?>"
                                                     disabled>
-                                                <label id="expiration_date_label" for="expiration_date">Expiration
-                                                    date</label>
+                                                <label id="expiration_date_label" for="expiration_date">
+                                                    <?php echo $trans['Expiration date']; ?>
+                                                </label>
                                             </div>
                                             <!-- CVV -->
                                             <div class="inputbox">
                                                 <ion-icon name="lock-closed-outline"></ion-icon>
                                                 <input id="cvv" name="cvv" type="text"
                                                     value="<?php echo $payment_method->cvv; ?>" disabled>
-                                                <label id="cvv_label" for="cvv">CVV</label>
+                                                <label id="cvv_label" for="cvv">
+                                                    <?php echo $trans['CVV']; ?>
+                                                </label>
                                             </div>
                                             <!-- Padding -->
                                             <div style="height: 20px"></div>
                                             <!-- Change payment method -->
                                             <a href="/account/payment.php?redirect_to=profile" class="btn btn-primary"
-                                                style="background-color:var(--theme); border-color: var(--theme)">Change
-                                                payment
-                                                method</a>
+                                                style="background-color:var(--theme); border-color: var(--theme)"><?php echo $trans['Change payment method']; ?></a>
                                             <!-- Padding -->
                                             <div style="height: 30px"></div>
 
                                         <?php } else { ?>
 
                                             <!-- No payment method -->
-                                            <a href="/account/payment.php?redirect_to=profile" class="btn btn-danger">Add
-                                                new method</a>
+                                            <a href="/account/payment.php?redirect_to=profile" class="btn btn-danger">
+                                                <?php echo $trans['Add
+                                                new method']; ?>
+                                            </a>
 
                                             <!-- Padding -->
                                             <div style="height: 30px"></div>
@@ -506,7 +533,9 @@ try {
                     <!-- Current trips title -->
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h1>Current trips</h1>
+                            <h1>
+                                <?php echo $trans['Current trips']; ?>
+                            </h1>
                         </div>
                     </div>
 
@@ -514,7 +543,9 @@ try {
                     <?php if (!$reservations) { ?>
                         <div class="row">
                             <div class="col-12">
-                                <p>No current trips</p>
+                                <p>
+                                    <?php echo $trans['No current trips']; ?>
+                                </p>
                             </div>
                         </div>
                     <?php } else { ?>
@@ -524,10 +555,18 @@ try {
                                     <thead>
                                         <tr>
                                             <th scope="col"></th>
-                                            <th scope="col">Company</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Price</th>
+                                            <th scope="col">
+                                                <?php echo $trans['Company']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Date']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Time']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Price']; ?>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -573,7 +612,9 @@ try {
                     <!-- Old trips title -->
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h1>Old trips</h1>
+                            <h1>
+                                <?php echo $trans['Old trips']; ?>
+                            </h1>
                         </div>
                     </div>
 
@@ -581,7 +622,9 @@ try {
                     <?php if (!$trips) { ?>
                         <div class="row">
                             <div class="col-12">
-                                <p>No old trips</p>
+                                <p>
+                                    <?php echo $trans['No old trips']; ?>
+                                </p>
                             </div>
                         </div>
                     <?php } else { ?>
@@ -591,10 +634,18 @@ try {
                                     <thead>
                                         <tr>
                                             <th scope="col"></th>
-                                            <th scope="col">Company</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Price</th>
+                                            <th scope="col">
+                                                <?php echo $trans['Company']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Date']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Time']; ?>
+                                            </th>
+                                            <th scope="col">
+                                                <?php echo $trans['Price']; ?>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -645,12 +696,12 @@ try {
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                 aria-expanded="false" aria-controls="collapseExample"
                 style="background-color: var(--theme); border-color: var(--theme) ">
-                Map theme
+                <?php echo $trans['Map theme']; ?>
             </button>
         </p>
 
         <style>
-            a {
+            #collapseExample a {
                 text-decoration: none;
                 color: inherit;
             }
@@ -692,8 +743,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=default&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('default')">
+                        <div id="default_card"
+                            class="card my-card <?php echo ($map_theme === 'default') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/default.png" class="card-img-top" alt="default">
                             <div class="card card-body">
@@ -706,8 +758,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=dark&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('dark')">
+                        <div id="dark_card"
+                            class="card my-card <?php echo ($map_theme === 'dark') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/dark.png" class="card-img-top" alt="dark">
                             <div class="card card-body">
@@ -720,8 +773,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=light&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('light')">
+                        <div id="light_card"
+                            class="card my-card <?php echo ($map_theme === 'light') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/light.png" class="card-img-top" alt="light">
                             <div class="card card-body">
@@ -734,8 +788,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=grey&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('grey')">
+                        <div id="grey_card"
+                            class="card my-card <?php echo ($map_theme === 'grey') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/grey.png" class="card-img-top" alt="grey">
                             <div class="card card-body">
@@ -748,8 +803,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=classic&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('classic')">
+                        <div id="classic_card"
+                            class="card my-card <?php echo ($map_theme === 'classic') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/classic.png" class="card-img-top" alt="classic">
                             <div class="card card-body">
@@ -762,8 +818,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=night&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('night')">
+                        <div id="night_card"
+                            class="card my-card <?php echo ($map_theme === 'night') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/night.png" class="card-img-top" alt="night">
                             <div class="card card-body">
@@ -776,8 +833,9 @@ try {
 
                 <div class="col mb-3 mb-sm-0">
                     <div style="height: 21px;"></div>
-                    <a href="/account/change_map.php?map=atlas&redirect_to=profile">
-                        <div class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
+                    <a onclick="change_map_theme('atlas')">
+                        <div id="atlas_card"
+                            class="card my-card <?php echo ($map_theme === 'atlas') ? 'selected-card' : ''; ?>"
                             style="width: max-content;">
                             <img src="/img/thumbnails/atlas.png" class="card-img-top" alt="atlas">
                             <div class="card card-body">
@@ -797,7 +855,9 @@ try {
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <!-- Left -->
             <div class="me-5 d-none d-lg-block">
-                <span>Get connected with us on social networks:</span>
+                <span>
+                    <?php echo $trans["Get connected with us on social networks"]; ?>:
+                </span>
             </div>
             <!-- Left -->
 
@@ -838,9 +898,7 @@ try {
                             <i class="bi bi-scooter me-2"></i>MONOVATTINO
                         </h6>
                         <p>
-                            <strong>M</strong>ono<strong>V</strong>attino: Modern e-scooter sharing for urban mobility.
-                            Ride, unlock, and explore with
-                            ease. Join us in shaping a greener future of transportation.
+                            <?php echo $trans["FooterMVDesc"]; ?>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -849,7 +907,7 @@ try {
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            BUILT WITH
+                            <?php echo $trans["BUILT WITH"]; ?>
                         </h6>
                         <p>
                             <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="text-reset">HTML</a>
@@ -876,9 +934,12 @@ try {
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <?php echo $trans["Contact"]; ?>
+                        </h6>
                         <p>
-                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7"><i class="fas fa-home me-3"></i> Piazzale
+                            <a href="https://goo.gl/maps/BzPKV68sjswbXoFB7" style="text-decoration: none;
+                color: inherit;"><i class="fas fa-home me-3"></i> Piazzale
                                 della
                                 Stazione Ponte Mammolo, Rome 00156, IT</a>
                         </p>
@@ -886,8 +947,8 @@ try {
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>
@@ -907,10 +968,6 @@ try {
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        if (window.history.replaceState) {
-
-            window.history.replaceState(null, null, window.location.href);
-        }
         // Get the current language from the server
         var currentLanguage = "<?php echo $language; ?>";
 
@@ -924,6 +981,25 @@ try {
         toggleElement.classList.add("active");
         toggleElement.setAttribute("aria-current", "true");
         toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+
+        var currentSelectedMapTheme = "<?php echo $map_theme; ?>";
+        function change_map_theme(theme) {
+            var id = currentSelectedMapTheme + "_card";
+            document.getElementById(id).classList.remove("selected-card");
+
+            var new_id = theme + "_card";
+            document.getElementById(new_id).classList.add("selected-card");
+            currentSelectedMapTheme = theme;
+
+            $.ajax({
+                url: "/account/change_map.php",
+                type: "GET",
+                data: {
+                    map: theme
+                },
+            });
+
+        }
     </script>
 
 </body>

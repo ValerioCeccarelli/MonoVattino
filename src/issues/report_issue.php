@@ -6,6 +6,7 @@ require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/bad_request.php');
+require_once('../translations/translation.php');
 
 session_start();
 
@@ -13,14 +14,15 @@ $is_user_logged = isset($_SESSION['user_email']);
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
 $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
+$trans = get_translation($language, '../translations');
 
 try {
+    $scooter_id = $_GET['id'];
     if (!$is_user_logged) {
         header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
         exit;
     }
 
-    $scooter_id = $_GET['id'];
 
     // $jwt_payload = validate_jwt();
     // $email = $jwt_payload->email;
@@ -85,7 +87,9 @@ catch (MethodNotAllowedException $e) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report issue</title>
+    <title>
+        <?php echo $trans['Report issue']; ?> | MV
+    </title>
 
     <!-- Bootsrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -170,7 +174,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=it"
                                     id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
@@ -178,7 +182,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=de"
                                     id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
@@ -186,7 +190,7 @@ catch (MethodNotAllowedException $e) {
                                     href="/account/change_language.php?redirect_to=report_issue&id=<?php echo $scooter_id; ?>&lang=es"
                                     id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>
@@ -374,8 +378,8 @@ catch (MethodNotAllowedException $e) {
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>
@@ -394,7 +398,6 @@ catch (MethodNotAllowedException $e) {
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
 
     <script>
         // Get the current language from the server

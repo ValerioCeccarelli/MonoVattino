@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="form-box">
             <div class="form-padding">
                 <div class="form-value">
-                    <form action="/account/register.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>"
-                        method="POST">
+                    <form action="/account/register.php<?php if ($redirect_to)
+                        echo "?redirect_to=$redirect_to"; ?>" method="POST">
                         <!-- Title -->
                         <h2>
                             Register
@@ -151,40 +151,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Username error -->
                         <?php if ($username_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $username_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $username_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Email input -->
                         <div class="inputbox">
                             <ion-icon name="mail-outline"></ion-icon>
-                            <input id="email" name="email" type="email" value="<?php echo $email; ?>" required>
+                            <input id="email" name="email" type="email" value="<?php echo $email; ?>">
                             <label id="email_label" for="email">Email</label>
                         </div>
 
                         <!-- Email error -->
-                        <?php if ($email_error) { ?>
                         <h5 class="error-msg">
                             <?php echo $email_error; ?>
                         </h5>
-                        <?php } ?>
 
                         <!-- Password input -->
                         <div class="inputbox">
                             <ion-icon id="togglePasswordIcon" name="eye-off-outline" onmouseenter="showPassword()"
-                                onmouseleave="hidePassword()"></ion-icon>
-                            <input id="password" name="password" type="password" value="<?php echo $password; ?>"
-                                required>
+                                onmouseleave="hidePassword()">
+                            </ion-icon>
+                            <input id="password" name="password" onfocusout="checkPassword()" type="password"
+                                value="<?php echo $password; ?>" required>
                             <label id="password_label" for="password">Password</label>
                         </div>
 
                         <!-- Password error -->
-                        <?php if ($password_error) { ?>
-                        <h5 class="error-msg">
+                        <h5 id="password_error" class="error-msg">
                             <?php echo $password_error; ?>
                         </h5>
-                        <?php } ?>
 
                         <!-- Name input -->
                         <div class="inputbox">
@@ -195,9 +192,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Name error -->
                         <?php if ($name_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $name_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $name_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Surname input -->
@@ -209,9 +206,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Surname error -->
                         <?php if ($surname_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $surname_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $surname_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Date of birth input -->
@@ -224,9 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Date of birth error -->
                         <?php if ($date_of_birth_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $date_of_birth_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $date_of_birth_error; ?>
+                            </h5>
                         <?php } ?>
 
                         <!-- Phone number input -->
@@ -239,9 +236,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                         <!-- Phone number error -->
                         <?php if ($phone_number_error) { ?>
-                        <h5 class="error-msg">
-                            <?php echo $phone_number_error; ?>
-                        </h5>
+                            <h5 class="error-msg">
+                                <?php echo $phone_number_error; ?>
+                            </h5>
                         <?php } ?>
 
 
@@ -254,8 +251,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <!-- Register page link -->
                         <div class="register">
 
-                            <p>Already signed up? <a
-                                    href="login.php<?php if($redirect_to) echo "?redirect_to=$redirect_to"; ?>">Login</a>
+                            <p>Already signed up? <a href="login.php<?php if ($redirect_to)
+                                echo "?redirect_to=$redirect_to"; ?>">Login</a>
                             </p>
                         </div>
                     </form>
@@ -265,44 +262,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
 
-    setLabelControls('#email', '#email_label');
-    setLabelControls('#password', '#password_label');
-    setLabelControls('#username', '#username_label');
-    setLabelControls('#name', '#name_label');
-    setLabelControls('#surname', '#surname_label');
-    setLabelControls('#date_of_birth', '#date_of_birth_label');
-    setLabelControls('#phone_number', '#phone_number_label');
-    $('#date_of_birth_label').css('top', '-5px')
+        setLabelControls('#email', '#email_label');
+        setLabelControls('#password', '#password_label');
+        setLabelControls('#username', '#username_label');
+        setLabelControls('#name', '#name_label');
+        setLabelControls('#surname', '#surname_label');
+        setLabelControls('#date_of_birth', '#date_of_birth_label');
+        setLabelControls('#phone_number', '#phone_number_label');
+        $('#date_of_birth_label').css('top', '-5px')
 
-    function showPassword() {
-        var passwordInput = document.getElementById("password");
-        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-        passwordInput.type = "text";
-        togglePasswordIcon.name = "eye-outline";
-    }
+            passwordInput.type = "text";
+            togglePasswordIcon.name = "eye-outline";
+        }
 
-    function hidePassword() {
-        var passwordInput = document.getElementById("password");
-        var togglePasswordIcon = document.getElementById("togglePasswordIcon");
+        function hidePassword() {
+            var passwordInput = document.getElementById("password");
+            var togglePasswordIcon = document.getElementById("togglePasswordIcon");
 
-        passwordInput.type = "password";
-        togglePasswordIcon.name = "eye-off-outline";
-    }
+            passwordInput.type = "password";
+            togglePasswordIcon.name = "eye-off-outline";
+        }
+        function checkPassword() {
+            var passwordInput = document.getElementById("password");
+            var passwordLabel = document.getElementById("password_error");
+
+            var password = passwordInput.value;
+            var errorMsg = "";
+
+            if (password.length < 8) {
+                errorMsg = "Password must be at least 8 characters long";
+            }
+            else if (password.search(/[a-z]/) == -1) {
+                errorMsg = "Password must contain at least one lowercase letter";
+            }
+            else if (password.search(/[A-Z]/) == -1) {
+                errorMsg = "Password must contain at least one uppercase letter";
+            }
+            else if (password.search(/[0-9]/) == -1) {
+                errorMsg = "Password must contain at least one digit";
+            }
+            else if (password.search(/[!@#$%^&*()\-_=+{};:,<.>]/) == -1) {
+                errorMsg = "Password must contain at least one special character";
+            }
+
+            passwordLabel.innerHTML = errorMsg;
+
+        }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

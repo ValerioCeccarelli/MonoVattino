@@ -67,7 +67,8 @@ function update_user_payment_method($conn, $email, $payment_id)
     }
 }
 
-class PaymentMethod {
+class PaymentMethod
+{
     public $id;
     public $owner;
     public $card_number;
@@ -76,7 +77,8 @@ class PaymentMethod {
     public $cvv;
 }
 
-function get_payment_metod_by_id($conn, $id) {
+function get_payment_method_by_id($conn, $id)
+{
     $query = "SELECT * FROM payment_methods WHERE id = $1";
     $result1 = pg_prepare($conn, "get_payment_metod_by_id", $query);
     if (!$result1) {
@@ -105,7 +107,8 @@ function get_payment_metod_by_id($conn, $id) {
     return $payment_method;
 }
 
-function delete_payment_method($conn, $payment_id) {
+function delete_payment_method($conn, $payment_id)
+{
     $query = "DELETE FROM payment_methods WHERE id = $1";
     // the foreign key constraint will set to null the payment_method field in the users table
     $result1 = pg_prepare($conn, "delete_payment_method", $query);
@@ -116,7 +119,7 @@ function delete_payment_method($conn, $payment_id) {
     $result2 = pg_execute($conn, "delete_payment_method", array($payment_id));
     if (!$result2) {
         throw new Exception("Could not execute the query: " . pg_last_error());
-    }    
+    }
 }
 
 ?>

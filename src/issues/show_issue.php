@@ -6,6 +6,7 @@ require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/http_exceptions/forbidden.php');
 require_once('../lib/accounts/user.php');
+require_once('../translations/translation.php');
 
 session_start();
 
@@ -13,6 +14,7 @@ $is_user_logged = isset($_SESSION['user_email']);
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
 $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
 $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
+$trans = get_translation($language, '../translations');
 
 try {
     if (!$is_user_logged) {
@@ -60,7 +62,9 @@ catch (ForbiddenException $e) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>
+        <?php echo $trans["Issues"]; ?> | MV
+    </title>
 
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -70,6 +74,9 @@ catch (ForbiddenException $e) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
+
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -99,7 +106,7 @@ catch (ForbiddenException $e) {
                         <a class="nav-link" href="/index.php">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="/account/profile.php">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About us</a>
@@ -117,35 +124,35 @@ catch (ForbiddenException $e) {
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <span id="selectedLanguageFlag" class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
-                            <span id="selectedLanguageText" style="font-size: 1rem;">English</span>
+                            <!-- <span id="selectedLanguageText" style="font-size: 1rem;">English</span> -->
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=en"
-                                    id="langEN">
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=show_issue&lang=en" id="langEN">
                                     <span class="fi fi-gb my-fi" style="padding-right: 5px;"></span>
                                     <span style="font-size: 1rem;">English</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=it"
-                                    id="langIT">
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=show_issue&lang=it" id="langIT">
                                     <span class="fi fi-it"></span>
-                                    <span style="font-size: 1rem;">Italian</span>
+                                    <span style="font-size: 1rem;">Italiano</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=de"
-                                    id="langDE">
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=show_issue&lang=de" id="langDE">
                                     <span class="fi fi-de"></span>
-                                    <span style="font-size: 1rem;">German</span>
+                                    <span style="font-size: 1rem;">Deutsch</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/account/change_language.php?redirect_to=profile&lang=es"
-                                    id="langES">
+                                <a class="dropdown-item"
+                                    href="/account/change_language.php?redirect_to=show_issue&lang=es" id="langES">
                                     <span class="fi fi-es"></span>
-                                    <span style="font-size: 1rem;">Spanish</span>
+                                    <span style="font-size: 1rem;">Español</span>
                                 </a>
                             </li>
                         </ul>
@@ -366,8 +373,8 @@ catch (ForbiddenException $e) {
                             <i class="fas fa-envelope me-3"></i>
                             info@monovattino.com
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 00 13 04 2023</p>
-                        <p><i class="fas fa-print me-3"></i> + 00 13 04 2023</p>
+                        <p><i class="fas fa-phone me-3"></i> + 00 14 04 2023</p>
+                        <p><i class="fas fa-print me-3"></i> + 00 12 05 2023</p>
                     </div>
                     <!-- Grid column -->
                 </div>
@@ -383,7 +390,6 @@ catch (ForbiddenException $e) {
         </div>
         <!-- Copyright -->
     </footer>
-    <script src="https://kit.fontawesome.com/d79f0d308d.js" crossorigin="anonymous"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
@@ -398,12 +404,12 @@ catch (ForbiddenException $e) {
         var currentLanguage = "<?php echo $language; ?>";
 
         var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-        var selectedLanguageText = document.getElementById("selectedLanguageText");
+        // var selectedLanguageText = document.getElementById("selectedLanguageText");
 
         // Update the toggle element to show the current language
         var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
         selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-        selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+        // selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
         toggleElement.classList.add("active");
         toggleElement.setAttribute("aria-current", "true");
         toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
