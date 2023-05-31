@@ -45,14 +45,14 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
-VALUES ('Utente1', 'utente1@mail.com', 'a0357a29d984018382037f49b65b63b7f3a8df2e9cc1768f6959fbf0107e124d', '6HZFd7Supf', true, true, 1, 'Utente', 
-'Utente1', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456
+VALUES ('Utente1', 'utente1@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 1, 'Utente', 
+'Utente1', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
-VALUES ('Admin1', 'admin1@mail.com', 'd0fbb73db6f36b3bd7dbc8718739b14a429deb8d9af5bf5d1e4935b7d67f93df', 'AElYuBzCtP', true, true, 2, 'Admin', 
-'Cognome', '2001-01-01', '1234567890', 'default', 'light', true, 'en'); -- password=Aa123456
+VALUES ('Admin1', 'admin1@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 2, 'Admin', 
+'Cognome', '2001-01-01', '1234567890', 'default', 'light', true, 'en'); -- password=Aa123456!
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
-VALUES ('Utente2', 'utente2@mail.com', 'ebfd8cd9e833727adca6ef2e3758ef331ffa57b91f884d0b4a2822f980cd19eb', 'bkKCbSoFtD', true, true, 3, 'Utente', 
-'Utente2', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456
+VALUES ('Utente2', 'utente2@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 3, 'Utente', 
+'Utente2', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
 
 CREATE TABLE companies (
 	id SERIAL PRIMARY KEY,
