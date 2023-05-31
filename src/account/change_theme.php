@@ -2,7 +2,6 @@
 
 require_once('../lib/accounts/user.php');
 require_once('../lib/database.php');
-// require_once('../lib/jwt.php');
 require_once('../lib/accounts/themes.php');
 require_once('../lib/http_exceptions/bad_request.php');
 
