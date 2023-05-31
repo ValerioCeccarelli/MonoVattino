@@ -4,16 +4,16 @@ import random
 
 print("Tool to generate random points:")
 
-lat_start = float(input("Insert latitude start: "))
-lon_start = float(input("Insert longitude start: "))
+lat_start = float(input("Insert latitude start: ") or "41.778089")
+lon_start = float(input("Insert longitude start: ") or "12.654691")
 
-lat_end = float(input("Insert latitude end: "))
-lon_end = float(input("Insert longitude end: "))
+lat_end = float(input("Insert latitude end: ") or "42.012735")
+lon_end = float(input("Insert longitude end: ") or "12.285497")
 
-n_companies = int(input("Insert number of companies: "))
+n_companies = int(input("Insert number of companies: ") or "6")
 companies = [i for i in range(1, n_companies + 1)]
 
-n_points = int(input("Insert number of points: "))
+n_points = int(input("Insert number of points: ") or "1000")
 
 scooters = []
 
@@ -26,9 +26,9 @@ for i in range(n_points):
 
 sql_template = 'INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES ({lat}, {lon}, {bat}, {comp});'
 
-file_name = input("Insert file name: ")
+file_name = input("Insert file name: ") or "points.sql"
 
-with open('file_name', 'w') as f:
+with open(file_name, 'w') as f:
     for scooter in scooters:
         sql = sql_template.format(lat=scooter[0], lon=scooter[1], bat=scooter[2], comp=scooter[3])
         f.write(sql + '\n')

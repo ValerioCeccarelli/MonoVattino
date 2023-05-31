@@ -73,7 +73,7 @@ catch (ForbiddenException $e) {
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+    </script>
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -112,9 +112,9 @@ catch (ForbiddenException $e) {
                         <a class="nav-link" href="/about.php">About us</a>
                     </li>
                     <?php if ($is_admin) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/issues/show_issue.php"><strong>Issues</strong></a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/issues/show_issue.php"><strong>Issues</strong></a>
+                    </li>
                     <?php } ?>
                 </ul>
 
@@ -177,25 +177,25 @@ catch (ForbiddenException $e) {
                                 <ion-icon class="p-3" name="sunny-outline" style="font-size: 23px; color:gold;" />
                             </a>
                             <script>
-                                function change_theme(theme) {
-                                    html = document.getElementsByTagName('html')[0];
-                                    if (theme == 'dark') {
-                                        html.setAttribute('data-bs-theme', 'dark');
-                                        document.getElementById('nav_dark').style.display = 'none';
-                                        document.getElementById('nav_light').style.display = 'block';
-                                    } else if (theme == 'light') {
-                                        html.setAttribute('data-bs-theme', 'light');
-                                        document.getElementById('nav_dark').style.display = 'block';
-                                        document.getElementById('nav_light').style.display = 'none';
-                                    }
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "/account/change_theme.php",
-                                        data: {
-                                            theme: theme
-                                        }
-                                    });
+                            function change_theme(theme) {
+                                html = document.getElementsByTagName('html')[0];
+                                if (theme == 'dark') {
+                                    html.setAttribute('data-bs-theme', 'dark');
+                                    document.getElementById('nav_dark').style.display = 'none';
+                                    document.getElementById('nav_light').style.display = 'block';
+                                } else if (theme == 'light') {
+                                    html.setAttribute('data-bs-theme', 'light');
+                                    document.getElementById('nav_dark').style.display = 'block';
+                                    document.getElementById('nav_light').style.display = 'none';
                                 }
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/account/change_theme.php",
+                                    data: {
+                                        theme: theme
+                                    }
+                                });
+                            }
                             </script>
 
                         </a>
@@ -223,37 +223,40 @@ catch (ForbiddenException $e) {
             <tbody>
                 <?php foreach ($issues as $issue) {
                     $is_updated = $issue->status == 'accepted' ?>
-                    <tr>
-                        <th scope="row">
-                            <?php echo $issue->id ?>
-                        </th>
-                        <td>
-                            <?php echo $issue->user_email ?>
-                        </td>
-                        <td>
-                            <?php echo $issue->scooter_id ?>
-                        </td>
-                        <td>
-                            <?php echo $issue->title ?>
-                        </td>
-                        <td>
-                            <?php echo $issue->created_at ?>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-primary" onclick="openInfo('<?php echo $issue->id; ?>');">
-                                    Info
-                                </a>
-                                <a class="btn <?php echo $is_updated ? 'btn-secondary' : 'btn-success'; ?>
-                             ?>" href="/issues/update_issue.php?id=<?php echo $issue->id; ?>">
-                                    Update
-                                </a disabled>
-                                <a class="btn btn-danger" href="/issues/delete_issue.php?id=<?php echo $issue->id; ?>">
-                                    Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                <tr>
+                    <th scope="row">
+                        <?php echo $issue->id ?>
+                    </th>
+                    <td>
+                        <?php echo $issue->user_email ?>
+                    </td>
+                    <td>
+                        <?php echo $issue->scooter_id ?>
+                    </td>
+                    <td>
+                        <?php echo $issue->title ?>
+                    </td>
+                    <td>
+                        <?php echo $issue->created_at ?>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" onclick="openInfo('<?php echo $issue->id; ?>');">
+                                Info
+                            </a>
+                            <a class="btn <?php echo $is_updated ? 'btn-secondary' : 'btn-success'; ?>"
+                                <?php if( ! $is_updated) { echo 'href="/issues/update_issue.php?id=' . $issue->id . '"'; } ?>>
+                                Update
+                            </a>
+                            <a class="btn btn-danger" href="/issues/delete_issue.php?id=<?php echo $issue->id; ?>">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                    <div style="display: none;" id="description_<?php echo $issue->id; ?>">
+                        <?php echo $issue->description; ?>
+                    </div>
+                </tr>
                 <?php } ?>
             </tbody>
         </table>
@@ -393,26 +396,30 @@ catch (ForbiddenException $e) {
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        function openInfo(issue_id) {
-            var description = document.getElementById("description_" + issue_id).innerHTML;
-            var modal = document.getElementById("info_modal_mody");
-            modal.innerHTML = description;
-            var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
-            myModal.show();
-        }
+    function openInfo(issue_id) {
+        // var description = document.getElementById("description_" + issue_id).innerHTML;
+        // var modal = document.getElementById("info_modal_mody");
+        // modal.innerHTML = description;
+        // var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
+        // myModal.show();
+        var id = "#description_" + issue_id;
+        var description = $(id).html();
+        $("#info_modal_mody").html(description);
+        $("#info_modal").modal("show");
+    }
 
-        var currentLanguage = "<?php echo $language; ?>";
+    var currentLanguage = "<?php echo $language; ?>";
 
-        var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-        // var selectedLanguageText = document.getElementById("selectedLanguageText");
+    var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
+    // var selectedLanguageText = document.getElementById("selectedLanguageText");
 
-        // Update the toggle element to show the current language
-        var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
-        selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-        // selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
-        toggleElement.classList.add("active");
-        toggleElement.setAttribute("aria-current", "true");
-        toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
+    // Update the toggle element to show the current language
+    var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
+    selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
+    // selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
+    toggleElement.classList.add("active");
+    toggleElement.setAttribute("aria-current", "true");
+    toggleElement.querySelector("span.fi").classList.add("my-fi-selected");
     </script>
 </body>
 

@@ -17,6 +17,11 @@ function process_get_request() {
     $latitude = $_GET['latitude'];
     $radius = $_GET['radius'];
 
+    $max_radius = 4000;
+    if ($radius > $max_radius) {
+        $radius = $max_radius;
+    }
+
     $conn = connect_to_database();
 
     $scooters = get_scooters($conn, $longitude, $latitude, $radius);
