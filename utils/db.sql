@@ -94,9 +94,9 @@ INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.95
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.925201409171294, 12.333131540488893, 100, 3);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.846965448003594, 12.486864767746505, 100, 1);
 INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.940367177661265, 12.41086676383526, 100, 2);
-INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.801219788048066, 12.572581393610761, 100, 2);
-INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.79357116425402, 12.420407218450672, 100, 2);
-INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.853616173950165, 12.584597757144758, 100, 3);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.801219788048066, 12.572581393610761, 100, 4);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.79357116425402, 12.420407218450672, 100, 5);
+INSERT INTO scooters (latitude, longitude, battery_level, company) VALUES (41.853616173950165, 12.584597757144758, 100, 6);
 
 CREATE TABLE issues (
 	id SERIAL PRIMARY KEY,
@@ -156,20 +156,20 @@ CREATE TABLE trips (
 
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 1, 'user1@mail.com', '2023-05-29 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (401, 2, 'user1@mail.com', '2023-05-01 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (11111, 3, 'user1@mail.com', '2023-05-02 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (11111, 12, 'user1@mail.com', '2023-05-02 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (12042, 4, 'user1@mail.com', '2023-05-03 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (130423, 5, 'user1@mail.com', '2023-05-04 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (42069, 6, 'user1@mail.com', '2023-05-05 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (130423, 13, 'user1@mail.com', '2023-05-04 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (42069, 14, 'user1@mail.com', '2023-05-05 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1006, 7, 'user1@mail.com', '2023-05-06 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (33333, 8, 'user1@mail.com', '2001-05-21 12:00:00.000000');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1000, 9, 'user1@mail.com', '2001-12-12 12:00:00.000000');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1000, 8, 'user1@mail.com', '2001-12-12 12:00:00.000000');
 
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (100, 7, 'user2@mail.com', '2023-05-29 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (401, 6, 'user2@mail.com', '2023-05-01 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (11111, 5, 'user2@mail.com', '2023-05-02 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (12042, 4, 'user2@mail.com', '2023-05-03 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (11111, 12, 'user2@mail.com', '2023-05-02 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (12042, 13, 'user2@mail.com', '2023-05-03 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (130423, 3, 'user2@mail.com', '2023-05-04 12:01:26.214972');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (42069, 2, 'user2@mail.com', '2023-05-05 12:01:26.214972');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (42069, 14, 'user2@mail.com', '2023-05-05 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1006, 1, 'user2@mail.com', '2023-05-06 12:01:26.214972');
 INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (33333, 8, 'user2@mail.com', '2001-05-21 12:00:00.000000');
-INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1000, 9, 'user2@mail.com', '2001-12-12 12:00:00.000000');
+INSERT INTO trips (trip_time, scooter_id, user_email, date) VALUES (1000, 8, 'user2@mail.com', '2001-12-12 12:00:00.000000');
