@@ -45,14 +45,14 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
-VALUES ('Utente1', 'utente1@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 1, 'Utente', 
-'Utente1', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
+VALUES ('User1', 'user1@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 1, 'Name1', 
+'Surname1', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
 VALUES ('Admin1', 'admin1@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 2, 'Admin', 
-'Cognome', '2001-01-01', '1234567890', 'default', 'light', true, 'en'); -- password=Aa123456!
+'Surname', '2001-01-01', '1234567890', 'default', 'light', true, 'en'); -- password=Aa123456!
 INSERT INTO users (username, email, password, salt, privacy_policy_accepted, terms_and_conditions_accepted, payment_method, name, surname, date_of_birth, phone_number, map_theme, html_theme, is_admin, language) 
-VALUES ('Utente2', 'utente2@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 3, 'Utente', 
-'Utente2', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
+VALUES ('User1', 'user2@mail.com', 'df11b78fa15baaad27580ac89635af7b4643705a9724f9359ed7a6e4c6227932', 'gHi5afIvAu', true, true, 3, 'Name2', 
+'Surname2', '2001-01-01', '1234567890', 'default', 'light', false, 'en'); -- password=Aa123456!
 
 CREATE TABLE companies (
 	id SERIAL PRIMARY KEY,
