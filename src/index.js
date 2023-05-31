@@ -342,7 +342,7 @@ async function onDocumentReady() {
         const initial_position = colosseo;
 
         let map_promise = initMap(initial_position.latitude, initial_position.longitude);
-        let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
+        // let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
 
         let position_promise = null;
         if (isCurrentPositionAvailable()) {
@@ -354,17 +354,17 @@ async function onDocumentReady() {
         }
 
         await map_promise;
-        let scooters_response = await scooters_promise;
-        let scooters = scooters_response.scooters;
-        let my_scooters = scooters_response.reserved_scooters;
+        // let scooters_response = await scooters_promise;
+        // let scooters = scooters_response.scooters;
+        // let my_scooters = scooters_response.reserved_scooters;
 
-        scooters.forEach(scooter => {
-            renderScooter(scooter);
-        });
+        // scooters.forEach(scooter => {
+        //     renderScooter(scooter);
+        // });
 
-        my_scooters.forEach(scooter => {
-            renderScooter(scooter);
-        });
+        // my_scooters.forEach(scooter => {
+        //     renderScooter(scooter);
+        // });
 
         if (!isCurrentPositionAvailable()) {
             return;
