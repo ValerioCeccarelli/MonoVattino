@@ -90,7 +90,6 @@ class InvalidCVVException extends Exception
 
 function validate_email($email)
 {
-    // echo $email;
     if (empty($email)) {
         throw new InvalidEmailException("Email is required!");
     }
@@ -269,31 +268,5 @@ function validate_cvv($cvv)
     }
 }
 
-
-
-
-// class InvalidCreditCardException extends Exception
-// {
-//     public function __construct($message)
-//     {
-//         parent::__construct($message, 0, null);
-//     }
-// }
-
-// function validate_credit_card($credit_card)
-// {
-//     if (empty($credit_card)) {
-//         throw new InvalidCreditCardException("Credit card is required!");
-//     }
-//     if (strlen($credit_card) < 16) {
-//         throw new InvalidCreditCardException("Credit card must be 16 digits long!");
-//     }
-//     if (strlen($credit_card) > 16) {
-//         throw new InvalidCreditCardException("Credit card must be 16 digits long!");
-//     }
-//     if (!preg_match('/^[0-9]+$/', $credit_card)) {
-//         throw new InvalidCreditCardException("Credit card must contain only numbers!");
-//     }
-// }
 
 ?>

@@ -11,7 +11,7 @@ session_start();
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['user_email'])) {
-            // unauthorized
+            // Unauthorized
             throw new UserCanNotReserveException("You need to be logged in to reserve a scooter");
         }
 

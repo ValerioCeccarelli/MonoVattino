@@ -35,7 +35,6 @@ try {
             $policy_accepted = false;
         }
 
-        // $map_id = theme_to_mapid($user->map_theme);
         $html_theme = $user->html_theme;
         $map_theme = $user->map_theme;
 

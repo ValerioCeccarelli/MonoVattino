@@ -44,7 +44,6 @@ try {
         // thows ScooterNotFoundException if the scooter does not exist
         get_scooter_by_id($conn, $scooter_id);
 
-        // TODO: far si che sia questa funzione a lanciare l'eccezione se non esiste lo scooter
         create_issue($conn, $email, $scooter_id, $title, $description);
 
         header("Location: /");

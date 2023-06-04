@@ -3,7 +3,7 @@
 session_start();
 session_destroy();
 
-// redirect to the home page
+// Redirect to the home page
 header('Location: /');
 
 ?>

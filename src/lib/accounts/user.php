@@ -142,7 +142,6 @@ function create_new_user($conn, $user)
 
     $salt = generate_random_string(10);
     $password_hash = hash('sha256', $password . $salt);
-    // echo strlen($password_hash); //64
 
     $result2 = pg_execute($conn, "create_new_user", array($username, $password_hash, $salt, $email, $name, $surname, $date_of_birth, $phone_number));
 
@@ -156,7 +155,8 @@ function create_new_user($conn, $user)
     }
 }
 
-function update_password($conn, $email, $new_password) {
+function update_password($conn, $email, $new_password)
+{
     $salt = generate_random_string(10);
     $password_hash = hash('sha256', $new_password . $salt);
 
@@ -180,10 +180,10 @@ class UserCanNotReserveException extends Exception
     }
 }
 
-// check if the user can reserve a scooter
-// throws an Exception if the query fails
-// throws a NoUserFoundException if the user is not found
-// throws a UserCanNotReserveException if the user can not reserve, with a message that explains why
+// Check if the user can reserve a scooter
+// Throws an Exception if the query fails
+// Throws a NoUserFoundException if the user is not found
+// Throws a UserCanNotReserveException if the user can not reserve, with a message that explains why
 function check_if_user_can_reserve($conn, $user_id)
 {
     $query = "SELECT privacy_policy_accepted, terms_and_conditions_accepted, payment_method FROM users WHERE email = $1";

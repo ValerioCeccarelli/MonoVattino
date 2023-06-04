@@ -3,6 +3,8 @@
 require_once('../lib/database.php');
 require_once('../lib/scooters/issues.php');
 require_once('../lib/http_exceptions/bad_request.php');
+require_once('../lib/http_exceptions/unauthorized.php');
+require_once('../lib/http_exceptions/forbidden.php');
 
 session_start();
 
@@ -11,21 +13,17 @@ try {
     $is_admin = $_SESSION['is_admin'];
 
     if (!isset($user_email)) {
-        // TODO: dare errore
-        header('Location: /');
-        exit;
+        throw new UnauthorizedException("You need to be logged in to delete an issue");
     }
 
     if (!$is_admin) {
-        // TODO: dare errore
-        header('Location: /');
-        exit;
+        throw new ForbiddenException("You need to be an admin to delete an issue");
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $issue_id = $_GET['id'];
 
-        if(!isset($issue_id)) {
+        if (!isset($issue_id)) {
             throw new BadRequestException("Missing issue id");
         }
 
