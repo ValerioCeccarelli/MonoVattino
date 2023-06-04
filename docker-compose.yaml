@@ -13,8 +13,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-      JWT_SECRET: secret123
-      JWT_EXP_TIME: 3600
 
   pg_server:
     container_name: pg_server
@@ -27,7 +25,7 @@ services:
       - 5432:5432
     volumes:
       - ./pg/data:/var/lib/postgresql/data
-  
+
   pg_admin:
     container_name: pg_admin
     image: dpage/pgadmin4

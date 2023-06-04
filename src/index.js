@@ -125,13 +125,6 @@ async function initMap(latitude, longitude) {
         zoom: 14,
         center: position,
         mapId: map_id,
-        // mapId: "18db44928f96d960", // default
-        // mapId: "a4960208d9b76361", // dark
-        // mapId: "7bf73a088c3484e4", // night
-        // mapId: "4d28faf75cbe2224", // atlas
-        // mapId: "a85cc9c21291463", // classic
-        // mapId: "f12bf4b63529e007", // grey
-        // mapId: "b00ca340d0b7980f", // light
         streetViewControl: false,
         mapTypeControl: false,
         fullscreenControl: false
@@ -183,7 +176,7 @@ async function onScooterReserveClick(scooter) {
         if (error.status == 403) {
             console.error("User not authorized.");
             text = error.responseText;
-            // replace \n with <br>
+            // Replace \n with <br>
             text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
             showErrorWithModal(text);
             return;
@@ -263,7 +256,7 @@ function onScooterClick(scooter) {
     }
 
     $('#offcanvas_report_button').unbind('click').click(() => {
-        // redirect to report issue page
+        // Redirect to report issue page
         window.location.href = "issues/report_issue.php?id=" + scooter.id;
     });
 
@@ -332,7 +325,7 @@ async function renderMe(latitude, longitude) {
 
 async function onDocumentReady() {
     try {
-        // center the map on Colosseo
+        // Center the map on Colosseo
         const colosseo = {
             longitude: 12.492234,
             latitude: 41.889819,
@@ -342,7 +335,6 @@ async function onDocumentReady() {
         const initial_position = colosseo;
 
         let map_promise = initMap(initial_position.latitude, initial_position.longitude);
-        // let scooters_promise = getScooters(initial_position.latitude, initial_position.longitude, radius);
 
         let position_promise = null;
         if (isCurrentPositionAvailable()) {
@@ -354,17 +346,6 @@ async function onDocumentReady() {
         }
 
         await map_promise;
-        // let scooters_response = await scooters_promise;
-        // let scooters = scooters_response.scooters;
-        // let my_scooters = scooters_response.reserved_scooters;
-
-        // scooters.forEach(scooter => {
-        //     renderScooter(scooter);
-        // });
-
-        // my_scooters.forEach(scooter => {
-        //     renderScooter(scooter);
-        // });
 
         if (!isCurrentPositionAvailable()) {
             return;
@@ -398,10 +379,6 @@ async function onDocumentReady() {
         scooters_response = await scooters_promise;
         scooters = scooters_response.scooters;
         my_scooters = scooters_response.reserved_scooters;
-
-        // scooter_markers.forEach(scooterMarker => {
-        //     removeRender(scooterMarker);
-        // });
 
         scooters.forEach(scooter => {
             renderScooter(scooter);

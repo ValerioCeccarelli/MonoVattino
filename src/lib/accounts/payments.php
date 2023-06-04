@@ -110,7 +110,7 @@ function get_payment_method_by_id($conn, $id)
 function delete_payment_method($conn, $payment_id)
 {
     $query = "DELETE FROM payment_methods WHERE id = $1";
-    // the foreign key constraint will set to null the payment_method field in the users table
+    // The foreign key constraint will set to null the payment_method field in the users table
     $result1 = pg_prepare($conn, "delete_payment_method", $query);
     if (!$result1) {
         throw new Exception("Could not prepare the query: " . pg_last_error());

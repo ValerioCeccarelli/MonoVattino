@@ -3,7 +3,6 @@
 require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
-// require_once('../lib/jwt.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/accounts/user.php');
 
@@ -11,8 +10,8 @@ session_start();
 
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (! isset($_SESSION['user_email'])) {
-            // unauthorized
+        if (!isset($_SESSION['user_email'])) {
+            // Unauthorized
             throw new UserCanNotReserveException("You need to be logged in to reserve a scooter");
         }
 
@@ -29,8 +28,7 @@ try {
         check_if_user_can_reserve($conn, $email);
 
         reserve_scooter($conn, $scooter_id, $email);
-    }
-    else {
+    } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
 } catch (BadRequestException $e) {

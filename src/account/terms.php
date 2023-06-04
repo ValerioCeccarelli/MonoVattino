@@ -1,5 +1,4 @@
 <?php 
-require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
@@ -13,9 +12,6 @@ try {
         header('Location: /account/login.php?redirect_to=terms');
         exit;
     }
-    // $jwt_payload = validate_jwt();
-    // $email = $jwt_payload->email;
-    // $username = $jwt_payload->username;
     $email = $_SESSION['user_email'];
     $username = $_SESSION['user_username'];
 

@@ -2,7 +2,6 @@
 require_once('../lib/accounts/user.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/database.php');
-require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
 
 session_start();
@@ -38,14 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $is_valid = verify_password($db_user, $password);
 
         if ($is_valid) {
-
-            // $jwt_payload = new JwtPayload();
-            // $jwt_payload->email = $email;
-            // $jwt_payload->username = $db_user->username;
-
-            // $jwt = generate_jwt($db_user);
-
-            // setcookie('jwt', $jwt, get_jwt_expire_time(), "/");
 
             $_SESSION['user_email'] = $db_user->email;
             $_SESSION['user_username'] = $db_user->username;

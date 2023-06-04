@@ -1,5 +1,4 @@
 <?php
-require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/scooters/reservations.php');
@@ -36,7 +35,6 @@ try {
             $policy_accepted = false;
         }
 
-        // $map_id = theme_to_mapid($user->map_theme);
         $html_theme = $user->html_theme;
         $map_theme = $user->map_theme;
 

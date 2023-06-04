@@ -1,6 +1,5 @@
 <?php
 
-require_once('lib/jwt.php');
 require_once('lib/accounts/user.php');
 require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
@@ -9,7 +8,6 @@ require_once('translations/translation.php');
 session_start();
 
 $is_user_logged = isset($_SESSION['user_email']);
-// $jwt_payload = null;
 
 $map_theme = isset($_SESSION['map_theme']) ? $_SESSION['map_theme'] : 'default';
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
@@ -19,27 +17,6 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 $map_id = theme_to_mapid($map_theme);
 
 $trans = get_translation($language, 'translations');
-// try {
-//     // $jwt_payload = validate_jwt();
-//     // $is_user_logged = true;
-//     // $username = $jwt_payload->username;
-
-//     $conn = connect_to_database();
-//     $user = get_user_by_email($conn, $jwt_payload->email);
-//     $map_theme = $user->map_theme;
-
-//     $html_theme = $user->html_theme;
-//     $is_admin = $user->is_admin;
-// } 
-// // catch (InvalidJWTException $e) {
-// //     $is_user_logged = false;
-// //     $username = null;
-// // } 
-// catch (Exception $e) {
-//     echo 'ERROR 500: Internal Server Error';
-//     error_log("ERROR: index.php: " . $e->getMessage());
-//     exit;
-// }
 
 ?>
 
@@ -61,16 +38,13 @@ $trans = get_translation($language, 'translations');
     <!-- Bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+
 
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script> -->
+
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">

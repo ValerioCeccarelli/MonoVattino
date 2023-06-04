@@ -1,6 +1,5 @@
 <?php
 
-// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
@@ -34,10 +33,7 @@ try {
         throw new MethodNotAllowedException("Method not allowed");
     }
 }
-// catch (InvalidJWTException $e) {
-//     header("Location: /account/login.php");
-//     exit;
-// } 
+
 catch (ForbiddenException $e) {
     http_response_code(403);
     echo "403 Forbidden";
@@ -397,11 +393,6 @@ catch (ForbiddenException $e) {
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
     function openInfo(issue_id) {
-        // var description = document.getElementById("description_" + issue_id).innerHTML;
-        // var modal = document.getElementById("info_modal_mody");
-        // modal.innerHTML = description;
-        // var myModal = new bootstrap.Modal(document.getElementById('info_modal'), {});
-        // myModal.show();
         var id = "#description_" + issue_id;
         var description = $(id).html();
         $("#info_modal_mody").html(description);
@@ -411,12 +402,10 @@ catch (ForbiddenException $e) {
     var currentLanguage = "<?php echo $language; ?>";
 
     var selectedLanguageFlag = document.getElementById("selectedLanguageFlag");
-    // var selectedLanguageText = document.getElementById("selectedLanguageText");
 
     // Update the toggle element to show the current language
     var toggleElement = document.getElementById("lang" + currentLanguage.toUpperCase());
     selectedLanguageFlag.classList = toggleElement.querySelector("span.fi").classList;
-    // selectedLanguageText.textContent = toggleElement.querySelector("span").textContent;
     toggleElement.classList.add("active");
     toggleElement.setAttribute("aria-current", "true");
     toggleElement.querySelector("span.fi").classList.add("my-fi-selected");

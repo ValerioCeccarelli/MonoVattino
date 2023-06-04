@@ -1,6 +1,5 @@
 <?php
 
-// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/accounts/user.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
@@ -17,9 +16,6 @@ try {
         header('Location: /account/login.php?redirect_to=payment');
         exit;
     }
-    // $jwt_payload = validate_jwt();
-    // $email = $jwt_payload->email;
-    // $username = $jwt_payload->username;
 
     $email = $_SESSION['user_email'];
     $username = $_SESSION['user_username'];
@@ -70,11 +66,6 @@ try {
     } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
-
-} catch (InvalidJWTException $e) {
-    http_response_code(401);
-    echo "401 Unauthorized";
-    exit;
 } catch (NoUserFoundException $e) {
     http_response_code(404);
     echo "404 Not Found";

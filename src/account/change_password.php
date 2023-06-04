@@ -2,7 +2,6 @@
 require_once('../lib/accounts/user.php');
 require_once('../lib/accounts/validate_user.php');
 require_once('../lib/database.php');
-require_once('../lib/jwt.php');
 require_once('../lib/redirect_to.php');
 
 session_start();
@@ -160,38 +159,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </section>
 
     <script>
-    function setLabelControls(input_id, label_id) {
-        if ($(input_id).val() != "") {
-            $(label_id).css('top', '-5px')
-        }
-        $(input_id).focus(function() {
-            $(label_id).css('top', '-5px')
-        });
-        $(input_id).blur(function() {
-            if ($(input_id).val() == "") {
-                $(label_id).css('top', '50%')
+        function setLabelControls(input_id, label_id) {
+            if ($(input_id).val() != "") {
+                $(label_id).css('top', '-5px')
             }
-        });
-    }
-    setLabelControls('#old_password', '#old_password_label');
-    setLabelControls('#new_password', '#new_password_label');
-    setLabelControls('#confirm_password', '#confirm_password_label');
+            $(input_id).focus(function () {
+                $(label_id).css('top', '-5px')
+            });
+            $(input_id).blur(function () {
+                if ($(input_id).val() == "") {
+                    $(label_id).css('top', '50%')
+                }
+            });
+        }
+        setLabelControls('#old_password', '#old_password_label');
+        setLabelControls('#new_password', '#new_password_label');
+        setLabelControls('#confirm_password', '#confirm_password_label');
 
-    function showPassword(id) {
-        var passwordInput = document.getElementById(id + "_password");
-        var togglePasswordIcon = document.getElementById(id + "_togglePasswordIcon");
+        function showPassword(id) {
+            var passwordInput = document.getElementById(id + "_password");
+            var togglePasswordIcon = document.getElementById(id + "_togglePasswordIcon");
 
-        passwordInput.type = "text";
-        togglePasswordIcon.name = "eye-outline";
-    }
+            passwordInput.type = "text";
+            togglePasswordIcon.name = "eye-outline";
+        }
 
-    function hidePassword(id) {
-        var passwordInput = document.getElementById(id + "_password");
-        var togglePasswordIcon = document.getElementById(id + "_togglePasswordIcon");
+        function hidePassword(id) {
+            var passwordInput = document.getElementById(id + "_password");
+            var togglePasswordIcon = document.getElementById(id + "_togglePasswordIcon");
 
-        passwordInput.type = "password";
-        togglePasswordIcon.name = "eye-off-outline";
-    }
+            passwordInput.type = "password";
+            togglePasswordIcon.name = "eye-off-outline";
+        }
     </script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
