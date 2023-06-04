@@ -1,6 +1,5 @@
 <?php
 
-// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
@@ -34,10 +33,7 @@ try {
         throw new MethodNotAllowedException("Method not allowed");
     }
 }
-// catch (InvalidJWTException $e) {
-//     header("Location: /account/login.php");
-//     exit;
-// } 
+
 catch (ForbiddenException $e) {
     http_response_code(403);
     echo "403 Forbidden";

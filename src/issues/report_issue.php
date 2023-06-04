@@ -1,6 +1,5 @@
 <?php
 
-// require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/issues.php');
@@ -22,10 +21,6 @@ try {
         header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
         exit;
     }
-
-
-    // $jwt_payload = validate_jwt();
-    // $email = $jwt_payload->email;
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // pass
@@ -62,12 +57,7 @@ try {
     http_response_code(404);
     echo "404 Not Found";
     exit;
-}
-// catch (InvalidJWTException $e) {
-//     header("Location: /account/login.php?redirect_to=report_issue&id=$scooter_id");
-//     exit;
-// } 
-catch (MethodNotAllowedException $e) {
+} catch (MethodNotAllowedException $e) {
     http_response_code(405);
     echo "405 Method Not Allowed";
     exit;

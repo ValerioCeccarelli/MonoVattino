@@ -1,6 +1,5 @@
 <?php
 
-require_once('../lib/jwt.php');
 require_once('../lib/database.php');
 require_once('../lib/scooters/issues.php');
 
@@ -23,7 +22,7 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $issue_id = $_GET['id'];
 
-        if(!isset($issue_id)) {
+        if (!isset($issue_id)) {
             throw new BadRequestException("Missing issue id");
         }
 
@@ -35,9 +34,6 @@ try {
 } catch (BadRequestException $e) {
     http_response_code(400);
     echo "400 Bad Request";
-    exit;
-} catch (InvalidJWTException $e) {
-    header("Location: /account/login.php");
     exit;
 } catch (MethodNotAllowedException $e) {
     http_response_code(405);

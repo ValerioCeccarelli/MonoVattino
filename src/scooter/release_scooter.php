@@ -3,15 +3,15 @@
 require_once('../lib/http_exceptions/bad_request.php');
 require_once('../lib/http_exceptions/method_not_allowed.php');
 require_once('../lib/database.php');
-// require_once('../lib/jwt.php');
 require_once('../lib/scooters/scooter.php');
 require_once('../lib/scooters/trips.php');
 
 session_start();
 
-function process_post_request() {
+function process_post_request()
+{
 
-    if (! isset($_SESSION['user_email'])) {
+    if (!isset($_SESSION['user_email'])) {
         http_response_code(401);
         echo "401 Unauthorized";
         exit;
@@ -40,7 +40,7 @@ function process_post_request() {
     $total_cost = $costs->fixed_cost + $costs->cost_per_minute * $travel_time / 60;
 
     $total_cost = round($total_cost, 2);
-    
+
     header('Content-Type: application/json');
     echo json_encode(array('total_cost' => $total_cost));
 }
@@ -48,8 +48,7 @@ function process_post_request() {
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         process_post_request();
-    }
-    else {
+    } else {
         throw new MethodNotAllowedException("Method not allowed");
     }
 } catch (BadRequestException $e) {

@@ -1,6 +1,5 @@
 <?php
 
-require_once('lib/jwt.php');
 require_once('lib/accounts/user.php');
 require_once('lib/accounts/themes.php');
 require_once('lib/database.php');
@@ -9,7 +8,6 @@ require_once('translations/translation.php');
 session_start();
 
 $is_user_logged = isset($_SESSION['user_email']);
-// $jwt_payload = null;
 
 $map_theme = isset($_SESSION['map_theme']) ? $_SESSION['map_theme'] : 'default';
 $html_theme = isset($_SESSION['html_theme']) ? $_SESSION['html_theme'] : 'light';
@@ -19,27 +17,6 @@ $is_admin = isset($_SESSION['is_admin']) ? $_SESSION['is_admin'] : false;
 $map_id = theme_to_mapid($map_theme);
 
 $trans = get_translation($language, 'translations');
-// try {
-//     // $jwt_payload = validate_jwt();
-//     // $is_user_logged = true;
-//     // $username = $jwt_payload->username;
-
-//     $conn = connect_to_database();
-//     $user = get_user_by_email($conn, $jwt_payload->email);
-//     $map_theme = $user->map_theme;
-
-//     $html_theme = $user->html_theme;
-//     $is_admin = $user->is_admin;
-// } 
-// // catch (InvalidJWTException $e) {
-// //     $is_user_logged = false;
-// //     $username = null;
-// // } 
-// catch (Exception $e) {
-//     echo 'ERROR 500: Internal Server Error';
-//     error_log("ERROR: index.php: " . $e->getMessage());
-//     exit;
-// }
 
 ?>
 
