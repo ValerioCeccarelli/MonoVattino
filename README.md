@@ -21,7 +21,6 @@ In the main directory, run this command to build the docker containers:
 docker compose up
 ```
 Then, open the browser and access to localhost to view the website.
-*[localhost]: enter "localhost" into the search bar
 
 ## Contributing
 
