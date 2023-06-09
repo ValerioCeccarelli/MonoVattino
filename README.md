@@ -17,7 +17,7 @@ Technologies used:
 	* Bootstrap
 
 
-![Homepage](https://github.com/ValerioCeccarelli/MonoVattino/blob/main/image.jpg?raw=true)
+![Homepage](https://github.com/ValerioCeccarelli/MonoVattino/blob/mirko/.img/MV_homePage.png?raw=true)
 
 ---
 ## License
